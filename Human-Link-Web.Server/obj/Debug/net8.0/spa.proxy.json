@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:5173",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\..\\human-link-web.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

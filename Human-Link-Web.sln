@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Human-Link-Web.Server", "Human-Link-Web.Server\Human-Link-Web.Server.csproj", "{18E186D1-2442-4ACC-BFE8-3A752A542C16}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "human-link-web.client", "human-link-web.client\human-link-web.client.esproj", "{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18E186D1-2442-4ACC-BFE8-3A752A542C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E186D1-2442-4ACC-BFE8-3A752A542C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E186D1-2442-4ACC-BFE8-3A752A542C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E186D1-2442-4ACC-BFE8-3A752A542C16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7115AA3-7055-44CC-9249-681B4FAF2F35}
+	EndGlobalSection
+EndGlobal

@@ -1,7 +1,7 @@
 # Human-Link
 ## Descripción
 
-El **Sistema de Gestión de Recursos Humanos para OROCRUZ** es una plataforma integral diseñada para optimizar la gestión del talento humano en una empresa en crecimiento. Este sistema facilita la creación y mantenimiento de perfiles de empleados, administración de documentos, gestión de formación y desarrollo a través de cursos, así como la gestión de compensaciones y beneficios.
+El **Sistema de Gestión de Recursos Humanos para OROCRUZ (HumanLink)** es una plataforma integral diseñada para optimizar la gestión del talento humano en una empresa en crecimiento. Este sistema facilita la creación y mantenimiento de perfiles de empleados, administración de documentos, gestión de formación y desarrollo a través de cursos, así como la gestión de compensaciones y beneficios.
 
 Entre las funcionalidades más destacadas se encuentran:
 - Registro de horas extras y cálculo de bonificaciones.
@@ -15,7 +15,7 @@ El proyecto está desarrollado utilizando un stack tecnológico moderno y eficie
 ### Backend:
 - **Lenguaje**: C#
 - **Framework**: .NET Core
-- **Base de Datos**: SQL Server
+- **Base de Datos**: PostgreSQL
 - **ORM**: Entity Framework
 - **API RESTful**: Provee la interacción entre el frontend y el backend, gestionando todas las operaciones.
 

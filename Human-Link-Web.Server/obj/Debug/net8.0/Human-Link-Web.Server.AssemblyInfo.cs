@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Human-Link-Web.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26a653c06e59e9436b13a68fc903a50ef6e05a74")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3476adf12b0ca812deb44c87844ab4da9087d1f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Human-Link-Web.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Human-Link-Web.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

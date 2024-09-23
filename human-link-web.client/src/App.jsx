@@ -1,49 +1,61 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import './App.css'
 
 function App() {
-    const [forecasts, setForecasts] = useState();
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        populateWeatherData();
+        populateUserData();
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
+    async function populateUserData() {
+        try {
+            const response = await fetch('https://localhost:7019/HumanLink/GetUsers');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
+    const contents = users.length === 0 
+        ? <p>Loading... </p>
         : <table className="table table-striped" aria-labelledby="tableLabel">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Es admin</th>
+                    <th>Nombre</th>
                 </tr>
             </thead>
             <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                {users.map(user => (
+                    <tr key={user.idusuario}>
+                        <td>{user.usuario1}</td>
+                        <td>{user.correo}</td>
+                        <td>{user.isadmin ? 'Sí' : 'No'}</td>
+                        <td>
+                            {user.empleados.map(empleado => ( 
+                                <div key={empleado.idEmpleado}>{empleado.nombre}</div>
+                            ))}
+                        </td>
                     </tr>
-                )}
+                ))}
             </tbody>
         </table>;
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
+            <h1 id="tableLabel">Usuarios</h1>
+            <p>Mom dont go</p>
+            <img src='https://i.pinimg.com/564x/b6/2b/f4/b62bf4d6aa7019de819f80f01667e466.jpg' alt="Imagen" />
             {contents}
         </div>
     );
-    
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
 }
 
 export default App;

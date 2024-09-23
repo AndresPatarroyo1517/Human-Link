@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
+    "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
+    "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectUniqueName": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "projectName": "Human-Link-Web.Server",
-        "projectPath": "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-        "packagesPath": "C:\\Users\\Prueba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Prueba\\source\\repos\\Human-Link\\Human-Link-Web.Server\\obj\\",
+        "projectPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "packagesPath": "C:\\Users\\AndrezPR\\.nuget\\packages\\",
+        "outputPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Prueba\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\AndrezPR\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -50,9 +46,29 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.SpaProxy": {
               "target": "Package",
               "version": "[8.*-*, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -78,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,8 @@
 
+using Human_Link_Web.Server.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 namespace Human_Link_Web.Server
 {
     public class Program
@@ -13,13 +17,21 @@ namespace Human_Link_Web.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin() 
+                           .AllowAnyMethod()  
+                           .AllowAnyHeader(); 
+                });
+            });
             var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -30,6 +42,9 @@ namespace Human_Link_Web.Server
 
             app.UseAuthorization();
 
+            app.UseCors("AllowAllOrigins");
+            
+            app.UseRouting();
 
             app.MapControllers();
 

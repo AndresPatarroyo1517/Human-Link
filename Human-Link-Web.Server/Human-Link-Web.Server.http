@@ -1,6 +1,6 @@
 @Human_Link_Web.Server_HostAddress = http://localhost:5081
 
-GET {{Human_Link_Web.Server_HostAddress}}/weatherforecast/
+GET {{Human_Link_Web.Server_HostAddress}}/humanlink/
 Accept: application/json
 
 ###

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Human_Link_Web.Server.Models;
 
@@ -27,7 +26,9 @@ public partial class HumanLinkContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {}
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=ep-empty-grass-a5tf5v7l.us-east-2.aws.neon.tech;port=5432;Username=HumanLink_owner;Password=WTaAkc0Uh3XY;Database=HumanLink");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Curso>(entity =>
@@ -123,13 +124,37 @@ public partial class HumanLinkContext : DbContext
             entity.ToTable("usuario");
 
             entity.Property(e => e.Idusuario).HasColumnName("idusuario");
-            entity.Property(e => e.Clave)
-                .HasMaxLength(100)
-                .HasColumnName("clave");
             entity.Property(e => e.Correo)
                 .HasMaxLength(50)
                 .HasColumnName("correo");
+            entity.Property(e => e.Emailverificationtoken)
+                .HasMaxLength(255)
+                .HasColumnName("emailverificationtoken");
+            entity.Property(e => e.Failedloginattempts)
+                .HasDefaultValue(0)
+                .HasColumnName("failedloginattempts");
             entity.Property(e => e.Isadmin).HasColumnName("isadmin");
+            entity.Property(e => e.Isemailverified)
+                .HasDefaultValue(false)
+                .HasColumnName("isemailverified");
+            entity.Property(e => e.Islockedout)
+                .HasDefaultValue(false)
+                .HasColumnName("islockedout");
+            entity.Property(e => e.Lockoutend)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("lockoutend");
+            entity.Property(e => e.Passwordhash)
+                .HasMaxLength(255)
+                .HasColumnName("passwordhash");
+            entity.Property(e => e.Passwordresettoken)
+                .HasMaxLength(255)
+                .HasColumnName("passwordresettoken");
+            entity.Property(e => e.Passwordresettokenexpiration)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("passwordresettokenexpiration");
+            entity.Property(e => e.Passwordsalt)
+                .HasMaxLength(255)
+                .HasColumnName("passwordsalt");
             entity.Property(e => e.Usuario1)
                 .HasMaxLength(30)
                 .HasColumnName("usuario");

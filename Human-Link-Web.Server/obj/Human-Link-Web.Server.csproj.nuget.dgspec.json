@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
+    "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
   },
   "projects": {
-    "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
+    "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectUniqueName": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "projectName": "Human-Link-Web.Server",
-        "projectPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-        "packagesPath": "C:\\Users\\AndrezPR\\.nuget\\packages\\",
-        "outputPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\obj\\",
+        "projectPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "packagesPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AndrezPR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USUARIO.DESKTOP-64OMC89\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -94,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

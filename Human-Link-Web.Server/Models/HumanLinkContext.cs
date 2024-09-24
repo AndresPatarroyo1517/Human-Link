@@ -124,37 +124,16 @@ public partial class HumanLinkContext : DbContext
             entity.ToTable("usuario");
 
             entity.Property(e => e.Idusuario).HasColumnName("idusuario");
+            entity.Property(e => e.Clave)
+                .HasMaxLength(100)
+                .HasColumnName("clave");
             entity.Property(e => e.Correo)
                 .HasMaxLength(50)
                 .HasColumnName("correo");
-            entity.Property(e => e.Emailverificationtoken)
-                .HasMaxLength(255)
-                .HasColumnName("emailverificationtoken");
-            entity.Property(e => e.Failedloginattempts)
-                .HasDefaultValue(0)
-                .HasColumnName("failedloginattempts");
             entity.Property(e => e.Isadmin).HasColumnName("isadmin");
             entity.Property(e => e.Isemailverified)
                 .HasDefaultValue(false)
                 .HasColumnName("isemailverified");
-            entity.Property(e => e.Islockedout)
-                .HasDefaultValue(false)
-                .HasColumnName("islockedout");
-            entity.Property(e => e.Lockoutend)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("lockoutend");
-            entity.Property(e => e.Passwordhash)
-                .HasMaxLength(255)
-                .HasColumnName("passwordhash");
-            entity.Property(e => e.Passwordresettoken)
-                .HasMaxLength(255)
-                .HasColumnName("passwordresettoken");
-            entity.Property(e => e.Passwordresettokenexpiration)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("passwordresettokenexpiration");
-            entity.Property(e => e.Passwordsalt)
-                .HasMaxLength(255)
-                .HasColumnName("passwordsalt");
             entity.Property(e => e.Usuario1)
                 .HasMaxLength(30)
                 .HasColumnName("usuario");

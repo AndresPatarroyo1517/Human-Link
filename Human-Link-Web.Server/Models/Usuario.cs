@@ -13,23 +13,9 @@ public partial class Usuario
 
     public bool? Isadmin { get; set; }
 
-    public string? Passwordhash { get; set; }
-
-    public string? Passwordsalt { get; set; }
-
-    public string? Passwordresettoken { get; set; }
-
-    public DateTime? Passwordresettokenexpiration { get; set; }
-
     public bool? Isemailverified { get; set; }
 
-    public string? Emailverificationtoken { get; set; }
-
-    public int? Failedloginattempts { get; set; }
-
-    public bool? Islockedout { get; set; }
-
-    public DateTime? Lockoutend { get; set; }
+    public string? Clave { get; set; }
 
     public virtual ICollection<Cursousuario> Cursousuarios { get; set; } = new List<Cursousuario>();
 

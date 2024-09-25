@@ -1,2 +1,5 @@
 
 .vs/
+/.vs
+/Human-Link-Web.Server/obj
+/Human-Link-Web.Server/bin/Debug

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
+    "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
+    "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectUniqueName": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "projectName": "Human-Link-Web.Server",
-        "projectPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-        "packagesPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USUARIO.DESKTOP-64OMC89\\Downloads\\Human-Link\\Human-Link-Web.Server\\obj\\",
+        "projectPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "packagesPath": "C:\\Users\\st147\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\USUARIO.DESKTOP-64OMC89\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\st147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -59,6 +65,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.5, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
@@ -88,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Human-Link-Web.Server",
+    "\\Human-Link-Web.Server\\Controllers",
+    "\\Human-Link-Web.Server\\Models"
   ],
-  "SelectedNode": "\\Human-Link-Web.sln",
+  "SelectedNode": "\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
   "PreviewInSolutionExplorer": false
 }

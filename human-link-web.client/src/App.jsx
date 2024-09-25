@@ -10,7 +10,7 @@ function App() {
 
     async function populateUserData() {
         try {
-            const response = await fetch('http://localhost:5000/HumanLink/GetUsers');
+            const response = await fetch('https://localhost:7019/HumanLink/GetUsers');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

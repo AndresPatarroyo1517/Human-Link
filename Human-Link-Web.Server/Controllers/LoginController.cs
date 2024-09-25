@@ -9,7 +9,7 @@ using Human_Link_Web.Server.Models;
 
 namespace Human_Link_Web.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("HumanLink/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {

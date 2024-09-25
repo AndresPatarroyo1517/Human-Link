@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "E:\\GitHub\\HL\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|e:\\github\\hl\\human-link-web.server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|e:\\github\\hl\\human-link-web.server\\models\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\models\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\services\\authservices.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\services\\authservices.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|e:\\github\\hl\\human-link-web.server\\models\\humanlinkcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\models\\humanlinkcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|e:\\github\\hl\\human-link-web.server\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\hooks\\useauth.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\hooks\\useauth.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,54 +58,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Login.cs",
-              "DocumentMoniker": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\Login.cs",
-              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Login.cs",
-              "ToolTip": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\Login.cs",
-              "RelativeToolTip": "Human-Link-Web.Server\\Models\\Login.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T19:43:10.049Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HumanLinkContext.cs",
-              "DocumentMoniker": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
-              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
-              "ToolTip": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
-              "RelativeToolTip": "Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T04:23:21.514Z",
+              "DocumentIndex": 0,
+              "Title": "login.css",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\login.css",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\login.css",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\login.css",
+              "RelativeToolTip": "human-link-web.client\\src\\components\\login.css",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAAALUAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-09-25T22:08:09.354Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\Usuario.cs",
-              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Usuario.cs",
-              "ToolTip": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Models\\Usuario.cs",
-              "RelativeToolTip": "Human-Link-Web.Server\\Models\\Usuario.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T03:43:54.727Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "LoginController.cs",
               "DocumentMoniker": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\LoginController.cs",
               "ToolTip": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
               "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\LoginController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAADIAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAA5wDoAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T03:20:09.238Z",
+              "WhenOpened": "2024-09-25T21:46:51.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "useAuth.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\hooks\\useAuth.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\hooks\\useAuth.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\hooks\\useAuth.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\hooks\\useAuth.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-09-25T20:39:43.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "authServices.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\services\\authServices.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\services\\authServices.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\services\\authServices.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\services\\authServices.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-09-25T20:36:45.065Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "authContext.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\authContext.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\context\\authContext.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\authContext.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\context\\authContext.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-09-25T20:34:37.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "login.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\login.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\login.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\login.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\components\\login.jsx",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADIAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-09-25T20:31:17.462Z",
               "EditorCaption": ""
             }
           ]

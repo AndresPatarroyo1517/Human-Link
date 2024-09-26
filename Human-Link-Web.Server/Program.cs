@@ -2,6 +2,10 @@
 using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Human_Link_Web.Server.Custom;
 
 namespace Human_Link_Web.Server
 {
@@ -27,6 +31,29 @@ namespace Human_Link_Web.Server
                            .AllowAnyHeader(); 
                 });
             });
+
+            builder.Services.AddSingleton<Utilidades>();
+
+            builder.Services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey
+                    (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]!))
+                };
+            });
+
             var app = builder.Build();
 
             app.UseDefaultFiles();
@@ -40,11 +67,13 @@ namespace Human_Link_Web.Server
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseCors("AllowAllOrigins");
             
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.MapControllers();
 

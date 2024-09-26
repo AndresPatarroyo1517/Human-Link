@@ -1,10 +1,15 @@
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Human_Link_Web.Server.Controllers
 {
     [ApiController]
+    // Se deja sin especificar la autenticación (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)
+    // porque solo se tiene un tipo de autenticación
+    [Authorize]
     [Route("[controller]")]
     public class HumanLinkController : ControllerBase
     {
@@ -14,14 +19,15 @@ namespace Human_Link_Web.Server.Controllers
 
         public HumanLinkController(ILogger<HumanLinkController> logger, HumanLinkContext db)
         {
-            _logger = logger;
-            _db = db;
+            this._logger = logger;
+            this._db = db;
         }
 
         [HttpGet("GetUsers")]
         //Get Usuarios, y en la relación con empleado solo se trae el nombre del empleado asociado
         public async Task<ActionResult<List<Usuario>>> GetAllUsersAsync()
         {
+
             try
             {
                 var users = await _db.Usuarios

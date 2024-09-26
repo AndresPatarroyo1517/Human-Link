@@ -9,7 +9,7 @@ using Human_Link_Web.Server.Models;
 
 namespace Human_Link_Web.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("HumanLink/[controller]")]
     [ApiController]
     public class EmpleadoController : ControllerBase
     {
@@ -20,15 +20,15 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Empleado
-        [HttpGet]
+        // GET: HumanLink/Empleado
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
             return await _context.Empleados.ToListAsync();
         }
 
-        // GET: api/Empleado/5
-        [HttpGet("{id}")]
+        // GET: HumanLink/Empleado/:id
+        [HttpGet("Get-{id}")]
         public async Task<ActionResult<Empleado>> GetEmpleado(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);
@@ -41,9 +41,9 @@ namespace Human_Link_Web.Server.Controllers
             return empleado;
         }
 
-        // PUT: api/Empleado/5
+        // PUT: HumanLink/Empleado/:id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("Put-{id}")]
         public async Task<IActionResult> PutEmpleado(int id, Empleado empleado)
         {
             if (id != empleado.Idempleado)
@@ -72,9 +72,9 @@ namespace Human_Link_Web.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Empleado
+        // POST: HumanLink/Empleado
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
             _context.Empleados.Add(empleado);
@@ -83,8 +83,8 @@ namespace Human_Link_Web.Server.Controllers
             return CreatedAtAction("GetEmpleado", new { id = empleado.Idempleado }, empleado);
         }
 
-        // DELETE: api/Empleado/5
-        [HttpDelete("{id}")]
+        // DELETE: HumanLink/Empleado/:id
+        [HttpDelete("Delete-{id}")]
         public async Task<IActionResult> DeleteEmpleado(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);

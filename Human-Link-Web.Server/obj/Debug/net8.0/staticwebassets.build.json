@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "CQMI0Od+gC+uRwXtHx+S7OXGugQD3wzwiMfqpovGz4M=",
+  "Hash": "GB5/yUCQ0lH4D3UykY98a86/fmkPM3MQDdp556aqx1k=",
   "Source": "Human-Link-Web.Server",
   "BasePath": "_content/Human-Link-Web.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\USUARIO\\Documents\\Maik\\Human-Link\\human-link-web.client\\human-link-web.client.esproj",
+      "Identity": "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\human-link-web.client\\human-link-web.client.esproj",
       "Version": 2,
       "Source": "human-link-web.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

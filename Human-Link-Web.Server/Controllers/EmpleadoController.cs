@@ -1,79 +1,107 @@
-﻿//importa las clases de Models:
-using Human_Link_Web.Server.Models;
-//se usa para peticiones HTTP:
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-//El ORM de C#:
 using Microsoft.EntityFrameworkCore;
+using Human_Link_Web.Server.Models;
 
 namespace Human_Link_Web.Server.Controllers
 {
-    //Clase que hereda de HumanLinkController
-    public class EmpleadoController : HumanLinkController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EmpleadoController : ControllerBase
     {
-        //Contructor
-        public EmpleadoController(ILogger<HumanLinkController> logger, HumanLinkContext db) : base(logger, db)
+        private readonly HumanLinkContext _context;
+
+        public EmpleadoController(HumanLinkContext context)
         {
+            _context = context;
         }
-        //Metodos GET, POST, PUT, DELETE:
-        // GET: api/<ValuesController1>
-        [HttpGet("GetEmployee")]
-        public async Task<ActionResult<List<Empleado>>> GetAllEmpAsync()
+
+        // GET: api/Empleado
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
+            return await _context.Empleados.ToListAsync();
+        }
+
+        // GET: api/Empleado/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Empleado>> GetEmpleado(int id)
+        {
+            var empleado = await _context.Empleados.FindAsync(id);
+
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            return empleado;
+        }
+
+        // PUT: api/Empleado/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEmpleado(int id, Empleado empleado)
+        {
+            if (id != empleado.Idempleado)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(empleado).State = EntityState.Modified;
+
             try
             {
-                var employ = await _db.Empleados
-                    .Include(e => e.Nominas)
-                    .Select(e => new Empleado
-                    {
-                        Idempleado = e.Idempleado,
-                        Nombre = e.Nombre,
-                        Cargo = e.Cargo,
-                        Salario = e.Salario,
-                        Departamento = e.Departamento,
-                        Fechacontratacion = e.Fechacontratacion,
-                        Fechaterminacioncontrato = e.Fechaterminacioncontrato,
-                        Nominas = e.Nominas.Select(n => new Nomina
-                        {
-                            Totalnomina = n.Totalnomina,
-                            Horasextra = n.Horasextra,
-                            Bonificacion = n.Bonificacion
-                        }).ToList()
-                    })
-                    .ToListAsync();
-
-                return Ok(employ);
+                await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateConcurrencyException)
             {
-                _logger.LogError(ex, "Error al obtener empleados");
-                return StatusCode(500, "Error interno: " + ex.Message);
+                if (!EmpleadoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
+
+            return NoContent();
         }
 
-        // GET api/<ValuesController1>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ValuesController1>
+        // POST: api/Empleado
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
+            _context.Empleados.Add(empleado);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetEmpleado", new { id = empleado.Idempleado }, empleado);
         }
 
-        // PUT api/<ValuesController1>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ValuesController1>/5
+        // DELETE: api/Empleado/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteEmpleado(int id)
         {
+            var empleado = await _context.Empleados.FindAsync(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            _context.Empleados.Remove(empleado);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
+        private bool EmpleadoExists(int id)
+        {
+            return _context.Empleados.Any(e => e.Idempleado == id);
+        }
     }
 }

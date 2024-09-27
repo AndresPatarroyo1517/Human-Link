@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "r2vy2S6wpTIo7p29a/eAYVK/foVKXt/CQ+cwk61ECcQ=",
+  "Hash": "Q/zukH6ocIKa7t9jLAk/6hXsFnTCLNivFu2+F1oeo4c=",
   "Source": "Human-Link-Web.Server",
   "BasePath": "_content/Human-Link-Web.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\human-link-web.client.esproj",
+      "Identity": "E:\\GitHub\\HL\\human-link-web.client\\human-link-web.client.esproj",
       "Version": 2,
       "Source": "human-link-web.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

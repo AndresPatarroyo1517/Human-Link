@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server
 {
@@ -24,11 +25,12 @@ namespace Human_Link_Web.Server
             builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins", builder =>
+                options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
-                    builder.AllowAnyOrigin() 
+                    builder.WithOrigins("https://localhost:5173") 
                            .AllowAnyMethod()  
-                           .AllowAnyHeader(); 
+                           .AllowAnyHeader()
+                           .AllowCredentials(); 
                 });
             });
 
@@ -36,8 +38,8 @@ namespace Human_Link_Web.Server
 
             builder.Services.AddAuthentication(config =>
             {
-                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddJwtBearer(config =>
             {
                 config.RequireHttpsMetadata = false;
@@ -52,6 +54,11 @@ namespace Human_Link_Web.Server
                     IssuerSigningKey = new SymmetricSecurityKey
                     (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]!))
                 };
+            })
+            .AddCookie(config => {
+                config.LoginPath = "/HumanLink/Login";
+                config.SlidingExpiration = true;
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
 
             var app = builder.Build();
@@ -69,7 +76,7 @@ namespace Human_Link_Web.Server
 
             app.UseAuthentication();
 
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowSpecificOrigin");
             
             app.UseRouting();
 

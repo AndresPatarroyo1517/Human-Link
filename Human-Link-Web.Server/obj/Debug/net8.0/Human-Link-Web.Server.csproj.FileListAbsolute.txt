@@ -585,3 +585,11 @@ C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link
 C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

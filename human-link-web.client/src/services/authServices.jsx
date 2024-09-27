@@ -2,7 +2,7 @@ const API_URL = 'https://localhost:7019/HumanLink/Login';
 
 export const login = async ({ usuario1, clave }) => {
     const body = {
-        usuario1: usuario1, 
+        usuario: usuario1, 
         clave: clave        
     };
 
@@ -11,15 +11,17 @@ export const login = async ({ usuario1, clave }) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(body),
     });
-
-    const text = await response.text();
 
     if (!response.ok) {
         throw new Error('Credenciales incorrectas');
     }
 
-    const data = JSON.parse(text);
+    const data = await response.json();
+    const { token, isAdmin } = data;
+    console.log({token, isAdmin})
     return data;
 };
+

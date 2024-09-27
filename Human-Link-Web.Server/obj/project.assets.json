@@ -7231,19 +7231,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\st147\\.nuget\\packages\\": {}
+    "C:\\Users\\AndrezPR\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+      "projectUniqueName": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
       "projectName": "Human-Link-Web.Server",
-      "projectPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-      "packagesPath": "C:\\Users\\st147\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\obj\\",
+      "projectPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+      "packagesPath": "C:\\Users\\AndrezPR\\.nuget\\packages\\",
+      "outputPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\st147\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AndrezPR\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7331,7 +7331,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

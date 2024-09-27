@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -31,9 +28,9 @@ namespace Human_Link_Web.Server.Controllers
         public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)
         {
             //var user = await _context.Usuarios.FindAsync(usuario.Idusuario);
-            Console.WriteLine(userLogin.Usuario);
+            //Console.WriteLine(userLogin.Usuario);
             var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
-            Console.WriteLine(user);
+            //Console.WriteLine(user);
             if (user == null)
             {
                 return NotFound("Usuario y/o clave incorrectos Usuario");
@@ -48,12 +45,18 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Antes de retornar OK, implementar la creacion de token de sesion, como JWT
+            var token = _utilidades.generarJWT(user);
             var sesion = new
             {
                 mensaje = "Acceso concedido",
                 usuario = user.Usuario1,
-                token = _utilidades.generarJWT(user)
+                token = token,
+                isAdmin = user.Isadmin
             };
+
+            //Se retorna la cookie para inicio de sesión
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new System.Security.Claims.ClaimsPrincipal(_utilidades.generarCookie(user, token)));
+
 
             return Ok(sesion);
         }

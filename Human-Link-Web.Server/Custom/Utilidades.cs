@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server.Custom
 {
@@ -40,8 +41,7 @@ namespace Human_Link_Web.Server.Custom
             {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Idusuario.ToString()),
                 new Claim(ClaimTypes.Name, usuario.Usuario1!),
-                new Claim(ClaimTypes.Hash, usuario.Clave!)
-
+                new Claim("isAdmin", usuario.Isadmin.ToString())
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]!));
@@ -55,6 +55,17 @@ namespace Human_Link_Web.Server.Custom
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
+        }
+
+        public ClaimsIdentity generarCookie(Usuario usuario, string JWT) {
+            var userClaims = new[]
+                {
+                new Claim(ClaimTypes.Name, usuario.Usuario1!),
+                new Claim(ClaimTypes.Hash, usuario.Clave!),
+                new Claim("JwtToken", JWT)
+            };
+            var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
+            return claimsIdentity;
         }
     }
 }

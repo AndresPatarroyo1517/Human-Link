@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Human_Link_Web.Server.Custom;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -46,6 +47,14 @@ namespace Human_Link_Web.Server.Controllers
 
             // Antes de retornar OK, implementar la creacion de token de sesion, como JWT
             var token = _utilidades.generarJWT(user);
+            
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = DateTime.UtcNow.AddDays(1)
+            });
+
             var sesion = new
             {
                 mensaje = "Acceso concedido",
@@ -53,11 +62,6 @@ namespace Human_Link_Web.Server.Controllers
                 token = token,
                 isAdmin = user.Isadmin
             };
-
-            //Se retorna la cookie para inicio de sesión
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new System.Security.Claims.ClaimsPrincipal(_utilidades.generarCookie(user, token)));
-
-
             return Ok(sesion);
         }
 

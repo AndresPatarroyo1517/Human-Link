@@ -45,7 +45,7 @@ namespace Human_Link_Web.Server.Custom
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]!));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // Crear detalle del token
             var jwtConfig = new JwtSecurityToken(
@@ -55,17 +55,6 @@ namespace Human_Link_Web.Server.Custom
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
-        }
-
-        public ClaimsIdentity generarCookie(Usuario usuario, string JWT) {
-            var userClaims = new[]
-                {
-                new Claim(ClaimTypes.Name, usuario.Usuario1!),
-                new Claim(ClaimTypes.Hash, usuario.Clave!),
-                new Claim("JwtToken", JWT)
-            };
-            var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
-            return claimsIdentity;
         }
     }
 }

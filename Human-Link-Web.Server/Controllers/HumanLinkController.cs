@@ -9,7 +9,7 @@ namespace Human_Link_Web.Server.Controllers
     [ApiController]
     // Se deja sin especificar la autenticación (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)
     // porque solo se tiene un tipo de autenticación
-    [Authorize]
+    //[Authorize]
     [Route("[controller]")]
     public class HumanLinkController : ControllerBase
     {
@@ -27,7 +27,6 @@ namespace Human_Link_Web.Server.Controllers
         //Get Usuarios, y en la relación con empleado solo se trae el nombre del empleado asociado
         public async Task<ActionResult<List<Usuario>>> GetAllUsersAsync()
         {
-
             try
             {
                 var users = await _db.Usuarios
@@ -51,6 +50,21 @@ namespace Human_Link_Web.Server.Controllers
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
+        }
+        [HttpGet("GetCookie")]
+        public IActionResult GetSecureData()
+        {
+            // Acceder a la cookie que contiene el JWT
+            var jwtCookie = Request.Cookies["jwt"];
+
+            if (string.IsNullOrEmpty(jwtCookie))
+            {
+                return Unauthorized(new { message = "Token no encontrado." });
+            }
+            var isAdmin = User.Claims.FirstOrDefault(c => c.Type == "isAdmin")?.Value;
+            var username = User.Identity.Name;
+
+            return Ok(new { message = "Acceso permitido", user = username, isAdmin });
         }
     }
 }

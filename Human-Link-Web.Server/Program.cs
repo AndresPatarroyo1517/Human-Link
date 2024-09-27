@@ -1,8 +1,6 @@
 
 using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Human_Link_Web.Server.Custom;
@@ -38,8 +36,7 @@ namespace Human_Link_Web.Server
 
             builder.Services.AddAuthentication(config =>
             {
-                config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                config.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddJwtBearer(config =>
             {
                 config.RequireHttpsMetadata = false;
@@ -65,13 +62,14 @@ namespace Human_Link_Web.Server
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseMiddleware<JwtCookieMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

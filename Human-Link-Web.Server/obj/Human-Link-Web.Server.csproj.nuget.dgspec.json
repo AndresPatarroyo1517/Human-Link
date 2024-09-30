@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
+    "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
+    "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectUniqueName": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "projectName": "Human-Link-Web.Server",
-        "projectPath": "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-        "packagesPath": "C:\\Users\\Prueba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Prueba\\Source\\Repos\\Human-Link\\Human-Link-Web.Server\\obj\\",
+        "projectPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "packagesPath": "C:\\Users\\st147\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Prueba\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\st147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

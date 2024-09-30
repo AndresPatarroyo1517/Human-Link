@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\HumanLinkController.cs" />
-    <Compile Remove="Controllers\UsuarioController.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,47 +11,47 @@ namespace Human_Link_Web.Server.Controllers
 {
     [Route("HumanLink/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class NominaController : ControllerBase
     {
         private readonly HumanLinkContext _context;
 
-        public UsuarioController(HumanLinkContext context)
+        public NominaController(HumanLinkContext context)
         {
             _context = context;
         }
 
-        // GET: HumanLink/Usuario
+        // GET: HumanLink/Nomina
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Nomina>>> GetNominas()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Nominas.ToListAsync();
         }
 
-        // GET: HumanLink/Usuario/5
+        // GET: HumanLink/Nomina/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<Nomina>> GetNomina(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var nomina = await _context.Nominas.FindAsync(id);
 
-            if (usuario == null)
+            if (nomina == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            return nomina;
         }
 
-        // PUT: HumanLink/Usuario/5
+        // PUT: HumanLink/Nomina/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
+        public async Task<IActionResult> PutNomina(int id, Nomina nomina)
         {
-            if (id != usuario.Idusuario)
+            if (id != nomina.Idnomina)
             {
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _context.Entry(nomina).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace Human_Link_Web.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!NominaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace Human_Link_Web.Server.Controllers
             return NoContent();
         }
 
-        // POST: HumanLink/Usuario
+        // POST: HumanLink/Nomina
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<Nomina>> PostNomina(Nomina nomina)
         {
-            _context.Usuarios.Add(usuario);
+            _context.Nominas.Add(nomina);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.Idusuario }, usuario);
+            return CreatedAtAction("GetNomina", new { id = nomina.Idnomina }, nomina);
         }
 
-        // DELETE: HumanLink/Usuario/5
+        // DELETE: HumanLink/Nomina/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> DeleteNomina(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var nomina = await _context.Nominas.FindAsync(id);
+            if (nomina == null)
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.Nominas.Remove(nomina);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UsuarioExists(int id)
+        private bool NominaExists(int id)
         {
-            return _context.Usuarios.Any(e => e.Idusuario == id);
+            return _context.Nominas.Any(e => e.Idnomina == id);
         }
     }
 }

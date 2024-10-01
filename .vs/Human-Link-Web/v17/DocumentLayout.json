@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|c:\\users\\st147\\desktop\\semestre 6\\ingenieria de software 1\\human-link\\human-link-web.server\\controllers\\cursocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\cursocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|c:\\users\\st147\\desktop\\semestre 6\\ingenieria de software 1\\human-link\\human-link-web.server\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|c:\\users\\st147\\desktop\\semestre 6\\ingenieria de software 1\\human-link\\human-link-web.server\\controllers\\nominacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\nominacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|c:\\users\\st147\\desktop\\semestre 6\\ingenieria de software 1\\human-link\\human-link-web.server\\controllers\\cursocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\cursocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|c:\\users\\st147\\desktop\\semestre 6\\ingenieria de software 1\\human-link\\human-link-web.server\\controllers\\cursousuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -106,7 +110,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -135,19 +139,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "NominaController.cs",
+              "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\NominaController.cs",
+              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\NominaController.cs",
+              "ToolTip": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\NominaController.cs",
+              "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\NominaController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAUwFUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-01T04:05:30Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "UsuarioController.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\UsuarioController.cs",
               "ToolTip": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\UsuarioController.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAowBMAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAkwFUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-30T04:20:25.495Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CursoUsuarioController.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\CursoUsuarioController.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\CursoUsuarioController.cs",
@@ -159,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EmpleadoController.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\EmpleadoController.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\EmpleadoController.cs",
@@ -171,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "CursoController.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Controllers\\CursoController.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\CursoController.cs",
@@ -184,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Curso.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\Curso.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Curso.cs",
@@ -196,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Program.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Program.cs",
@@ -208,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -220,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\index.html",
               "RelativeDocumentMoniker": "human-link-web.client\\index.html",
@@ -232,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "vite.config.js",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\vite.config.js",
               "RelativeDocumentMoniker": "human-link-web.client\\vite.config.js",
@@ -244,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "HumanLinkContext.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\HumanLinkContext.cs",
@@ -256,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "main.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\main.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\main.jsx",
@@ -268,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "index.css",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\index.css",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\index.css",
@@ -280,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Usuario.cs",
@@ -292,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Cursousuario.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\Cursousuario.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Cursousuario.cs",
@@ -304,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "App.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\App.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\App.jsx",
@@ -316,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\App.css",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\App.css",
@@ -328,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "react.svg",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\assets\\react.svg",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\assets\\react.svg",
@@ -340,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "vite.svg",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\public\\vite.svg",
               "RelativeDocumentMoniker": "human-link-web.client\\public\\vite.svg",
@@ -352,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "login.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\components\\login.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\login.jsx",
@@ -364,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "authContext.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\context\\authContext.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\context\\authContext.jsx",
@@ -376,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "useAuth.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\hooks\\useAuth.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\hooks\\useAuth.jsx",
@@ -388,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "authServices.jsx",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\human-link-web.client\\src\\services\\authServices.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\services\\authServices.jsx",
@@ -400,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "Nomina.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\Nomina.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Nomina.cs",
@@ -412,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "Empleado.cs",
               "DocumentMoniker": "C:\\Users\\st147\\Desktop\\Semestre 6\\Ingenieria de Software 1\\Human-Link\\Human-Link-Web.Server\\Models\\Empleado.cs",
               "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Empleado.cs",

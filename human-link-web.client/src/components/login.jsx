@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useNavigate } from 'react';
 import { login } from '../services/authServices.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import './Login.css'; 
@@ -9,12 +9,15 @@ const Login = () => {
     const { setUser } = useAuth();
 
     const handleSubmit = async (e) => {
+        const navigate = useNavigate();
+        navigate('/AdminDashboard');
         e.preventDefault();
         try {
             console.log({ usuario1, clave })
             const userData = await login({ usuario1, clave });
             console.log(userData)
             setUser(userData);
+            
         } catch (error) {
             console.error('Error en el login:', error);
         }

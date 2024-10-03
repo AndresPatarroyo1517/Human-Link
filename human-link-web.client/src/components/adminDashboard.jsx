@@ -3,7 +3,7 @@ import { Slidebar } from '../components/Dashboard/slidebar';
 import { Main } from '../components/Dashboard/main';
 import { AdminProvider } from '../context/adminContext';
 import './adminDashboard.css';
-export const AdminDashboard = () => {
+const AdminDashboard = () => {
     return (
         <AdminProvider>
             <Navbar />
@@ -16,3 +16,5 @@ export const AdminDashboard = () => {
         </AdminProvider>
     );
 };
+
+export default AdminDashboard;

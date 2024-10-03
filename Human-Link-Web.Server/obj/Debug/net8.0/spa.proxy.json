@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "E:\\GitHub\\HL\\Human-Link-Web.Server\\..\\human-link-web.client",
+"WorkingDirectory": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\..\\human-link-web.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

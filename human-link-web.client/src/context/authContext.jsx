@@ -10,12 +10,7 @@ export const AuthProvider = ({ children }) => {
         const userData = await loginService(username, password);
         console.log(userData)
         setUser(userData)
-        console.log(user)
     };
-
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     const logout = () => {
         setUser(null)

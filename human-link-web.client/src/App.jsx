@@ -13,7 +13,7 @@ const App = () => {
                 <Route path="/AdminDashboard" element={<AdminDashboard /> } />
             </Routes>
             </BrowserRouter>
-          </>
+         </>
     )
 };
 

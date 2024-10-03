@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
+    "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
+    "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectUniqueName": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "projectName": "Human-Link-Web.Server",
-        "projectPath": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+        "projectPath": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
         "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\obj\\",
+        "outputPath": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",

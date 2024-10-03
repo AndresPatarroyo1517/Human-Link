@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAdmin } from '../../context/adminContext';  
 
-export const Slidebar = () => {
+const Slidebar = () => {
 
     const { activeSection, setActiveMenu } = useAdmin();  
 
@@ -34,3 +34,4 @@ export const Slidebar = () => {
         </nav>
     );
 };
+export default Slidebar;

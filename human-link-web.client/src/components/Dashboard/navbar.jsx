@@ -1,4 +1,4 @@
-export const Navbar = () => {
+const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg custom-navbar-bg px-4">
             <a className="navbar-brand" href="#">Mi Empresa</a>
@@ -22,3 +22,5 @@ export const Navbar = () => {
         </nav>
     );
 }
+
+export default Navbar;

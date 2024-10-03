@@ -1,4 +1,4 @@
-export const TableInforms = ({ colum1, colum2, colum3 }) => {
+const TableInforms = ({ colum1, colum2, colum3 }) => {
 
     return (
         <>
@@ -36,3 +36,5 @@ export const TableInforms = ({ colum1, colum2, colum3 }) => {
         </>
     )
 }
+
+export default TableInforms;

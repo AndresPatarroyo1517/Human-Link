@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const CardCursos = () => {
+const CardCursos = () => {
     // Array inicial de cursos
     const [cursos, setCursos] = useState([
         {
@@ -131,3 +131,5 @@ export const CardCursos = () => {
         </>
     );
 };
+
+export default CardCursos;

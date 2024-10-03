@@ -1,9 +1,9 @@
 import React from 'react';
-import { CardCursos } from './cardCursos';
-import { TableInforms } from './tableInforms';
+import CardCursos from './cardCursos';
+import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 
-export const Main = () => {
+const Main = () => {
     const { activeMenu, activeSection, setActiveSection } = useAdmin();
 
     const handleChangeSection = (section) => {
@@ -50,3 +50,5 @@ export const Main = () => {
         </main>
     );
 };
+
+export default Main;

@@ -1,4 +1,5 @@
-import { useState, useNavigate } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authServices.jsx';
 import { useAuth } from '../hooks/useAuth.jsx';
 import './Login.css'; 
@@ -7,16 +8,19 @@ const Login = () => {
     const [usuario1, setUsuario1] = useState('');
     const [clave, setClave] = useState('');
     const { setUser } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        const navigate = useNavigate();
-        navigate('/AdminDashboard');
+       
         e.preventDefault();
         try {
-            console.log({ usuario1, clave })
-            const userData = await login({ usuario1, clave });
-            console.log(userData)
-            setUser(userData);
+            //console.log({ usuario1, clave })
+            //const userData = await login({ usuario1, clave });
+            //console.log(userData)
+            //setUser(userData);
+
+
+            navigate('/AdminDashboard');
             
         } catch (error) {
             console.error('Error en el login:', error);

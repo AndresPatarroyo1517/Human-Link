@@ -1,18 +1,23 @@
 import { BrowserRouter, Routes ,Route } from 'react-router-dom';
-import Login from './components/login.jsx';
-import AdminDashboard from './components/adminDashboard';
+import Login from './components/Login/login.jsx';
+import AdminDashboard from './components/Dashboard/adminDashboard.jsx';
+import { AuthProvider } from './context/authContext.jsx'
+import { Hola } from './components/Hola(Cambiar)/Hola.jsx'
 
 
 
 const App = () => {
     return (
         <>
-          <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/AdminDashboard" element={<AdminDashboard /> } />
-            </Routes>
-            </BrowserRouter>
+            <AuthProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+                        <Route path="/hola" element={<Hola/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </AuthProvider>
          </>
     )
 };

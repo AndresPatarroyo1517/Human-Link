@@ -8206,19 +8206,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\USUARIO\\.nuget\\packages\\": {}
+    "C:\\Users\\AndrezPR\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+      "projectUniqueName": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
       "projectName": "Human-Link-Web.Server",
-      "projectPath": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
-      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USUARIO\\Documents\\Human-Link\\Human-Link-Web.Server\\obj\\",
+      "projectPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Human-Link-Web.Server.csproj",
+      "packagesPath": "C:\\Users\\AndrezPR\\.nuget\\packages\\",
+      "outputPath": "E:\\GitHub\\HL\\Human-Link-Web.Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AndrezPR\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

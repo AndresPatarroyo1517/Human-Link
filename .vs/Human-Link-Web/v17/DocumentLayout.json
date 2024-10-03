@@ -1,54 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\USUARIO\\Documents\\Human-Link\\",
+  "WorkspaceRootPath": "E:\\GitHub\\HL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\context\\admincontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\context\\admincontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|e:\\github\\hl\\human-link-web.server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18E186D1-2442-4ACC-BFE8-3A752A542C16}|Human-Link-Web.Server\\Human-Link-Web.Server.csproj|solutionrelative:human-link-web.server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\login\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\login\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\admindashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\admindashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\hola(cambiar)\\hola.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\hola(cambiar)\\hola.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\dashboard\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\tableinforms.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\tableinforms.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\components\\dashboard\\admindashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\admindashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\slidebar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\slidebar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\navbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\navbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\cardcursos.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\cardcursos.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\admindashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\admindashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|c:\\users\\usuario\\documents\\human-link\\human-link-web.client\\src\\components\\dashboard\\navbar.1.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\components\\dashboard\\navbar.1.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|e:\\github\\hl\\human-link-web.client\\src\\services\\authservices.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}|human-link-web.client\\human-link-web.client.esproj|solutionrelative:human-link-web.client\\src\\services\\authservices.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,12 +46,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -86,158 +70,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\index.html",
-              "RelativeDocumentMoniker": "human-link-web.client\\index.html",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\index.html*",
-              "RelativeToolTip": "human-link-web.client\\index.html*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-10-03T20:56:42.275Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "main.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\main.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\main.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\main.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\main.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:55:15.662Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "App.css",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\App.css",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\App.css",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\App.css",
-              "RelativeToolTip": "human-link-web.client\\src\\App.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-03T20:54:59.415Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "index.css",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\index.css",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\index.css",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\index.css",
-              "RelativeToolTip": "human-link-web.client\\src\\index.css",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAABEAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-03T20:54:43.948Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "adminDashboard.css",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\adminDashboard.css",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\adminDashboard.css",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\adminDashboard.css",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\adminDashboard.css",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-03T20:47:57.641Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "cardCursos.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\cardCursos.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\cardCursos.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\cardCursos.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\cardCursos.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:47:29.301Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "main.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\main.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Dashboard\\main.jsx",
               "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\main.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\main.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Dashboard\\main.jsx",
               "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\main.jsx",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAABsAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:47:04.895Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Navbar.1.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\Navbar.1.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\Navbar.1.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\Navbar.1.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\Navbar.1.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:46:22.677Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "navbar.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\navbar.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\navbar.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\navbar.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\navbar.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:46:10.357Z",
+              "WhenOpened": "2024-10-03T21:50:36.797Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "slidebar.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\slidebar.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\slidebar.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\slidebar.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\slidebar.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAYAAAAAAAAAA==",
+              "Title": "adminDashboard.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Dashboard\\adminDashboard.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\adminDashboard.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Dashboard\\adminDashboard.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\adminDashboard.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:45:49.257Z",
+              "WhenOpened": "2024-10-03T21:49:10.52Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "tableInforms.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\tableInforms.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Dashboard\\tableInforms.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\Dashboard\\tableInforms.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\Dashboard\\tableInforms.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAcAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "authContext.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\authContext.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\context\\authContext.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\authContext.jsx*",
+              "RelativeToolTip": "human-link-web.client\\src\\context\\authContext.jsx*",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T20:45:31.357Z",
+              "WhenOpened": "2024-10-03T21:46:41.16Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "adminDashboard.jsx",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\adminDashboard.jsx",
-              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\adminDashboard.jsx",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\Human-Link\\human-link-web.client\\src\\components\\adminDashboard.jsx",
-              "RelativeToolTip": "human-link-web.client\\src\\components\\adminDashboard.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAAA==",
+              "Title": "Hola.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Hola(Cambiar)\\Hola.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Hola(Cambiar)\\Hola.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Hola(Cambiar)\\Hola.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\components\\Hola(Cambiar)\\Hola.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-03T19:15:42.811Z",
+              "WhenOpened": "2024-10-03T21:41:02.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "login.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Login\\login.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\components\\Login\\login.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\components\\Login\\login.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\components\\Login\\login.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-03T21:34:17.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "ToolTip": "E:\\GitHub\\HL\\Human-Link-Web.Server\\Controllers\\LoginController.cs*",
+              "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\LoginController.cs*",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowDoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T21:31:21.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\App.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\App.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\App.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\App.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-03T21:22:02.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "authServices.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\services\\authServices.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\services\\authServices.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\services\\authServices.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\services\\authServices.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-03T21:21:28.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "adminContext.jsx",
+              "DocumentMoniker": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\adminContext.jsx",
+              "RelativeDocumentMoniker": "human-link-web.client\\src\\context\\adminContext.jsx",
+              "ToolTip": "E:\\GitHub\\HL\\human-link-web.client\\src\\context\\adminContext.jsx",
+              "RelativeToolTip": "human-link-web.client\\src\\context\\adminContext.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-03T21:19:13.547Z",
               "EditorCaption": ""
             }
           ]

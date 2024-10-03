@@ -1,4 +1,3 @@
-import React from 'react';
 import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';

@@ -20,24 +20,6 @@ export const login = async ({ usuario1, clave }) => {
     }
 
     const data = await response.json();
-    const { token } = data
-    callProtectedEndpoint(token)
+    console.log(data)
     return data;
 };
-
-const callProtectedEndpoint = async(token) => {
-
-    fetch('https://localhost:7019/HumanLink/GetUsers', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('No autorizado');
-        })
-        .then(data => console.log(data));
-}

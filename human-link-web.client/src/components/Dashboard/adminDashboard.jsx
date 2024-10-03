@@ -1,7 +1,7 @@
-import Navbar from "./Dashboard/Navbar";
-import Slidebar from '../components/Dashboard/slidebar';
-import Main from '../components/Dashboard/main';
-import { AdminProvider } from '../context/adminContext';
+import Navbar from "./navbar.jsx";
+import Slidebar from './slidebar';
+import Main from './main.jsx';
+import { AdminProvider } from '../../context/adminContext.jsx';
 import './adminDashboard.css';
 
 const AdminDashboard = () => {

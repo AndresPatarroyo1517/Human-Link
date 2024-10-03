@@ -57,9 +57,7 @@ namespace Human_Link_Web.Server.Controllers
 
             var sesion = new
             {
-                mensaje = "Acceso concedido",
                 usuario = user.Usuario1,
-                token = token,
                 isAdmin = user.Isadmin
             };
             return Ok(sesion);

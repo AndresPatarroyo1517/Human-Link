@@ -1,5 +1,12 @@
 
 .vs/
-/.vs
-/Human-Link-Web.Server/obj
-/Human-Link-Web.Server/bin/Debug
+
+human-link-web.client/
+
+Human-Link-Web.Server/bin/
+
+Human-Link-Web.Server/obj/
+
+*.csproj
+
+*.user

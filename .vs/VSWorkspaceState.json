@@ -2,8 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Human-Link-Web.Server",
-    "\\Human-Link-Web.Server\\Controllers",
-    "\\Human-Link-Web.Server\\Models"
+    "\\Human-Link-Web.Server\\Controllers"
   ],
   "SelectedNode": "\\Human-Link-Web.sln",
   "PreviewInSolutionExplorer": false

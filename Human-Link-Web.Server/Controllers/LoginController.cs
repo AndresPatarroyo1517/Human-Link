@@ -24,14 +24,11 @@ namespace Human_Link_Web.Server.Controllers
         }
 
         // POST: api/Login
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)
         {
-            //var user = await _context.Usuarios.FindAsync(usuario.Idusuario);
-            //Console.WriteLine(userLogin.Usuario);
             var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
-            //Console.WriteLine(user);
+
             if (user == null)
             {
                 return NotFound("Usuario y/o clave incorrectos Usuario");
@@ -41,11 +38,9 @@ namespace Human_Link_Web.Server.Controllers
             var claveValida = user.Clave == userLogin.Clave ? true : false;
             if (!claveValida)
             {
-                //return Unauthorized("Clave incorrecta");
                 return NotFound("Usuario y/o clave incorrectos Clave");
             }
 
-            // Antes de retornar OK, implementar la creacion de token de sesion, como JWT
             var token = _utilidades.generarJWT(user);
             
             Response.Cookies.Append("jwt", token, new CookieOptions

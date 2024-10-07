@@ -1601,5 +1601,24 @@ E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-arm64\native\Mi
 E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 E:\GitHub\HL\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+<<<<<<< HEAD
 =======
 >>>>>>> 0aa95059ecbd98d5e2aae45f3fb3f8202f9fcc8b
+=======
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\Human-Link-Web.Server\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+>>>>>>> 6e3246386f1f252eba45163ff2968ca33747121e

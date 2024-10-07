@@ -9,8 +9,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HumanLinkController.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Controllers\\HumanLinkController.cs",
+              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\HumanLinkController.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Controllers\\HumanLinkController.cs",
+              "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\HumanLinkController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T05:15:14.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "Human-Link-Web.Server\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T05:15:12.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Models\\Usuario.cs",
+              "RelativeDocumentMoniker": "Human-Link-Web.Server\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Downloads\\Human-Link\\Human-Link-Web.Server\\Models\\Usuario.cs",
+              "RelativeToolTip": "Human-Link-Web.Server\\Models\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T05:14:59.649Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"

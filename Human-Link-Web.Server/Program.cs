@@ -1,7 +1,10 @@
 
 using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server
 {
@@ -20,31 +23,62 @@ namespace Human_Link_Web.Server
             builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins", builder =>
+                options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
-                    builder.AllowAnyOrigin() 
+                    builder.WithOrigins("https://localhost:5173") 
                            .AllowAnyMethod()  
-                           .AllowAnyHeader(); 
+                           .AllowAnyHeader()
+                           .AllowCredentials(); 
                 });
             });
+
+            builder.Services.AddSingleton<Utilidades>();
+
+            builder.Services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey
+                    (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]!))
+                };
+            })
+            .AddCookie(config => {
+                config.LoginPath = "/HumanLink/Login";
+                config.SlidingExpiration = true;
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            });
+
             var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseMiddleware<JwtCookieMiddleware>();
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowSpecificOrigin");
             
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.MapControllers();
 

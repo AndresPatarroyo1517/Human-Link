@@ -1,5 +1,11 @@
 E:\GitHub\HL\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
 C:\Users\USUARIO.DESKTOP-64OMC89\Downloads\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
+<<<<<<< HEAD
+C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
+C:\Users\USUARIO\Downloads\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
+C:\Users\USUARIO\Documents\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
+=======
 C:\Users\Prueba\source\repos\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
 C:\Users\USUARIO\Documents\Maik\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
 C:\Users\st147\Desktop\Semestre 6\Ingenieria de Software 1\Human-Link\human-link-web.client\obj\Debug\human-link-web.client.esproj.CoreCompileInputs.cache
+>>>>>>> 0aa95059ecbd98d5e2aae45f3fb3f8202f9fcc8b

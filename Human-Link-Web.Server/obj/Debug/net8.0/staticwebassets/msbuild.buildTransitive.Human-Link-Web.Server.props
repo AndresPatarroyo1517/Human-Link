@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Human-Link-Web.Server.props" />
-</Project>

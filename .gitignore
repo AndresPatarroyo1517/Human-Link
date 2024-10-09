@@ -1,11 +1,11 @@
 
-.vs/
+.vs/*
 
-human-link-web.client/
+human-link-web.client/obj/*
 
-Human-Link-Web.Server/bin/
+Human-Link-Web.Server/bin/*
 
-Human-Link-Web.Server/obj/
+Human-Link-Web.Server/obj/*
 
 *.csproj
 

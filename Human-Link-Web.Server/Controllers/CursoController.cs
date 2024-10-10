@@ -19,14 +19,15 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
-
+        //Endpoint para obtener todos los cursos existentes en la base de datos
+        //Cambiar a uso restringido del JWT
         // GET: HumanLink/Curso
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
             return await _context.Cursos.ToListAsync();
         }
-
+        //Endpoint para obtener un curso en especifico usando el ID
         // GET: HumanLink/Curso/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Curso>> GetCurso(int id)
@@ -40,7 +41,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return curso;
         }
-
+        //Endpoint para actualizar algún campo del curso 
+        //Cambiar a uso restringido del JWT
         // PUT: HumanLink/Curso/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -71,7 +73,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
-
+        //Endpoint para crear un curso 
+        //Cambiar a uso restringido del JWT
         // POST: HumanLink/Curso
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -82,7 +85,7 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetCurso", new { id = curso.Idcurso }, curso);
         }
-
+        //Endpoint para eliminar algú curso usando la ID
         // DELETE: HumanLink/Curso/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCurso(int id)

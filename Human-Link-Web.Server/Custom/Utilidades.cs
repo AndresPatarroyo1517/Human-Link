@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Human_Link_Web.Server.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server.Custom
 {

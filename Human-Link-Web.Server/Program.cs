@@ -1,4 +1,3 @@
-
 using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,9 +12,6 @@ namespace Human_Link_Web.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -55,7 +51,7 @@ namespace Human_Link_Web.Server
             .AddCookie(config => {
                 config.LoginPath = "/HumanLink/Login";
                 config.SlidingExpiration = true;
-                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                config.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
 
             var app = builder.Build();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 
@@ -19,14 +14,15 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
-
+        //Endpoint para obtener todos los empleados 
+        //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Empleado
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
             return await _context.Empleados.ToListAsync();
         }
-
+        //Endpoint para obtener un empleado en base a su ID
         // GET: HumanLink/Empleado/:id
         [HttpGet("Get-{id}")]
         public async Task<ActionResult<Empleado>> GetEmpleado(int id)
@@ -40,7 +36,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return empleado;
         }
-
+        //Endpoint para modificar la información del empleado
+        //Cambiar a uso restringido del JWT, además validar que el ID que esta empleando sea el mismo que existe en el JWT (Este proceso se realiza si no es admin)
         // PUT: HumanLink/Empleado/:id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Put-{id}")]
@@ -71,7 +68,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
-
+        //Endpoint para añadir un empleado a la base de datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // POST: HumanLink/Empleado
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("Post")]
@@ -82,7 +80,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetEmpleado", new { id = empleado.Idempleado }, empleado);
         }
-
+        //Endpoint para eliminar a un empleado haciendo uso de su ID
+        //Cambiar a uso restringido del JWT solamente del administrador
         // DELETE: HumanLink/Empleado/:id
         [HttpDelete("Delete-{id}")]
         public async Task<IActionResult> DeleteEmpleado(int id)

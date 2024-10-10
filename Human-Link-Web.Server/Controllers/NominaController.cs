@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 
@@ -19,14 +14,16 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
-
+        //Endpoint para obtener la nomina de todos los empleados
+        //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Nomina
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Nomina>>> GetNominas()
         {
             return await _context.Nominas.ToListAsync();
         }
-
+        //Endpoint para obtener la nomina de un empleado
+        //Cambiar el id obtenido por el params, y obtenerlo del JWT que existe en la cookie, aunque debe buscarse la nomina en base al ID usuario y no por la ID del campo
         // GET: HumanLink/Nomina/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Nomina>> GetNomina(int id)
@@ -40,7 +37,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return nomina;
         }
-
+        //Endpoint para modificar los campos de la nomina
+        //Cambiar a uso restringido del JWT, usando el ID del usuario o a todos si es administrador, y opcional cambiar de PUT a PATCH
         // PUT: HumanLink/Nomina/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -71,7 +69,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
-
+        //Enpoint para añadir una nomina a la base de datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // POST: HumanLink/Nomina
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -82,7 +81,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetNomina", new { id = nomina.Idnomina }, nomina);
         }
-
+        //Endpoint para eliminar una nomina de la base de datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // DELETE: HumanLink/Nomina/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNomina(int id)

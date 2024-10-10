@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-//importa herramientas para hacer las peticiones HTTP
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 //ORM de C#:
 using Microsoft.EntityFrameworkCore;
 //Importa clases de Models

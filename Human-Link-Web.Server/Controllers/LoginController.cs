@@ -3,9 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Human_Link_Web.Server.Custom;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -22,7 +19,7 @@ namespace Human_Link_Web.Server.Controllers
             this._context = context;
             this._utilidades = _utilidades;
         }
-
+        //Endpoint para hacer inicio de sesión 
         // POST: api/Login
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)

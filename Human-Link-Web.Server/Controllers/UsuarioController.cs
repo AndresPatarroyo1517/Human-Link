@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 
@@ -19,14 +14,16 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
-
+        //Endpoint para obtener todos los usuarios y sus datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
         }
-
+        //Endpoint para obtener el usuario mediante ID
+        //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
@@ -40,7 +37,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return usuario;
         }
-
+        //Endpoint para actualizar la información del Usuario
+        //Cambiar a uso restringido del JWT solamente del propio usuario y admin, recomendación cambiar a PATCH
         // PUT: HumanLink/Usuario/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -71,7 +69,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
-
+        //Endpoint para añadir usuarios a la base de datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // POST: HumanLink/Usuario
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -82,7 +81,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetUsuario", new { id = usuario.Idusuario }, usuario);
         }
-
+        //Endpoint para eliminar un usuario de la base de datos
+        //Cambiar a uso restringido del JWT solamente del administrador
         // DELETE: HumanLink/Usuario/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)

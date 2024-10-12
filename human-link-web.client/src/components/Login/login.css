@@ -18,6 +18,24 @@ body {
     min-height: 100vh;
 }
 
+.div-errorLogin {
+    padding-left: 30px;
+    position: absolute;
+    width: 100%;
+    top: 135px;
+}
+
+.div-errorLogin p {
+    margin: 0px;
+    width: max-content;
+    padding: 4px;
+    border: 1px solid rgb(255, 74, 74);
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: rgb(255, 0, 0, 0.15);
+}
+
+
 .screen {
     background: linear-gradient(90deg, #A8D8A2, #B8E8B6);
     position: relative;

@@ -8,22 +8,22 @@ const Login = () => {
     const [clave, setClave] = useState('');
     const { user, login } = useAuth();
     const navigate = useNavigate();
+    const [ errorLogin, setErrorLogin ] = useState(false);
 
     const handleSubmit = async (e) => {
        
         e.preventDefault();
         try {
-            //console.log({ usuario1, clave })
-            await login({ usuario1, clave });
-            //console.log(userData)
+            const usuarioLogin = await login({ usuario1, clave });
             //setUser(userData);
-            if (user && user.isAdmin) {
+            if (usuarioLogin && usuarioLogin.isAdmin) {
                 navigate('/AdminDashboard');
-            } else if (user) {
+            } else if (usuarioLogin) {
                 navigate('/Hola');
             }
-            
+            setErrorLogin(false);
         } catch (error) {
+            setErrorLogin(true);
             console.error('Error en el login:', error);
         }
     };
@@ -32,6 +32,9 @@ const Login = () => {
         <div className="container">
             <div className="screen">
                 <div className="screen__content">
+                    {errorLogin ? <div className="div-errorLogin">
+                        <p>Usuario y/o clave incorrectos.</p>
+                    </div>  : null}
                     <form className="login" onSubmit={handleSubmit}>
                         <div className="login__field">
                             <i className="login__icon fas fa-user"></i>

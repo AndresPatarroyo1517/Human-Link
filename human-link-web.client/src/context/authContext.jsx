@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
         const userData = await loginService(username, password);
         console.log(userData)
         setUser(userData)
+        return userData;
     };
 
     const logout = () => {

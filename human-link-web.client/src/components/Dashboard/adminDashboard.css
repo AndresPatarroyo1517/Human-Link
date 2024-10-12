@@ -35,6 +35,11 @@ body {
   .custom-navbar-bg {
     background-color: #e7ffb6;
   }
+
+.dropdown-menu li:not(.li-linea-divisora) {
+    cursor: pointer;
+}
+
 @media (max-width: 425px) {
     .card {
         width: 14rem;

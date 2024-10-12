@@ -1,4 +1,15 @@
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth.jsx';
+
 const Navbar = () => {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const cerrarSesion = async () => {
+        await logout();
+        navigate('/');
+    }
+
     return (
         <nav className="navbar navbar-expand-lg custom-navbar-bg px-4">
             <a className="navbar-brand" href="#">Mi Empresa</a>
@@ -13,8 +24,8 @@ const Navbar = () => {
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a className="dropdown-item" href="#"> <i className="bi bi-person-fill-gear"></i> Configuración</a></li>
-                            <li><hr className="dropdown-divider" /></li>
-                            <li><a className="dropdown-item text-danger" href="#"><i className="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
+                            <li className="li-linea-divisora"><hr className="dropdown-divider" /></li>
+                            <li><a className="dropdown-item text-danger" onClick={cerrarSesion}><i className="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
                         </ul>
                     </li>
                 </ul>

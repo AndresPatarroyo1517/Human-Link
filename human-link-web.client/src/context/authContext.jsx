@@ -8,13 +8,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         const userData = await loginService(username, password);
-        console.log(userData)
-        setUser(userData)
+        
+        setUser(userData);
         return userData;
     };
 
     const logout = () => {
-        setUser(null)
+        setUser(null);
     };
 
     return (

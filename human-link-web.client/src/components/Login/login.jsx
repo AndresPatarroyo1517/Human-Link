@@ -19,7 +19,7 @@ const Login = () => {
             if (usuarioLogin && usuarioLogin.isAdmin) {
                 navigate('/AdminDashboard');
             } else if (usuarioLogin) {
-                navigate('/Hola');
+                navigate('/dashboard');
             }
             setErrorLogin(false);
         } catch (error) {

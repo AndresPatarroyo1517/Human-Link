@@ -17,6 +17,8 @@ const CardCursos = () => {
         }
     ]);
 
+    
+
     const [newCurso, setNewCurso] = useState({
         titulo: "",
         duracion: "",

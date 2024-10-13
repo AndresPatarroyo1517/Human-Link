@@ -2,7 +2,7 @@ import { BrowserRouter, Routes ,Route } from 'react-router-dom';
 import Login from './components/Login/login.jsx';
 import AdminDashboard from './components/Dashboard/adminDashboard.jsx';
 import { AuthProvider } from './context/authContext.jsx'
-import { Hola } from './components/Hola(Cambiar)/Hola.jsx'
+import { Dashboard } from './components/Empleado/empleadoDashboard.jsx'
 
 
 
@@ -14,7 +14,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/AdminDashboard" element={<AdminDashboard />} />
-                        <Route path="/hola" element={<Hola/>}/>
+                        <Route path="/Dashboard" element={<Dashboard />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

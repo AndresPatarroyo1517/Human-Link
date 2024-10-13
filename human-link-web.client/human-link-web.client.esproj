@@ -13,7 +13,4 @@
     <None Remove="src\components\Dashboard\Navbar.1.jsx" />
     <None Remove="src\index.css" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\components\Hola%28Cambiar%29\" />
-  </ItemGroup>
 </Project>

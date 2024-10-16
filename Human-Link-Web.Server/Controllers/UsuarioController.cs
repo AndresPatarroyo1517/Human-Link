@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -18,6 +19,7 @@ namespace Human_Link_Web.Server.Controllers
         //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario
         [HttpGet]
+        [Authorize(Policy = "AllPolicy")]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
@@ -26,6 +28,7 @@ namespace Human_Link_Web.Server.Controllers
         //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);

@@ -39,14 +39,23 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             var token = _utilidades.generarJWT(user);
-            
-            Response.Cookies.Append("jwt", token, new CookieOptions
+            var remember = userLogin.Recuerdame;
+            if (!remember)
             {
-                HttpOnly = true,
-                Secure = true,
-                Expires = DateTime.UtcNow.AddDays(1)
-            });
-
+                Response.Cookies.Append("jwt", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true
+                });
+            }
+            else {
+                Response.Cookies.Append("jwt", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddDays(1)
+                });
+            }
             var sesion = new
             {
                 usuario = user.Usuario1,
@@ -54,6 +63,14 @@ namespace Human_Link_Web.Server.Controllers
             };
             return Ok(sesion);
         }
+        //Endpoint para eliminar la cookie
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return Ok(new { message = "Logout exitoso" });
+        }
+
 
     }
 }

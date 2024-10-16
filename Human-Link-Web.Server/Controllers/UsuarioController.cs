@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -20,6 +21,12 @@ namespace Human_Link_Web.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
+            var userRole = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (userRole == null)
+            {
+                return Forbid(); // Devuelve un 403 si el usuario no tiene el rol de administrador
+            }
             return await _context.Usuarios.ToListAsync();
         }
         //Endpoint para obtener el usuario mediante ID
@@ -28,6 +35,12 @@ namespace Human_Link_Web.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
+            var userRole = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            
+            if (userRole != "Admin")
+            {
+                return Forbid(); // Devuelve un 403 si el usuario no tiene el rol de administrador
+            }
             var usuario = await _context.Usuarios.FindAsync(id);
 
             if (usuario == null)
@@ -44,6 +57,7 @@ namespace Human_Link_Web.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
+
             if (id != usuario.Idusuario)
             {
                 return BadRequest();

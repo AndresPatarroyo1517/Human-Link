@@ -40,7 +40,7 @@ namespace Human_Link_Web.Server.Custom
             {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Idusuario.ToString()),
                 new Claim(ClaimTypes.Name, usuario.Usuario1!),
-                new Claim("isAdmin", usuario.Isadmin.ToString())
+                new Claim(ClaimTypes.Role, (bool)usuario.Isadmin! ? "Admin" : "Empleado")
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]!));

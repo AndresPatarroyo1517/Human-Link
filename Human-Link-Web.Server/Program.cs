@@ -54,6 +54,12 @@ namespace Human_Link_Web.Server
                 config.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("AllPolicy", policy => policy.RequireRole("Empleado", "Admin"));
+            });
+
             var app = builder.Build();
 
             app.UseDefaultFiles();

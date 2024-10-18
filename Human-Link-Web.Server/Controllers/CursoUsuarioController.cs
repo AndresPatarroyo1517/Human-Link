@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 //Importa clases de Models
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -26,13 +27,14 @@ namespace Human_Link_Web.Server.Controllers
             return await _context.Cursousuarios.ToListAsync();
         }
 
-        // GET: HumanLink/CursoUsuario/3
+        // GET: HumanLink/CursoUsuario/id
         [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado(int id)
+        [HttpGet("id")]
+        public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado()
         {
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var cursosUsuarioId = await _context.Cursousuarios
-                .Where(cu => cu.Idusuario == id)
+                .Where(cu => cu.Idusuario == Convert.ToInt32(id))
                 .Select(cu => cu.Idcurso)
                 .ToListAsync();
 
@@ -53,19 +55,19 @@ namespace Human_Link_Web.Server.Controllers
             return Ok(cursos);
         }
 
-        // GET: HumanLink/CursoUsuario/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Cursousuario>> GetCursousuario(int id)
-        //{
-        //    var cursousuario = await _context.Cursousuarios.FindAsync(id);
+        // GET: HumanLink/CursoUsuario/:id
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cursousuario>> GetCursousuario(int id)
+        {
+            var cursousuario = await _context.Cursousuarios.FindAsync(id);
 
-        //    if (cursousuario == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (cursousuario == null)
+            {
+                return NotFound();
+            }
 
-        //    return cursousuario;
-        //}
+            return cursousuario;
+        }
 
         // PUT: HumanLink/CursoUsuario/5
         [HttpPut("{id}")]

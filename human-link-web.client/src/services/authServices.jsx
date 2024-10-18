@@ -1,5 +1,5 @@
-const API_URL_LOGIN = 'https://localhost:7019/HumanLink/Login';
-const API_URL_LOGOUT = 'https://localhost:7019/HumanLink/Logout';
+const API_URL_LOGIN = 'https://localhost:7019/HumanLink/Login/login';
+const API_URL_LOGOUT = 'https://localhost:7019/HumanLink/Login/logout';
 
 export const login = async ({ usuario1, clave, recordar}) => {
     const body = {
@@ -15,7 +15,7 @@ export const login = async ({ usuario1, clave, recordar}) => {
         },
         body: JSON.stringify(body)
     });
-
+    console.log(body)
     if (!response.ok) {
         throw new Error('Credenciales incorrectas');
     }

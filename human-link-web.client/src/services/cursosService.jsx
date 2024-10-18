@@ -3,8 +3,8 @@ const API_URL = 'https://localhost:7019/HumanLink/CursoUsuario';
 const cursosService = {
 
     // Obtener cursos según el id del empleado
-    getCursosEmpleado: async (idEmpleado) => {
-        const response = await fetch(API_URL + "/" + idEmpleado, {
+    getCursosEmpleado: async () => {
+        const response = await fetch(API_URL + "/id", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

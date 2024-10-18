@@ -20,13 +20,9 @@ const CardCursos = () => {
     ]);
 
     useEffect(() => {
-        // Cambiar el 3 por el id del usuario logeado
-        cursosService.getCursosEmpleado(3)
+        cursosService.getCursosEmpleado()
             .then(response => {
-                console.log(response);
                 setCursos(response);
-                console.log(cursos);
-                console.log(response);
             })
             .catch(error => {
                 console.error('Error al obtener los cursos:', error);

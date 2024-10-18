@@ -1,26 +1,40 @@
 import React, { useState } from "react";
+import cursosService from "../../services/cursosService";
+import { useEffect } from "react";
 
 const CardCursos = () => {
     // Array inicial de cursos
     const [cursos, setCursos] = useState([
         {
-            titulo: "Curso ReactJS - OpenBootcamp",
+            nombrecurso: "Curso ReactJS - OpenBootcamp",
             duracion: 10,
             url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
             descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
         },
         {
-            titulo: "Curso Java Script - OpenBootcamp",
+            nombrecurso: "Curso Java Script - OpenBootcamp",
             duracion: 8,
             url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
             descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
         }
     ]);
 
-    
+    useEffect(() => {
+        // Cambiar el 3 por el id del usuario logeado
+        cursosService.getCursosEmpleado(3)
+            .then(response => {
+                console.log(response);
+                setCursos(response);
+                console.log(cursos);
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error al obtener los cursos:', error);
+            });
+    }, []);
 
     const [newCurso, setNewCurso] = useState({
-        titulo: "",
+        nombrecurso: "",
         duracion: "",
         url: "",
         descripcion: ""
@@ -38,7 +52,7 @@ const CardCursos = () => {
     const handleAddCurso = () => {
         setCursos([...cursos, newCurso]);
         setNewCurso({
-            titulo: "",
+            nombrecurso: "",
             duracion: "",
             url: "",
             descripcion: ""
@@ -64,7 +78,7 @@ const CardCursos = () => {
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="titulo" className="col-form-label">Título:</label>
-                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.titulo} onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.nombrecurso} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="descripcion" className="col-form-label">Descripción:</label>
@@ -93,9 +107,9 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url} className="card-img-top" alt={curso.titulo} />
+                            <img src={curso.url} className="card-img-top" alt={curso.nombrecurso} />
                             <div className="card-body">
-                                <h5 className="card-title">{curso.titulo}</h5>
+                                <h5 className="card-title">{curso.nombrecurso}</h5>
                                 <button
                                     type="button"
                                     className="btn btn-primary"
@@ -117,7 +131,7 @@ const CardCursos = () => {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.titulo}</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.nombrecurso}</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">

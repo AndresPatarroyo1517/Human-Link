@@ -24,19 +24,45 @@ namespace Human_Link_Web.Server.Controllers
             return await _context.Cursousuarios.ToListAsync();
         }
 
-        // GET: HumanLink/CursoUsuario/5
+        // GET: HumanLink/CursoUsuario/3
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cursousuario>> GetCursousuario(int id)
+        public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado(int id)
         {
-            var cursousuario = await _context.Cursousuarios.FindAsync(id);
+            var cursosUsuarioId = await _context.Cursousuarios
+                .Where(cu => cu.Idusuario == id)
+                .Select(cu => cu.Idcurso)
+                .ToListAsync();
 
-            if (cursousuario == null)
+            if (cursosUsuarioId == null || !cursosUsuarioId.Any())
             {
-                return NotFound();
+                return NotFound("No se encontraron cursos para el usuario especificado.");
             }
 
-            return cursousuario;
+            var cursos = await _context.Cursos
+                .Where(c => cursosUsuarioId.Contains(c.Idcurso))
+                .ToListAsync();
+
+            if (cursos == null || !cursos.Any())
+            {
+                return NotFound("No se encontraron cursos correspondientes en la tabla de cursos.");
+            }
+
+            return Ok(cursos);
         }
+
+        // GET: HumanLink/CursoUsuario/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Cursousuario>> GetCursousuario(int id)
+        //{
+        //    var cursousuario = await _context.Cursousuarios.FindAsync(id);
+
+        //    if (cursousuario == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return cursousuario;
+        //}
 
         // PUT: HumanLink/CursoUsuario/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

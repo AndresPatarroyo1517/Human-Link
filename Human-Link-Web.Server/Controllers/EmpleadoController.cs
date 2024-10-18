@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -14,17 +15,20 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
+
         //Endpoint para obtener todos los empleados 
-        //Cambiar a uso restringido del JWT solamente del administrador
-        // GET: HumanLink/Empleado
+        // GET: HumanLink/Empleado/GetAll
         [HttpGet("GetAll")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
             return await _context.Empleados.ToListAsync();
         }
+
         //Endpoint para obtener un empleado en base a su ID
         // GET: HumanLink/Empleado/:id
         [HttpGet("Get-{id}")]
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<Empleado>> GetEmpleado(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);
@@ -36,11 +40,12 @@ namespace Human_Link_Web.Server.Controllers
 
             return empleado;
         }
+
         //Endpoint para modificar la información del empleado
         //Cambiar a uso restringido del JWT, además validar que el ID que esta empleando sea el mismo que existe en el JWT (Este proceso se realiza si no es admin)
         // PUT: HumanLink/Empleado/:id
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Put-{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> PutEmpleado(int id, Empleado empleado)
         {
             if (id != empleado.Idempleado)
@@ -68,11 +73,12 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
+
         //Endpoint para añadir un empleado a la base de datos
         //Cambiar a uso restringido del JWT solamente del administrador
         // POST: HumanLink/Empleado
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("Post")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<Empleado>> PostEmpleado(Empleado empleado)
         {
             _context.Empleados.Add(empleado);
@@ -80,10 +86,11 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetEmpleado", new { id = empleado.Idempleado }, empleado);
         }
+
         //Endpoint para eliminar a un empleado haciendo uso de su ID
-        //Cambiar a uso restringido del JWT solamente del administrador
         // DELETE: HumanLink/Empleado/:id
         [HttpDelete("Delete-{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> DeleteEmpleado(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);

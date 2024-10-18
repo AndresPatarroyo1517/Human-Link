@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
         return userData;
     };
 
-    const logout = () => {
+    const logout = async () => {
         await logoutService()
         setUser(null);
     };

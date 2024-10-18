@@ -56,6 +56,9 @@ namespace Human_Link_Web.Server
 
             builder.Services.AddAuthorization(options =>
             {
+                // Se define como opciones de autorización AdminPolicy y AllPolicy
+                // AdminPolicy: solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+                // AllPolicy: solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
                 options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("AllPolicy", policy => policy.RequireRole("Empleado", "Admin"));
             });

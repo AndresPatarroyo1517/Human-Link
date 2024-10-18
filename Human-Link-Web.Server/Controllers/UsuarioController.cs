@@ -16,10 +16,9 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
         }
         //Endpoint para obtener todos los usuarios y sus datos
-        //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario
         [HttpGet]
-        [Authorize(Policy = "AllPolicy")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
@@ -28,7 +27,7 @@ namespace Human_Link_Web.Server.Controllers
         //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario/5
         [HttpGet("{id}")]
-        [Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
@@ -40,11 +39,12 @@ namespace Human_Link_Web.Server.Controllers
 
             return usuario;
         }
+
         //Endpoint para actualizar la información del Usuario
         //Cambiar a uso restringido del JWT solamente del propio usuario y admin, recomendación cambiar a PATCH
         // PUT: HumanLink/Usuario/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
             if (id != usuario.Idusuario)
@@ -72,11 +72,11 @@ namespace Human_Link_Web.Server.Controllers
 
             return NoContent();
         }
+
         //Endpoint para añadir usuarios a la base de datos
-        //Cambiar a uso restringido del JWT solamente del administrador
         // POST: HumanLink/Usuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
             _context.Usuarios.Add(usuario);
@@ -84,10 +84,11 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetUsuario", new { id = usuario.Idusuario }, usuario);
         }
+
         //Endpoint para eliminar un usuario de la base de datos
-        //Cambiar a uso restringido del JWT solamente del administrador
         // DELETE: HumanLink/Usuario/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> DeleteUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);

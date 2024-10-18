@@ -19,9 +19,10 @@ namespace Human_Link_Web.Server.Controllers
             this._context = context;
             this._utilidades = _utilidades;
         }
+
         //Endpoint para hacer inicio de sesión 
-        // POST: api/Login
-        [HttpPost]
+        // POST: HumanLink/Login/login
+        [HttpPost("login")]
         public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)
         {
             var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
@@ -63,8 +64,10 @@ namespace Human_Link_Web.Server.Controllers
             };
             return Ok(sesion);
         }
+
         //Endpoint para eliminar la cookie
-        [HttpPost]
+        // POST: HumanLink/Login/logout
+        [HttpPost("logout")]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("jwt");

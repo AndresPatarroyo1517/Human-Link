@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 //Importa clases de Models
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -19,12 +20,14 @@ namespace Human_Link_Web.Server.Controllers
 
         // GET: HumanLink/CursoUsuario
         [HttpGet]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursousuarios()
         {
             return await _context.Cursousuarios.ToListAsync();
         }
 
         // GET: HumanLink/CursoUsuario/3
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado(int id)
         {
@@ -65,8 +68,8 @@ namespace Human_Link_Web.Server.Controllers
         //}
 
         // PUT: HumanLink/CursoUsuario/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> PutCursousuario(int id, Cursousuario cursousuario)
         {
             if (id != cursousuario.Idcuremp)
@@ -96,8 +99,8 @@ namespace Human_Link_Web.Server.Controllers
         }
 
         // POST: HumanLink/CursoUsuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<Cursousuario>> PostCursousuario(Cursousuario cursousuario)
         {
             _context.Cursousuarios.Add(cursousuario);
@@ -108,6 +111,7 @@ namespace Human_Link_Web.Server.Controllers
 
         // DELETE: HumanLink/CursoUsuario/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> DeleteCursousuario(int id)
         {
             var cursousuario = await _context.Cursousuarios.FindAsync(id);

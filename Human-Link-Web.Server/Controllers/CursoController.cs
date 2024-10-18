@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -19,17 +20,20 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
+
         //Endpoint para obtener todos los cursos existentes en la base de datos
-        //Cambiar a uso restringido del JWT
         // GET: HumanLink/Curso
         [HttpGet]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
             return await _context.Cursos.ToListAsync();
         }
+
         //Endpoint para obtener un curso en especifico usando el ID
         // GET: HumanLink/Curso/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<Curso>> GetCurso(int id)
         {
             var curso = await _context.Cursos.FindAsync(id);
@@ -41,11 +45,12 @@ namespace Human_Link_Web.Server.Controllers
 
             return curso;
         }
+
         //Endpoint para actualizar algún campo del curso 
         //Cambiar a uso restringido del JWT
         // PUT: HumanLink/Curso/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> PutCurso(int id, Curso curso)
         {
             if (id != curso.Idcurso)
@@ -76,8 +81,8 @@ namespace Human_Link_Web.Server.Controllers
         //Endpoint para crear un curso 
         //Cambiar a uso restringido del JWT
         // POST: HumanLink/Curso
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<Curso>> PostCurso(Curso curso)
         {
             _context.Cursos.Add(curso);
@@ -85,9 +90,11 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetCurso", new { id = curso.Idcurso }, curso);
         }
+
         //Endpoint para eliminar algú curso usando la ID
         // DELETE: HumanLink/Curso/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> DeleteCurso(int id)
         {
             var curso = await _context.Cursos.FindAsync(id);

@@ -28,13 +28,13 @@ namespace Human_Link_Web.Server.Controllers
         }
 
         // GET: HumanLink/CursoUsuario/id
-        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         [HttpGet("id")]
+        // [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var cursosUsuarioId = await _context.Cursousuarios
-                .Where(cu => cu.Idusuario == Convert.ToInt32(id))
+                .Where(cu => cu.Idusuario == Convert.ToInt32(3))
                 .Select(cu => cu.Idcurso)
                 .ToListAsync();
 
@@ -53,6 +53,34 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             return Ok(cursos);
+        }
+
+        // GET: HumanLink/CursoUsuario/progreso
+        [HttpGet("progreso")]
+        // [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
+        public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioProgreso()
+        {
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var usuarioId = Convert.ToInt32(3);
+
+            var cursosConProgreso = await _context.Cursousuarios
+                .Where(cu => cu.Idusuario == usuarioId)
+                .Join(_context.Cursos,
+                    cu => cu.Idcurso,
+                    c => c.Idcurso,
+                    (cu, c) => new
+                        {
+                            Curso = c,
+                            Progreso = cu.Progreso
+                        })
+                .ToListAsync();
+
+            if (cursosConProgreso == null || !cursosConProgreso.Any())
+            {
+                return NotFound("No se encontraron cursos y progreso para el usuario especificado.");
+            }
+
+            return Ok(cursosConProgreso);
         }
 
         // GET: HumanLink/CursoUsuario/:id

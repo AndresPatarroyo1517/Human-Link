@@ -4,20 +4,7 @@ import { useEffect } from "react";
 
 const CardCursos = () => {
     // Array inicial de cursos
-    const [cursos, setCursos] = useState([
-        {
-            nombrecurso: "Curso ReactJS - OpenBootcamp",
-            duracion: 10,
-            url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
-            descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
-        },
-        {
-            nombrecurso: "Curso Java Script - OpenBootcamp",
-            duracion: 8,
-            url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
-            descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
-        }
-    ]);
+    const [cursos, setCursos] = useState([]);
 
     useEffect(() => {
         cursosService.getCursosEmpleado()

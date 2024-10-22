@@ -55,5 +55,7 @@ namespace Human_Link_Web.Server.Custom
 
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
         }
+
+
     }
 }

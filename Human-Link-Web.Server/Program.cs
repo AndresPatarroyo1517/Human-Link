@@ -1,4 +1,4 @@
-using Human_Link_Web.Server.Models;
+ using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -29,6 +29,7 @@ namespace Human_Link_Web.Server
             });
 
             builder.Services.AddSingleton<Utilidades>();
+            builder.Services.AddScoped<PasswordHasher>();
 
             builder.Services.AddAuthentication(config =>
             {

@@ -13,11 +13,13 @@ namespace Human_Link_Web.Server.Controllers
     {
         private readonly HumanLinkContext _context;
         private readonly Utilidades _utilidades;
+        private readonly PasswordHasher _passwordHasher;
 
-        public LoginController(HumanLinkContext context, Utilidades _utilidades)
+        public LoginController(HumanLinkContext context, Utilidades _utilidades, PasswordHasher _passwordHasher)
         {
             this._context = context;
             this._utilidades = _utilidades;
+            this._passwordHasher = _passwordHasher;
         }
 
         //Endpoint para hacer inicio de sesión 
@@ -32,10 +34,12 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound("Usuario y/o clave incorrectos Usuario");
             }
 
-            // Cambiar comparacion cuando se implemente la encriptación
-            var claveValida = user.Clave == userLogin.Clave ? true : false;
-            if (!claveValida)
+            // Verificar si la clave ingresada coincide con la encriptación
+
+            var result = _passwordHasher.Verify(user.Clave, userLogin.Clave);
+            if (!result)
             {
+                //return Unauthorized("Clave incorrecta");
                 return NotFound("Usuario y/o clave incorrectos Clave");
             }
 

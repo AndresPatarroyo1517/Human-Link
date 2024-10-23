@@ -90,7 +90,7 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url} className="card-img-top" alt={curso.nombrecurso} />
+                            <img src={curso.url[0]} className="card-img-top" alt={curso.nombrecurso} />
                             <div className="card-body">
                                 <h5 className="card-title">{curso.nombrecurso}</h5>
                                 <button

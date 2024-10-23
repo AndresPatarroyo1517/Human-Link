@@ -34,7 +34,7 @@ const CardCursoProgreso = () => {
                         </div>
                         <div className="contenedor-body">
                             <div className="contenedor-img">
-                                <img src={curso.curso.url } alt="Imagen de curso" />
+                                <img src={curso.curso.url[0] } alt="Imagen de curso" />
                             </div>
                             <div className="contenedor-progreso">
                                 <h3>Progreso</h3>

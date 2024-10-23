@@ -13,6 +13,7 @@ export const login = async ({ usuario1, clave, recordar}) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: "include",
         body: JSON.stringify(body)
     });
     console.log(body)

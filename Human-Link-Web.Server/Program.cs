@@ -50,7 +50,7 @@ namespace Human_Link_Web.Server
                 };
             })
             .AddCookie(config => {
-                config.LoginPath = "/HumanLink/Login";
+                config.LoginPath = "/HumanLink/Login/login";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromDays(1);
             });

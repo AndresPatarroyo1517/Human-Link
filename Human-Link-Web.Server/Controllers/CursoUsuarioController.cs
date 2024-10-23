@@ -29,12 +29,13 @@ namespace Human_Link_Web.Server.Controllers
 
         // GET: HumanLink/CursoUsuario/id
         [HttpGet("id")]
-        // [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var usuarioId = Convert.ToInt32(id);
             var cursosUsuarioId = await _context.Cursousuarios
-                .Where(cu => cu.Idusuario == Convert.ToInt32(3))
+                .Where(cu => cu.Idusuario == usuarioId)
                 .Select(cu => cu.Idcurso)
                 .ToListAsync();
 
@@ -57,11 +58,11 @@ namespace Human_Link_Web.Server.Controllers
 
         // GET: HumanLink/CursoUsuario/progreso
         [HttpGet("progreso")]
-        // [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioProgreso()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var usuarioId = Convert.ToInt32(3);
+            var usuarioId = Convert.ToInt32(id);
 
             var cursosConProgreso = await _context.Cursousuarios
                 .Where(cu => cu.Idusuario == usuarioId)
@@ -85,6 +86,7 @@ namespace Human_Link_Web.Server.Controllers
 
         // GET: HumanLink/CursoUsuario/:id
         [HttpGet("{id}")]
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<Cursousuario>> GetCursousuario(int id)
         {
             var cursousuario = await _context.Cursousuarios.FindAsync(id);

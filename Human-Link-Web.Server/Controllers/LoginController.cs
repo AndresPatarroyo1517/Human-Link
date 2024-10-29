@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
-using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -53,7 +53,8 @@ namespace Human_Link_Web.Server.Controllers
                     Secure = true
                 });
             }
-            else {
+            else
+            {
                 Response.Cookies.Append("jwt", token, new CookieOptions
                 {
                     HttpOnly = true,

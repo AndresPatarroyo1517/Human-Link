@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Human-Link-Web.Server", "Human-Link-Web.Server\Human-Link-Web.Server.csproj", "{18E186D1-2442-4ACC-BFE8-3A752A542C16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Human-Link-Web.Server", "Human-Link-Web.Server\Human-Link-Web.Server.csproj", "{18E186D1-2442-4ACC-BFE8-3A752A542C16}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "human-link-web.client", "human-link-web.client\human-link-web.client.esproj", "{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanLink_UnitaryTest", "HumanLink_UnitaryTest\HumanLink_UnitaryTest.csproj", "{AB7E176C-12BD-4E0E-B87F-9E654736520A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanLink_IntegrateTest", "HumanLink_IntegrateTest\HumanLink_IntegrateTest.csproj", "{837E273F-E88D-4B6E-9B79-22941C67868F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +27,14 @@ Global
 		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFDE3BF1-6C08-4F70-B5FB-A397614F8636}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AB7E176C-12BD-4E0E-B87F-9E654736520A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7E176C-12BD-4E0E-B87F-9E654736520A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7E176C-12BD-4E0E-B87F-9E654736520A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7E176C-12BD-4E0E-B87F-9E654736520A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837E273F-E88D-4B6E-9B79-22941C67868F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837E273F-E88D-4B6E-9B79-22941C67868F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837E273F-E88D-4B6E-9B79-22941C67868F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837E273F-E88D-4B6E-9B79-22941C67868F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

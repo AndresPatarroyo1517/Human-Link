@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-//ORM de C#:
-using Microsoft.EntityFrameworkCore;
-//Importa clases de Models
+﻿//Importa clases de Models
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+//ORM de C#:
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
@@ -70,10 +70,10 @@ namespace Human_Link_Web.Server.Controllers
                     cu => cu.Idcurso,
                     c => c.Idcurso,
                     (cu, c) => new
-                        {
-                            Curso = c,
-                            Progreso = cu.Progreso
-                        })
+                    {
+                        Curso = c,
+                        Progreso = cu.Progreso
+                    })
                 .ToListAsync();
 
             if (cursosConProgreso == null || !cursosConProgreso.Any())

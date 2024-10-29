@@ -27,7 +27,7 @@ namespace Human_Link_Web.Server.Controllers
                 ObjectId fileId = await _context.GridFS.UploadFromStreamAsync(file.FileName, stream);
                 Archivo nuevoArchivo = new()
                 {
-                    ArchivoPath = fileId.ToString(), 
+                    ArchivoPath = fileId.ToString(),
                     Propietario = propietario,
                     NombreArchivo = (file.FileName).ToLower()
                 };

@@ -9,7 +9,7 @@ namespace Human_Link_Web.Server.Custom
         private const int keySize = 256 / 8;
         private const int iterations = 10000;
         private static readonly HashAlgorithmName hashAlgorithmName = HashAlgorithmName.SHA256;
-        private static char delimiter = ';';
+        private static readonly char delimiter = ';';
 
         public string Hash(string password)
         {

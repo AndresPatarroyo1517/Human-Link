@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import cursosService from "../../services/cursosService";
 
 const CardCursos = () => {
     // Array inicial de cursos
@@ -16,6 +18,16 @@ const CardCursos = () => {
             descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
         }
     ]);
+
+    useEffect(() => {
+        cursosService.getCursos()
+            .then(response => {
+                setCursos(response);
+            })
+            .catch(error => {
+                console.error('Error al obtener los cursos:', error);
+            });
+    }, []);
 
     const [newCurso, setNewCurso] = useState({
         titulo: "",
@@ -91,9 +103,9 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url} className="card-img-top" alt={curso.titulo} />
+                            <img src={curso.url[0]} className="card-img-top" alt={curso.nombrecurso} />
                             <div className="card-body">
-                                <h5 className="card-title">{curso.titulo}</h5>
+                                <h5 className="card-title">{curso.nombrecurso}</h5>
                                 <button
                                     type="button"
                                     className="btn btn-primary"

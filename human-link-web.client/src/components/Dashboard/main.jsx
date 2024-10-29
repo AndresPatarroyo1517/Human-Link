@@ -3,10 +3,15 @@ import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 
 const Main = () => {
-    const { activeMenu, activeSection, setActiveSection } = useAdmin();
+    const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
 
     const handleChangeSection = (section) => {
         setActiveSection(section);
+        if (section != "Empleados") {
+            setActiveMenu("Añadir Cursos");
+        } else {
+            setActiveMenu("Asignar Cursos")
+        }
     };
 
     return (

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HumanLink_IntegrateTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f2cf56c79127097aee7f036601e8e130a6ef81b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85894a5e752e00796b0bbede77e9a6acfbacbeee")]
 [assembly: System.Reflection.AssemblyProductAttribute("HumanLink_IntegrateTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HumanLink_IntegrateTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

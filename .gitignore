@@ -7,6 +7,14 @@ Human-Link-Web.Server/bin/*
 
 Human-Link-Web.Server/obj/*
 
+HumanLink_IntegrateTest/obj/*
+
+HumanLink_IntegrateTest/bin/*
+
+HumanLink_UnitaryTest/obj/*
+
+HumanLink_UnitaryTest/obj/*
+
 *.csproj
 
 *.user

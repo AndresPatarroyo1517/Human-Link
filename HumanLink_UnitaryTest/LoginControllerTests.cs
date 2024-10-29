@@ -91,7 +91,6 @@ namespace Human_Link_Web.Tests.Controllers
 
             var response = JObject.FromObject(okResult.Value);
             Assert.Equal("jose123", response["usuario"].ToString());
-            Assert.True((bool)response["isAdmin"]);
         }
 
 

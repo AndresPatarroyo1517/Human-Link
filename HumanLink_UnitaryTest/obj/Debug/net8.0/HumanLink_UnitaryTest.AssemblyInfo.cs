@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HumanLink_UnitaryTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85894a5e752e00796b0bbede77e9a6acfbacbeee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1870312972259fc6dd8244223fb5d5f6c3a29ed9")]
 [assembly: System.Reflection.AssemblyProductAttribute("HumanLink_UnitaryTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HumanLink_UnitaryTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

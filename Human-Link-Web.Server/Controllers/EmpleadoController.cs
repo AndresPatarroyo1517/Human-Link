@@ -26,6 +26,26 @@ namespace Human_Link_Web.Server.Controllers
         }
 
         //Endpoint para obtener un empleado en base a su ID
+        // GET: HumanLink/Empleado/Get-empleados
+        //[HttpGet("Get-empleados")]
+        //[Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
+        //public async Task<ActionResult<Empleado>> GetEmpleadosCurso()
+        //{
+        //    var empleados = await _context.Empleados
+        //        .Include(e => e!.Nombre)
+        //        .Include(e => e!.Departamento)  // Incluye el departamento del empleado
+        //        .Include(e => e!.Cargo)         // Incluye el cargo del empleado
+        //        .ToListAsync();
+
+        //    if (empleados != null || empleados.Count == 0)
+        //    {
+        //        return Ok(empleados);
+        //    }
+
+        //    return NotFound();
+        //}
+
+        //Endpoint para obtener un empleado en base a su ID
         // GET: HumanLink/Empleado/:id
         [HttpGet("Get-{id}")]
         [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado

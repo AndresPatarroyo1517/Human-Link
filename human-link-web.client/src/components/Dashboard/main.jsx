@@ -1,6 +1,7 @@
 import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
+import TableEmpleados from './tableEmpleados';
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
@@ -10,7 +11,7 @@ const Main = () => {
         if (section != "Empleados") {
             setActiveMenu("Añadir Cursos");
         } else {
-            setActiveMenu("Asignar Cursos")
+            setActiveMenu("Asignar Cursos");
         }
     };
 
@@ -44,11 +45,11 @@ const Main = () => {
 
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
-                    {activeMenu === 'Asignar Cursos' && <TableInforms colum1="Usuario" colum2="Departamento" colum3="Curso" />}
+                    {activeMenu === 'Asignar Cursos' && <TableEmpleados />}
                     {activeMenu === 'Mis Documentos' && <p>Mostrando servicios...</p>}
                     {activeMenu === 'Informes' && <p>Mostrando informes...</p>}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}
-                    {activeMenu === 'Certificados' && <TableInforms colum1="Usuario" colum2="Curso" colum3="Certificado" />}
+                    {activeMenu === 'Certificados' && <TableInforms />}
                 </div>
             </div>
         </main>

@@ -43,7 +43,7 @@ const Main = () => {
                 <div>
                     {/*{activeMenu === 'Mis Cursos' && <TableInforms colum1="Usuario" colum2="Departamento" colum3="Curso" />}*/}
                     {activeMenu === 'Mis Cursos' && <CardCursos />}
-                    {activeMenu === 'Mis Documentos' && <TableInforms colum1="Usuario" colum2="Departamento" colum3="Curso" />}
+                    {activeMenu === 'Mis Documentos' && <TableInforms />}
                     {activeMenu === 'Mi Progreso' && <CardCursoProgreso />}
                     {/*{activeMenu === 'Añadir Cursos' && <CardCursos />}*/}
                     {/*{activeMenu === 'Certificados' && <TableInforms colum1="Usuario" colum2="Curso" colum3="Certificado" />}*/}

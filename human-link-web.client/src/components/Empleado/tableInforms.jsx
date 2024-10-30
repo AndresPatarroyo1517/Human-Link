@@ -1,13 +1,13 @@
-const TableInforms = ({ colum1, colum2, colum3 }) => {
+const TableInforms = () => {
 
     return (
         <>
             <table className="table table-striped mt-4">
                 <thead>
                     <tr>
-                        <th scope="col">{colum1}</th>
-                        <th scope="col">{colum2}</th>
-                        <th scope="col">{colum3}</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Departamento</th>
+                        <th scope="col">Curso</th>
                     </tr>
                 </thead>
                 <tbody>

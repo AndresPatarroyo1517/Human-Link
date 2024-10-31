@@ -73,12 +73,6 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Verificar si la contraseña ya está hasheada
-            if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-            {
-                return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
-            }
-
             // Cifra la nueva clave
             usuarioExistente.Clave = _passwordHasher.Hash(usuario.Clave);
 
@@ -126,12 +120,6 @@ namespace Human_Link_Web.Server.Controllers
                 if (string.IsNullOrEmpty(usuario.Clave))
                 {
                     return BadRequest("La contraseña no puede estar vacía.");
-                }
-
-                // Verificar si la contraseña ya está hasheada
-                if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-                {
-                    return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
                 }
 
                 // Hashear la contraseña

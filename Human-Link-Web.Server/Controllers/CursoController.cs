@@ -22,7 +22,8 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
-            return await _context.Cursos.ToListAsync();
+            var cursos = await _context.Cursos.ToListAsync();
+            return Ok(cursos);
         }
 
         //Endpoint para obtener un curso en especifico usando el ID
@@ -38,7 +39,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return curso;
+            return Ok(curso);
         }
 
         //Endpoint para actualizar algún campo del curso 

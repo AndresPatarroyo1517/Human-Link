@@ -55,7 +55,13 @@ namespace Human_Link_Web.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(nomina).State = EntityState.Modified;
+            var existingNomina = await _context.Nominas.FindAsync(id);
+            if (existingNomina == null)
+            {
+                return NotFound();
+            }
+
+            existingNomina.Bonificacion = nomina.Bonificacion;
 
             try
             {

@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using Human_Link_Web.Server.Controllers;
+﻿using Human_Link_Web.Server.Controllers;
 using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory.Query.Internal;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using NuGet.Protocol.Plugins;
-using Xunit;
+using System.Net;
 
-namespace Human_Link_Web.Tests.Controllers
+namespace HumanLink_UnitaryTest
 {
     public class LoginControllerTests
     {

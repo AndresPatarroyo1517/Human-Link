@@ -22,7 +22,8 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
-            return await _context.Empleados.ToListAsync();
+            var empleados = await _context.Empleados.ToListAsync();
+            return empleados;
         }
 
         //Endpoint para obtener un empleado en base a su ID

@@ -35,14 +35,14 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Verificar si la clave ingresada coincide con la encriptación
-            if (user.Clave == userLogin.Clave)
-            { return NotFound("Usuario y/o clave incorrectos Clave"); }
-            /*var result = _passwordHasher.Verify(user.Clave, userLogin.Clave);
+            /*if (user.Clave == userLogin.Clave)
+            { return NotFound("Usuario y/o clave incorrectos Clave"); }*/
+            var result = _passwordHasher.Verify(user.Clave, userLogin.Clave);
             if (!result)
             {
                 //return Unauthorized("Clave incorrecta");
                 return NotFound("Usuario y/o clave incorrectos Clave");
-            }*/
+            }
 
             var token = _utilidades.generarJWT(user);
             var remember = userLogin.Recuerdame;

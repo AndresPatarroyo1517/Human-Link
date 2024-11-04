@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { createContext, useState, useEffect } from 'react';
 import { login as loginService, logout as logoutService} from '../services/authServices.jsx';
 

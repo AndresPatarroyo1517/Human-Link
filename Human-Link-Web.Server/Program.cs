@@ -16,6 +16,12 @@ namespace Human_Link_Web.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+                {
+                   options.JsonSerializerOptions.PropertyNamingPolicy = null; // Si deseas mantener el formato original
+                   options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping; // Para asegurar que se manejen correctamente los caracteres especiales
+                });
             builder.Services.AddSingleton(new HumanLink_Mongo(builder.Configuration.GetConnectionString("MongoContext"), builder.Configuration.GetConnectionString("DatabaseName")));
             builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
             builder.Services.AddCors(options =>

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
+h4 {
+font-size: 1.2rem;
+margin-top: 30px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -139,34 +144,39 @@ body {
     }
 
 .login__submit {
-    background: #fff;
-    font-size: 14px;
+    background: linear-gradient(90deg, #A8D8A2, #B8E8B6); 
+    font-size: 16px;
     margin-top: 30px;
     padding: 16px 20px;
     border-radius: 26px;
-    border: 1px solid #D4D3E8;
+    border: none; 
     text-transform: uppercase;
     font-weight: 700;
     display: flex;
     align-items: center;
     width: 100%;
-    color: #4C489D;
-    box-shadow: 0px 2px 2px #A0CDA0;
+    color: #fff; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
     cursor: pointer;
-    transition: .2s;
+    transition: background 0.3s, transform 0.2s; 
 }
 
     .login__submit:active,
     .login__submit:focus,
     .login__submit:hover {
-        border-color: #A0CDA0;
-        outline: none;
+        background: linear-gradient(90deg, #B8E8B6, #A8D8A2); 
+        transform: translateY(-2px);
+        outline: none; 
     }
 
 .button__icon {
     font-size: 24px;
     margin-left: auto;
-    color: #A8D8A2;
+    color: #fff; 
+}
+
+.button__text {
+    color: #fff; 
 }
 
 .social-login {
@@ -197,5 +207,44 @@ body {
     }
 
 .button__text {
-    color: #A8D8A2;
+    color: #FFF;
+}
+
+.login__field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+    .login__field input[type="checkbox"] {
+        appearance: none;
+        width: 20px; 
+        height: 20px; 
+        border: 2px solid #A0CDA0; 
+        border-radius: 4px; 
+        margin-right: 10px; 
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+    }
+
+        .login__field input[type="checkbox"]:checked {
+            background: #A0CDA0; 
+            border-color: #A0CDA0; 
+        }
+
+            .login__field input[type="checkbox"]:checked::after {
+                content: '';
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                width: 5px; 
+                height: 5px; 
+                background: white; 
+                border-radius: 2px;
+            }
+
+span {
+    color: #A0CDA0; 
+    font-weight: 500; 
 }

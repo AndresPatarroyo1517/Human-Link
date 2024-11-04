@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import documentService from '../services/documentService';
-import empleadosService from '../services/empleadosService'; // Importar el servicio de empleados
+import documentService from '../../services/documentService';
+import empleadosService from '../../services/empleadosService'; // Importar el servicio de empleados
 import './documentManager.css';
 
 
@@ -111,7 +111,7 @@ const DocumentManager = () => {
                                 />
                             </td>
                             <td>{document.NombreArchivo}</td>
-                            <td>{document.Tamaño}</td>
+                            <td>{document.Tamanio}</td>
                             <td>{new Date(document.Fecha).toLocaleDateString()}</td>
                         </tr>
                     ))}

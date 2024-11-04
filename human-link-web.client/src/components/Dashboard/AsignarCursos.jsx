@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import './asignarCursos.css';
-import empleadosService from '../services/empleadosService';
-import cursosService from '../services/cursosService'; // Asegúrate de que el servicio de cursos esté importado
+import empleadosService from '../../services/empleadosService';
+import cursosService from '../../services/cursosService'; // Asegúrate de que el servicio de cursos esté importado
 
 const AsignarCursos = () => {
     const [empleados, setEmpleados] = useState([]);

@@ -75,7 +75,7 @@ const Login = () => {
                         </button>
                     </form>
                     <div className="social-login">
-                        <h3>Consulta el Código</h3>
+                        <h4>Consulta el Código</h4>
                         <div className="social-icons">
                             <a href="https://github.com/AndresPatarroyo1517/Human-Link" className="social-login__icon fab fa-github-alt"></a>
                         </div>

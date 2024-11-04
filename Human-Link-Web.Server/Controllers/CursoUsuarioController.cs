@@ -32,17 +32,21 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursoUsuarioEmpleado()
         {
-            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            //var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var id = 2;
+            Console.WriteLine(id);
             var usuarioId = Convert.ToInt32(id);
             var cursosUsuarioId = await _context.Cursousuarios
                 .Where(cu => cu.Idusuario == usuarioId)
                 .Select(cu => cu.Idcurso)
                 .ToListAsync();
 
-            if (cursosUsuarioId == null || !cursosUsuarioId.Any())
+            Console.WriteLine(cursosUsuarioId);
+
+            /*if (cursosUsuarioId == null || !cursosUsuarioId.Any())
             {
                 return NotFound("No se encontraron cursos para el usuario especificado.");
-            }
+            }*/
 
             var cursos = await _context.Cursos
                 .Where(c => cursosUsuarioId.Contains(c.Idcurso))

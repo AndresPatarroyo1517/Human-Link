@@ -4,7 +4,7 @@ import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
-import DocumentManager from './DocumentManager'; // Importa DocumentManager
+import DocumentManager from './DocumentManager'; 
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();

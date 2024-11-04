@@ -1,15 +1,18 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
 import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
+import DocumentManager from './DocumentManager'; // Importa DocumentManager
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
 
     const handleChangeSection = (section) => {
         setActiveSection(section);
-        if (section != "Empleados") {
-            setActiveMenu("AÒadir Cursos");
+        if (section !== "Empleados") {
+            setActiveMenu("A√±adir Cursos");
         } else {
             setActiveMenu("Asignar Cursos");
         }
@@ -46,9 +49,9 @@ const Main = () => {
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
                     {activeMenu === 'Asignar Cursos' && <TableEmpleados />}
-                    {activeMenu === 'Mis Documentos' && <p>Mostrando servicios...</p>}
-                    {activeMenu === 'Informes' && <p>Mostrando informes...</p>}
-                    {activeMenu === 'AÒadir Cursos' && <CardCursos />}
+                    {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aqu√≠ */}
+                    {activeMenu === 'Informes' && <TableInforms />}
+                    {activeMenu === 'A√±adir Cursos' && <CardCursos />}
                     {activeMenu === 'Certificados' && <TableInforms />}
                 </div>
             </div>

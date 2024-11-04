@@ -1,0 +1,18 @@
+.table {
+    margin-top: 20px;
+}
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+.btn-light {
+    background-color: lightgreen;
+    border: none;
+    border-radius: 5px;
+}
+
+    .btn-light:hover {
+        background-color: #5cb85c;
+        color: white;
+    }

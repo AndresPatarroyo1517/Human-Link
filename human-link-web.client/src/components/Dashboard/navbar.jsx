@@ -8,7 +8,7 @@ const Navbar = () => {
     const cerrarSesion = async () => {
         await logout();
         navigate('/');
-    }
+    };
 
     return (
         <nav className="navbar navbar-expand-lg custom-navbar-bg px-4">
@@ -23,15 +23,16 @@ const Navbar = () => {
                             Mi Cuenta
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a className="dropdown-item" href="#"> <i className="bi bi-person-fill-gear"></i> Configuración</a></li>
+                            <li><a className="dropdown-item" href="#"> <i className="bi bi-person-fill-gear"></i> ConfiguraciÃ³n</a></li>
                             <li className="li-linea-divisora"><hr className="dropdown-divider" /></li>
-                            <li><a className="dropdown-item text-danger" onClick={cerrarSesion}><i className="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
+                            <li><a className="dropdown-item text-danger" onClick={cerrarSesion}><i className="bi bi-box-arrow-left"></i> Cerrar SesiÃ³n</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </nav>
     );
-}
+};
 
 export default Navbar;
+

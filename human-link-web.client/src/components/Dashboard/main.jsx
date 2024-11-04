@@ -4,17 +4,18 @@ import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
-import DocumentManager from './DocumentManager'; 
+import DocumentManager from './DocumentManager';
+import AsignarCursos from './AsignarCursos'; // Importar el nuevo componente
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
 
     const handleChangeSection = (section) => {
         setActiveSection(section);
-        if (section !== "Empleados") {
-            setActiveMenu("Añadir Cursos");
+        if (section === "Empleados") {
+            setActiveMenu("Asignar Cursos"); // Cambiar a Asignar Cursos si se selecciona Empleados
         } else {
-            setActiveMenu("Asignar Cursos");
+            setActiveMenu("Añadir Cursos"); // Por defecto para otras secciones
         }
     };
 
@@ -48,7 +49,7 @@ const Main = () => {
 
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
-                    {activeMenu === 'Asignar Cursos' && <TableEmpleados />}
+                    {activeMenu === 'Asignar Cursos' && <AsignarCursos />} {/* Muestra el componente AsignarCursos */}
                     {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aquí */}
                     {activeMenu === 'Informes' && <TableInforms />}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}

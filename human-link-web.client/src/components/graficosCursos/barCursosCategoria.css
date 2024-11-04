@@ -1,0 +1,10 @@
+.contenedor-grafico {
+    width: 100%;
+    height: 400px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.contenedor-grafico div {
+    width: 100%;
+}

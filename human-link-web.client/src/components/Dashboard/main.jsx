@@ -2,6 +2,7 @@ import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
+import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
@@ -47,7 +48,7 @@ const Main = () => {
                 <div>
                     {activeMenu === 'Asignar Cursos' && <TableEmpleados />}
                     {activeMenu === 'Mis Documentos' && <p>Mostrando servicios...</p>}
-                    {activeMenu === 'Informes' && <p>Mostrando informes...</p>}
+                    {activeMenu === 'Informes' && <BarrasCursos />}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}
                     {activeMenu === 'Certificados' && <TableInforms />}
                 </div>

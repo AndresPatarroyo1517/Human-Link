@@ -57,6 +57,24 @@ const cursosService = {
 
         const data = await response.json();
         return data;
+    },
+
+    // Obtener todos los cursos con CursoUsuario y Curso
+    getAllCursosCategoria: async () => {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al consultar todos los cursos y categorias');
+        }
+
+        const data = await response.json();
+        return data;
     }
 }
 

@@ -1,14 +1,18 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import documentService from '../services/documentService';
-import cursosService from '../services/cursosService'; // Importa el servicio de cursos
+import empleadosService from '../services/empleadosService'; // Importar el servicio de empleados
+import './documentManager.css';
+
 
 const DocumentManager = () => {
     const [documents, setDocuments] = useState([]);
     const [file, setFile] = useState(null);
-    const [selectedDocument, setSelectedDocument] = useState(null); // Documento seleccionado
-    const [searchCourse, setSearchCourse] = useState('');
-    const [courses, setCourses] = useState([]); // Estado para los cursos
+    const [selectedDocument, setSelectedDocument] = useState(null);
+    const [searchEmployee, setSearchEmployee] = useState('');
+    const [employees, setEmployees] = useState([]); // Almacenar empleados relacionados
+    const [selectedEmployee, setSelectedEmployee] = useState(null); // Empleado seleccionado para asignar
+    const [showAssignModal, setShowAssignModal] = useState(false); // Estado para controlar el modal
 
     const loadDocuments = async () => {
         try {
@@ -19,18 +23,18 @@ const DocumentManager = () => {
         }
     };
 
-    const loadCourses = async () => {
+    const loadEmployees = async () => {
         try {
-            const data = await cursosService.getCursos(); // Cargar los cursos desde el backend
-            setCourses(data);
+            const data = await empleadosService.getEmpleados();
+            setEmployees(data);
         } catch (error) {
-            console.error("Error al cargar cursos:", error);
+            console.error("Error al cargar empleados:", error);
         }
     };
 
     useEffect(() => {
         loadDocuments();
-        loadCourses(); // Cargar cursos al iniciar
+        loadEmployees(); // Cargar empleados al iniciar
     }, []);
 
     const handleFileChange = (e) => {
@@ -42,8 +46,8 @@ const DocumentManager = () => {
 
         try {
             await documentService.uploadFile(file);
-            setFile(null); // Reinicia la entrada de archivo
-            loadDocuments(); // Recarga los documentos después de la subida
+            setFile(null);
+            loadDocuments();
         } catch (error) {
             console.error("Error al subir el archivo:", error);
         }
@@ -53,8 +57,31 @@ const DocumentManager = () => {
         setSelectedDocument(document);
     };
 
-    const handleAssignCourse = () => {
-        console.log("Asignar curso a documento:", selectedDocument);
+    const handleAssignEmployeeClick = () => {
+        setShowAssignModal(true); // Mostrar el modal para asignar empleado
+    };
+
+    const handleSearchEmployee = () => {
+        // Aquí puedes filtrar la lista de empleados según el nombre
+        if (searchEmployee) {
+            const filteredEmployees = employees.filter(employee =>
+                employee.Nombre.toLowerCase().includes(searchEmployee.toLowerCase())
+            );
+            setEmployees(filteredEmployees);
+        }
+    };
+
+    const handleEmployeeSelect = (employee) => {
+        setSelectedEmployee(employee); // Establecer el empleado seleccionado
+    };
+
+    const handleAssign = () => {
+        if (selectedDocument && selectedEmployee) {
+            console.log(`Asignando ${selectedEmployee.Nombre} al documento: ${selectedDocument.NombreArchivo}`);
+            // Aquí puedes agregar la lógica para asignar el empleado al documento
+            setShowAssignModal(false); // Cerrar el modal
+            setSelectedEmployee(null); // Reiniciar el empleado seleccionado
+        }
     };
 
     return (
@@ -94,8 +121,8 @@ const DocumentManager = () => {
             {/* Botones para gestionar documentos */}
             <div className="d-flex flex-column">
                 <button className="btn btn-light mb-2">Eliminar Documento</button>
-                <button className="btn btn-light mb-2" data-bs-toggle="modal" data-bs-target="#assignCourseModal">
-                    Asignar a Curso
+                <button className="btn btn-light mb-2" onClick={handleAssignEmployeeClick}>
+                    Asignar a Empleado
                 </button>
             </div>
 
@@ -118,62 +145,48 @@ const DocumentManager = () => {
                 </div>
             </div>
 
-            {/* Modal para asignar curso */}
-            <div className="modal fade" id="assignCourseModal" tabIndex="-1" aria-labelledby="assignCourseModalLabel" aria-hidden="true">
+            {/* Modal para asignar empleado */}
+            <div className={`modal fade ${showAssignModal ? 'show' : ''}`} style={{ display: showAssignModal ? 'block' : 'none' }} tabIndex="-1" aria-labelledby="assignEmployeeModalLabel" aria-hidden={!showAssignModal}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title fw-bold" id="assignCourseModalLabel">Asignar Curso</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 className="modal-title fw-bold" id="assignEmployeeModalLabel">Asignar Empleado</h5>
+                            <button type="button" className="btn-close" onClick={() => setShowAssignModal(false)} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div>
                                 <strong>Nombre archivo:</strong> {selectedDocument ? selectedDocument.NombreArchivo : 'Ninguno'}
                             </div>
                             <div className="mb-3 mt-2">
-                                <label htmlFor="courseSearch" className="form-label">Nombre curso o etiqueta</label>
+                                <label htmlFor="employeeSearch" className="form-label">Nombre empleado</label>
                                 <div className="input-group">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="courseSearch"
-                                        value={searchCourse}
-                                        onChange={(e) => setSearchCourse(e.target.value)}
-                                        placeholder="Buscar curso"
+                                        id="employeeSearch"
+                                        value={searchEmployee}
+                                        onChange={(e) => setSearchEmployee(e.target.value)}
+                                        placeholder="Buscar empleado"
                                     />
-                                    <button className="btn btn-success">Buscar</button>
+                                    <button className="btn btn-success" onClick={handleSearchEmployee}>Buscar</button>
                                 </div>
                             </div>
-                            <div>
-                                <h6>Cursos relacionados:</h6>
-                                <div className="d-flex flex-column">
-                                    {courses
-                                        .filter(course => course.name.toLowerCase().includes(searchCourse.toLowerCase()))
-                                        .map(course => (
-                                            <div key={course.id} className="d-flex align-items-center">
-                                                <div className={`rounded-circle me-2 ${course.type === 'resources' ? 'bg-success' : 'bg-secondary'}`} style={{ width: '20px', height: '20px' }}></div>
-                                                {course.name}
-                                            </div>
-                                        ))}
-                                </div>
-                            </div>
-                            <div className="mt-3">
-                                <strong>Tipo de documento:</strong>
-                                <div className="d-flex">
-                                    <div className="text-center me-3">
-                                        <div className="rounded-circle bg-success" style={{ width: '30px', height: '30px' }}></div>
-                                        <small>Recursos</small>
+                            <div className="employee-results" style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', maxHeight: '200px', overflowY: 'scroll' }}>
+                                {employees.map((employee) => (
+                                    <div key={employee.Id} className="d-flex align-items-center mb-1">
+                                        <div
+                                            onClick={() => handleEmployeeSelect(employee)}
+                                            className={`rounded-circle me-2 ${selectedEmployee === employee ? 'bg-success' : 'bg-secondary'}`}
+                                            style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                                        ></div>
+                                        {employee.Nombre}
                                     </div>
-                                    <div className="text-center">
-                                        <div className="rounded-circle bg-secondary" style={{ width: '30px', height: '30px' }}></div>
-                                        <small>Evaluación</small>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" onClick={handleAssignCourse} data-bs-dismiss="modal">Asignar</button>
+                            <button type="button" className="btn btn-danger" onClick={() => setShowAssignModal(false)}>Cancelar</button>
+                            <button type="button" className="btn btn-success" onClick={handleAssign}>Asignar</button>
                         </div>
                     </div>
                 </div>
@@ -183,3 +196,4 @@ const DocumentManager = () => {
 };
 
 export default DocumentManager;
+

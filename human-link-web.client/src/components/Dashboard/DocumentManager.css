@@ -1,18 +1,72 @@
+/* DocumentManager.css */
+
+/* Estilo general para la tabla */
 .table {
     margin-top: 20px;
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho */
+    border-collapse: collapse; /* Colapsa los bordes de la tabla */
 }
 
+    /* Estilo para los encabezados de la tabla */
     .table th, .table td {
-        text-align: center;
+        text-align: center; /* Centra el texto en las celdas */
+        padding: 15px; /* Añade espacio dentro de las celdas */
+        border-bottom: 1px solid #dee2e6; /* Añade una línea inferior */
     }
 
+/* Estilo para los botones de acción */
 .btn-light {
-    background-color: lightgreen;
-    border: none;
-    border-radius: 5px;
+    background-color: lightgreen; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
 }
 
     .btn-light:hover {
-        background-color: #5cb85c;
-        color: white;
+        background-color: #5cb85c; /* Color al pasar el mouse */
+        color: white; /* Color del texto al pasar el mouse */
     }
+
+/* Estilo para el modal de añadir documento */
+.modal-content {
+    border-radius: 0.5rem; /* Bordes redondeados para el contenido del modal */
+}
+
+/* Estilo para el título del modal */
+.modal-header .modal-title {
+    font-weight: bold; /* Negrita */
+}
+
+/* Estilo para el modal de asignar empleado */
+.employee-results {
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    max-height: 200px; /* Altura máxima */
+    overflow-y: auto; /* Desplazamiento vertical si el contenido excede la altura */
+}
+
+/* Estilo para el círculo de selección de empleado */
+.rounded-circle {
+    width: 20px; /* Ancho del círculo */
+    height: 20px; /* Alto del círculo */
+    cursor: pointer; /* Cursor de mano al pasar por encima */
+}
+
+/* Colores para los círculos de selección de empleados */
+.bg-secondary {
+    background-color: #6c757d; /* Color gris por defecto */
+}
+
+.bg-success {
+    background-color: #28a745; /* Color verde para selección */
+}
+
+/* Espaciado para el botón de cerrar en el modal */
+.btn-close {
+    margin-left: auto; /* Empuja el botón a la derecha */
+}
+
+/* Estilo para el input de búsqueda */
+.input-group .form-control {
+    border-radius: 0.5rem; /* Bordes redondeados */
+}

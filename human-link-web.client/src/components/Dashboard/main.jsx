@@ -1,3 +1,4 @@
+import React from 'react';
 import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
@@ -8,8 +9,8 @@ const Main = () => {
 
     const handleChangeSection = (section) => {
         setActiveSection(section);
-        if (section != "Empleados") {
-            setActiveMenu("Añadir Cursos");
+        if (section !== "Empleados") {
+            setActiveMenu("AÃ±adir Cursos");
         } else {
             setActiveMenu("Asignar Cursos");
         }
@@ -48,7 +49,7 @@ const Main = () => {
                     {activeMenu === 'Asignar Cursos' && <TableEmpleados />}
                     {activeMenu === 'Mis Documentos' && <p>Mostrando servicios...</p>}
                     {activeMenu === 'Informes' && <p>Mostrando informes...</p>}
-                    {activeMenu === 'Añadir Cursos' && <CardCursos />}
+                    {activeMenu === 'AÃ±adir Cursos' && <CardCursos />}
                     {activeMenu === 'Certificados' && <TableInforms />}
                 </div>
             </div>
@@ -57,3 +58,4 @@ const Main = () => {
 };
 
 export default Main;
+

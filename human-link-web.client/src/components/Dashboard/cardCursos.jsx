@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import cursosService from "../../services/cursosService";
 
 const CardCursos = () => {
@@ -9,13 +8,13 @@ const CardCursos = () => {
             titulo: "Curso ReactJS - OpenBootcamp",
             duracion: 10,
             url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
-            descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
+            descripcion: "AprenderÃ¡s cÃ³mo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
         },
         {
             titulo: "Curso Java Script - OpenBootcamp",
             duracion: 8,
             url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
-            descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
+            descripcion: "Con NodeJS podrÃ¡s trabajar con JavaScript en el servidor y crear aplicaciones rÃ¡pidas y escalables."
         }
     ]);
 
@@ -57,12 +56,12 @@ const CardCursos = () => {
 
     return (
         <>
-            {/* Botón Añadir curso */}
+            {/* BotÃ³n AÃ±adir curso */}
             <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#aniadirModal">
-                <i className="bi bi-plus-circle"></i> Añadir curso
+                <i className="bi bi-plus-circle"></i> AÃ±adir curso
             </button>
 
-            {/* Modal para añadir un nuevo curso */}
+            {/* Modal para aÃ±adir un nuevo curso */}
             <div className="modal fade" id="aniadirModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -73,15 +72,15 @@ const CardCursos = () => {
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
-                                    <label htmlFor="titulo" className="col-form-label">Título:</label>
+                                    <label htmlFor="titulo" className="col-form-label">TÃ­tulo:</label>
                                     <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.titulo} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="descripcion" className="col-form-label">Descripción:</label>
+                                    <label htmlFor="descripcion" className="col-form-label">DescripciÃ³n:</label>
                                     <textarea className="form-control" id="descripcion" name="descripcion" value={newCurso.descripcion} onChange={handleInputChange}></textarea>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="duracion" className="col-form-label">Duración (Horas):</label>
+                                    <label htmlFor="duracion" className="col-form-label">DuraciÃ³n (Horas):</label>
                                     <input type="number" className="form-control" id="duracion" name="duracion" value={newCurso.duracion} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
@@ -92,7 +91,7 @@ const CardCursos = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>Añadir</button>
+                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>AÃ±adir</button>
                         </div>
                     </div>
                 </div>
@@ -103,9 +102,9 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url[0]} className="card-img-top" alt={curso.nombrecurso} />
+                            <img src={curso.url} className="card-img-top" alt={curso.titulo} />
                             <div className="card-body">
-                                <h5 className="card-title">{curso.nombrecurso}</h5>
+                                <h5 className="card-title">{curso.titulo}</h5>
                                 <button
                                     type="button"
                                     className="btn btn-primary"
@@ -113,7 +112,7 @@ const CardCursos = () => {
                                     data-bs-target="#infoModal"
                                     onClick={() => setSelectedCurso(curso)}
                                 >
-                                    Saber más
+                                    Saber mÃ¡s
                                 </button>
                             </div>
                         </div>

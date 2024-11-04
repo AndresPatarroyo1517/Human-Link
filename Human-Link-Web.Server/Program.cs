@@ -1,5 +1,4 @@
-
-using Human_Link_Web.Server.Models;
+ using Human_Link_Web.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -13,13 +12,11 @@ namespace Human_Link_Web.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton(new HumanLink_Mongo(builder.Configuration.GetConnectionString("MongoContext"), builder.Configuration.GetConnectionString("DatabaseName")));
             builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
             builder.Services.AddCors(options =>
             {
@@ -33,6 +30,7 @@ namespace Human_Link_Web.Server
             });
 
             builder.Services.AddSingleton<Utilidades>();
+            builder.Services.AddScoped<PasswordHasher>();
 
             builder.Services.AddAuthentication(config =>
             {
@@ -53,9 +51,18 @@ namespace Human_Link_Web.Server
                 };
             })
             .AddCookie(config => {
-                config.LoginPath = "/HumanLink/Login";
+                config.LoginPath = "/HumanLink/Login/login";
                 config.SlidingExpiration = true;
-                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                config.ExpireTimeSpan = TimeSpan.FromDays(1);
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                // Se define como opciones de autorización AdminPolicy y AllPolicy
+                // AdminPolicy: solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+                // AllPolicy: solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("AllPolicy", policy => policy.RequireRole("Empleado", "Admin"));
             });
 
             var app = builder.Build();

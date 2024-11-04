@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import cursosService from "../../services/cursosService";
+import { useEffect } from "react";
 
 const CardCursos = () => {
     // Array inicial de cursos
-    const [cursos, setCursos] = useState([
-        {
-            titulo: "Curso ReactJS - OpenBootcamp",
-            duracion: 10,
-            url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
-            descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
-        },
-        {
-            titulo: "Curso Java Script - OpenBootcamp",
-            duracion: 8,
-            url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
-            descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
-        }
-    ]);
+    const [cursos, setCursos] = useState([]);
 
     useEffect(() => {
-        cursosService.getCursos()
+        cursosService.getCursosEmpleado()
             .then(response => {
                 setCursos(response);
             })
@@ -29,7 +17,7 @@ const CardCursos = () => {
     }, []);
 
     const [newCurso, setNewCurso] = useState({
-        titulo: "",
+        nombrecurso: "",
         duracion: "",
         url: "",
         descripcion: ""
@@ -47,7 +35,7 @@ const CardCursos = () => {
     const handleAddCurso = () => {
         setCursos([...cursos, newCurso]);
         setNewCurso({
-            titulo: "",
+            nombrecurso: "",
             duracion: "",
             url: "",
             descripcion: ""
@@ -56,12 +44,12 @@ const CardCursos = () => {
 
     return (
         <>
-            {/* Botón Añadir curso */}
+            {/* Bot�n A�adir curso */}
             <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#aniadirModal">
-                <i className="bi bi-plus-circle"></i> Añadir curso
+                <i className="bi bi-plus-circle"></i> A�adir curso
             </button>
 
-            {/* Modal para añadir un nuevo curso */}
+            {/* Modal para a�adir un nuevo curso */}
             <div className="modal fade" id="aniadirModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -72,15 +60,15 @@ const CardCursos = () => {
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
-                                    <label htmlFor="titulo" className="col-form-label">Título:</label>
-                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.titulo} onChange={handleInputChange} />
+                                    <label htmlFor="titulo" className="col-form-label">T�tulo:</label>
+                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.nombrecurso} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="descripcion" className="col-form-label">Descripción:</label>
+                                    <label htmlFor="descripcion" className="col-form-label">Descripci�n:</label>
                                     <textarea className="form-control" id="descripcion" name="descripcion" value={newCurso.descripcion} onChange={handleInputChange}></textarea>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="duracion" className="col-form-label">Duración (Horas):</label>
+                                    <label htmlFor="duracion" className="col-form-label">Duraci�n (Horas):</label>
                                     <input type="number" className="form-control" id="duracion" name="duracion" value={newCurso.duracion} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
@@ -91,7 +79,7 @@ const CardCursos = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>Añadir</button>
+                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>A�adir</button>
                         </div>
                     </div>
                 </div>
@@ -102,9 +90,9 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url} className="card-img-top" alt={curso.titulo} />
+                            <img src={curso.url[0]} className="card-img-top" alt={curso.nombrecurso} />
                             <div className="card-body">
-                                <h5 className="card-title">{curso.titulo}</h5>
+                                <h5 className="card-title">{curso.nombrecurso}</h5>
                                 <button
                                     type="button"
                                     className="btn btn-primary"
@@ -112,7 +100,7 @@ const CardCursos = () => {
                                     data-bs-target="#infoModal"
                                     onClick={() => setSelectedCurso(curso)}
                                 >
-                                    Saber más
+                                    Saber m�s
                                 </button>
                             </div>
                         </div>
@@ -126,7 +114,7 @@ const CardCursos = () => {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.titulo}</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.nombrecurso}</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">

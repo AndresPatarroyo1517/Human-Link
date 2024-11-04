@@ -1,21 +1,29 @@
 import { useState } from 'react';
-import { login } from '../services/authServices.jsx';
-import { useAuth } from '../hooks/useAuth.jsx';
-import './Login.css'; 
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth.jsx';
+import './Login.css';
 
 const Login = () => {
     const [usuario1, setUsuario1] = useState('');
     const [clave, setClave] = useState('');
-    const { setUser } = useAuth();
+    const { user, login } = useAuth();
+    const navigate = useNavigate();
+    const [errorLogin, setErrorLogin] = useState(false);
+    const [recordar, setRecordar] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log({ usuario1, clave })
-            const userData = await login({ usuario1, clave });
-            console.log(userData)
-            setUser(userData);
+            const usuarioLogin = await login({ usuario1, clave, recordar });
+
+            if (usuarioLogin && usuarioLogin.isAdmin) {
+                navigate('/AdminDashboard');
+            } else if (usuarioLogin) {
+                navigate('/dashboard');
+            }
+            setErrorLogin(false);
         } catch (error) {
+            setErrorLogin(true);
             console.error('Error en el login:', error);
         }
     };
@@ -24,11 +32,14 @@ const Login = () => {
         <div className="container">
             <div className="screen">
                 <div className="screen__content">
+                    {errorLogin ? <div className="div-errorLogin">
+                        <p>Usuario y/o clave incorrectos.</p>
+                    </div> : null}
                     <form className="login" onSubmit={handleSubmit}>
                         <div className="login__field">
                             <i className="login__icon fas fa-user"></i>
                             <input
-                                type="email"
+                                type="text"
                                 className="login__input"
                                 placeholder="Username"
                                 value={usuario1}
@@ -47,7 +58,18 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <button className="button login__submit" type="submit" onClick={handleSubmit}>
+                        <div className="login__field">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={recordar}
+                                    onChange={(e) => setRecordar(e.target.checked)} 
+                                />
+                                <span>Recordarme</span>
+                            </label>
+                        </div>
+
+                        <button className="button login__submit" type="submit">
                             <span className="button__text">Iniciar Sesión</span>
                             <i className="button__icon fas fa-chevron-right"></i>
                         </button>

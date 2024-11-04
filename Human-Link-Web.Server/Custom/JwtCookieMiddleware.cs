@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 public class JwtCookieMiddleware
 {
@@ -43,7 +39,7 @@ public class JwtCookieMiddleware
                     }
                     catch {
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync("Unauthorized: Claim 'sub' not found.");
+                        await context.Response.WriteAsync("Sin autorización: Datos a obtener no encontrados.");
                         return;
                     }
                 }
@@ -51,13 +47,13 @@ public class JwtCookieMiddleware
             catch (SecurityTokenExpiredException)
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync("Unauthorized: Token expired.");
+                await context.Response.WriteAsync("Sin autorización: Token expirado.");
                 return;
             }
             catch (Exception)
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync("Unauthorized: Invalid token.");
+                await context.Response.WriteAsync("Sin autorización: Token Inválido.");
                 return;
             }
         }

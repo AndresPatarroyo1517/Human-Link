@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import cursosService from '../../services/cursosService';
-import './BarCursosCategoria.css';
+import './Style-graficos.css';
 
 const BarrasCursosCategoria = () => {
     const [data, setData] = useState([]);
@@ -45,7 +45,7 @@ const BarrasCursosCategoria = () => {
                         x: xData,
                         y: yData,
                         type: 'bar',
-                        marker: { color: 'rgba(75, 192, 192, 0.5)' },
+                        marker: { color: 'rgba(40, 78, 250, 0.5)' },
                         name: 'Cantidad de Inscritos'
                     }
                 ]}

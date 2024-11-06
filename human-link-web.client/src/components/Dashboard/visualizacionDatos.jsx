@@ -16,7 +16,7 @@ const VisualizacionDatos = () => {
         //        </div>
         //    </div>
         //</div>
-        <div>
+        <div className="contenedor-graficos">
             <BarrasCursosCategoria />
             <TortaInscritos />
         </div>

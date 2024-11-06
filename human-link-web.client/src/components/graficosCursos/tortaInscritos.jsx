@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import cursosService from "../../services/cursosService";
 import usuariosService from "../../services/usuariosService";
-import './BarCursosCategoria.css';
+import './Style-graficos.css';
 
 const TortaInscritos = () => {
     const [cursosData, setCursosData] = useState([]);
@@ -34,8 +34,8 @@ const TortaInscritos = () => {
     if (usuariosData.length == 0 && cursosData.length == 0) {
         return <div>Cargando datos...</div>;
     }
-
-    const inscritos = usuariosData.filter((usuario) => usuariosInscritosIds.has(usuario.idusuario)).length;
+    usuariosData.filter((usuario) => console.log(usuariosInscritosIds.has(usuario.Idusuario)))
+    const inscritos = usuariosData.filter((usuario) => usuariosInscritosIds.has(usuario.Idusuario)).length;
     const noInscritos = usuariosData.length - inscritos;
 
     return (
@@ -55,11 +55,12 @@ const TortaInscritos = () => {
                 ]}
                 layout={{
                     title: "Porcentaje de Inscritos vs No Inscritos",
-                    width: "100%",
-                    height: "100%",
+                    //width: "100%",
+                    //height: "100%",
                     margin: { t: 50, l: 50, r: 50, b: 50 },
                 }}
-                style={{ width: "100%", height: "100%" }}
+                config={{ responsive: true }}
+                
             />
         </div>
     );

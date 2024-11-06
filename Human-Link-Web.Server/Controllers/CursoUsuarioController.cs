@@ -24,7 +24,31 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursousuarios()
         {
-            return await _context.Cursousuarios.ToListAsync();
+            var cursosUsuario = await _context.Cursousuarios
+                .Join(_context.Cursos,
+                    cu => cu.Idcurso,
+                    c => c.Idcurso,
+                    (cu, c) => new
+                    {
+                        idcurso = c.Idcurso,
+                        nombrecurso = c.Nombrecurso,
+                        categoria = c.Categoria,
+                        descripcion = c.Descripcion,
+                        duracion = c.Duracion,
+                        idcuremp = cu.Idcuremp,
+                        idusuario = cu.Idusuario,
+                        cursoId = cu.Idcurso,
+                        progreso = cu.Progreso,
+                        fechaInicio = cu.Fechainicio
+                    })
+                .ToListAsync();
+
+            if (cursosUsuario == null || !cursosUsuario.Any())
+            {
+                return NotFound("No se encontraron cursos y curso-usuario.");
+            }
+
+            return Ok(cursosUsuario);
         }
 
         // GET: HumanLink/CursoUsuario/id

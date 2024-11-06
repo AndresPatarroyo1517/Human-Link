@@ -4,6 +4,8 @@ import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
+import VisualizacionDatos from './visualizacionDatos';
+import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 import DocumentManager from './DocumentManager';
 import AsignarCursos from './AsignarCursos'; // Importar el nuevo componente
 
@@ -51,8 +53,8 @@ const Main = () => {
                 <div>
                     {activeMenu === 'Asignar Cursos' && <AsignarCursos />} {/* Muestra el componente AsignarCursos */}
                     {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aquí */}
-                    {activeMenu === 'Informes' && <TableInforms />}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}
+                    {activeMenu === 'Informes' && <VisualizacionDatos />}
                     {activeMenu === 'Certificados' && <TableInforms />}
                 </div>
             </div>

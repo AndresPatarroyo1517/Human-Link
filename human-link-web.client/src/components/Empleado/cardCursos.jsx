@@ -10,12 +10,17 @@ const CardCursos = () => {
     useEffect(() => {
         cursosService.getCursosEmpleado()
             .then(response => {
+                console.log("Response from getCursosEmpleado:", response);
                 setCursos(response);
             })
             .catch(error => {
                 console.error('Error al obtener los cursos:', error);
             });
     }, []);
+
+    useEffect(() => {
+        console.log("Cursos actualizados:", cursos);
+    }, [cursos]);
 
     const [newCurso, setNewCurso] = useState({
         nombrecurso: "",
@@ -91,9 +96,9 @@ const CardCursos = () => {
                 {cursos.map((curso, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
-                            <img src={curso.url[0]} className="card-img-top" alt={curso.nombrecurso} />
+                            <img src={curso.Url && curso.Url.length > 0 ? curso.Url[0] : "imagen no encontrada"} className="card-img-top" alt={curso.Nombrecurso} />
                             <div className="card-body">
-                                <h5 className="card-title">{curso.nombrecurso}</h5>
+                                <h5 className="card-title">{curso.Nombrecurso}</h5>
                                 <button
                                     type="button"
                                     className="btn btn-primary"
@@ -115,11 +120,11 @@ const CardCursos = () => {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.nombrecurso}</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.Nombrecurso}</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                {selectedCurso.descripcion}
+                                {selectedCurso.Descripcion}
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -7,8 +7,17 @@ const BarrasCursosCategoria = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        cursosService.getCursos()
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos: ', error);
+            });
+
         cursosService.getAllCursosCategoria()
             .then(response => {
+                console.log(response)
                 // Agrupar cursos por categoría y contar la cantidad de inscritos
                 const groupedData = response.reduce((acc, curso) => {
                     acc[curso.categoria] = (acc[curso.categoria] || 0) + 1;

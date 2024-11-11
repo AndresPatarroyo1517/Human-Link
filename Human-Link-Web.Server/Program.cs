@@ -20,10 +20,6 @@ namespace Human_Link_Web.Server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-           /* builder.Services.AddValidatorsFromAssemblyContaining<NominaValidator>();
-            builder.Services.AddValidatorsFromAssemblyContaining<EmpleadoValidator>();
-            builder.Services.AddValidatorsFromAssemblyContaining<CursoValidator>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UsuarioValidator>();*/
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddSingleton<HumanLink_Mongo>(provider =>
             {

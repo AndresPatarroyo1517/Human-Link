@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using System.Net;
 
 namespace HumanLink_UnitaryTest
 {
@@ -28,7 +27,7 @@ namespace HumanLink_UnitaryTest
             _mockHttpContext.Setup(x => x.Response).Returns(new DefaultHttpContext().Response);
 
             _mockConfiguration = new Mock<IConfiguration>();
-            _mockConfiguration.Setup(c => c["Jwt:key"]).Returns("his_is_a_very_secure_key_12345678"); //Tiene que ser una cadena de 32 bits, por el método de encriptación HS256
+            _mockConfiguration.Setup(c => c["Jwt:key"]).Returns("this_is_a_very_secure_key_12345678"); //Tiene que ser una cadena de 32 bits, por el método de encriptación HS256
 
             var utilidades = new Utilidades(_mockConfiguration.Object);
 
@@ -51,7 +50,7 @@ namespace HumanLink_UnitaryTest
             var result = await _controller.PostLogin(userLogin);
 
             var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-            Assert.Equal("Usuario y/o clave incorrectos Usuario", notFoundResult.Value);
+            Assert.Equal("Usuario y/o clave incorrectos", notFoundResult.Value);
             Assert.Equal((int)HttpStatusCode.NotFound, notFoundResult.StatusCode);
         }
 
@@ -66,7 +65,7 @@ namespace HumanLink_UnitaryTest
             var result = await _controller.PostLogin(userLogin);
 
             var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-            Assert.Equal("Usuario y/o clave incorrectos Clave", notFoundResult.Value);
+            Assert.Equal("Usuario y/o clave incorrectos", notFoundResult.Value);
             Assert.Equal((int)HttpStatusCode.NotFound, notFoundResult.StatusCode);
         }
 
@@ -75,7 +74,7 @@ namespace HumanLink_UnitaryTest
         public async Task PostLogin_ValidCredentials_ReturnsOk()
         {
             var userLogin = new Login { Usuario = "jose123", Clave = "123", Recuerdame = true };
-            var user = new Usuario { Usuario1 = "jose123", Clave = "+T2WCPwsw6Gku1U5CKrzTQ==;6SXMLppYvJNrsAH87NXkB2y7xE2As9uMQstm8uO1OPc=", Isadmin = true, Idusuario = 1 };
+            var user = new Usuario { Usuario1 = "jose123", Clave = "6dXo5bIbJAZIX6ndsn6Fuw==;pU21c8DPIuHztCeyjVimhiZ7EQjGm3PFttxAMM7UaF0=", Isadmin = true, Idusuario = 1 };
             _mockContext.Setup(c => c.Usuarios)
                 .ReturnsDbSet(new List<Usuario> { user });
 
@@ -95,7 +94,5 @@ namespace HumanLink_UnitaryTest
             var okResult = Assert.IsType<OkObjectResult>(result);
         }
     }
-
-
 }
 

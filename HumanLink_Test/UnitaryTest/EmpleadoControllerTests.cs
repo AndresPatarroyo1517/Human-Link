@@ -28,10 +28,11 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.GetEmpleados();
 
-            var actionResult = Assert.IsType<ActionResult<IEnumerable<Empleado>>>(result);
-            var empleados = Assert.IsAssignableFrom<IEnumerable<Empleado>>(actionResult.Value);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var empleados = Assert.IsAssignableFrom<IEnumerable<Empleado>>(okResult.Value);
             Assert.Equal(3, empleados.Count());
         }
+
 
         [Fact]
         public async Task GetEmpleado_ValidId_ReturnsEmpleado()
@@ -41,10 +42,11 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.GetEmpleado(1);
 
-            var actionResult = Assert.IsType<ActionResult<Empleado>>(result);
-            var returnedEmpleado = Assert.IsType<Empleado>(actionResult.Value);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnedEmpleado = Assert.IsType<Empleado>(okResult.Value);
             Assert.Equal(empleado.Nombre, returnedEmpleado.Nombre);
         }
+
 
         [Fact]
         public async Task GetEmpleado_InvalidId_ReturnsNotFound()
@@ -60,10 +62,12 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.PostEmpleado(empleado);
 
-            var actionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-            var returnValue = Assert.IsType<Empleado>(actionResult.Value);
-            Assert.Equal(empleado.Idempleado, returnValue.Idempleado);
+            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var createdEmpleado = Assert.IsType<Empleado>(createdAtActionResult.Value);
+            Assert.Equal(empleado.Idempleado, createdEmpleado.Idempleado);
         }
+
+
 
         [Fact]
         public async Task PutEmpleado_ValidId_UpdatesEmpleado()
@@ -75,10 +79,11 @@ namespace HumanLink_UnitaryTest
             empleado.Nombre = "Empleado Actualizado";
             var result = await _controller.PutEmpleado(6, empleado);
 
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
             var updatedEmpleado = await _context.Empleados.FindAsync(6);
             Assert.Equal("Empleado Actualizado", updatedEmpleado.Nombre);
         }
+
 
         [Fact]
         public async Task DeleteEmpleado_ValidId_RemovesEmpleado()
@@ -88,7 +93,7 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.DeleteEmpleado(2);
 
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]

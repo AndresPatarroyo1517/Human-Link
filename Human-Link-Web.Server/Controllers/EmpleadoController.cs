@@ -23,7 +23,7 @@ namespace Human_Link_Web.Server.Controllers
         public async Task<ActionResult<IEnumerable<Empleado>>> GetEmpleados()
         {
             var empleados = await _context.Empleados.ToListAsync();
-            return empleados;
+            return Ok(empleados);
         }
 
         //Endpoint para obtener un empleado en base a su ID
@@ -39,7 +39,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return empleado;
+            return Ok(empleado);
         }
 
         //Endpoint para modificar la información del empleado
@@ -72,7 +72,7 @@ namespace Human_Link_Web.Server.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("Empleado actualizado.");
         }
 
         //Endpoint para añadir un empleado a la base de datos
@@ -84,9 +84,9 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context.Empleados.Add(empleado);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetEmpleado", new { id = empleado.Idempleado }, empleado);
         }
+
 
         //Endpoint para eliminar a un empleado haciendo uso de su ID
         // DELETE: HumanLink/Empleado/:id
@@ -103,7 +103,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Empleados.Remove(empleado);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Empleado eliminado.");
         }
 
         private bool EmpleadoExists(int id)

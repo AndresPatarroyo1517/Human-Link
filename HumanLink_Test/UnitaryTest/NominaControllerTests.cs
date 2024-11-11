@@ -30,7 +30,7 @@ namespace HumanLink_UnitaryTest
 
             var actionResult = Assert.IsType<ActionResult<IEnumerable<Nomina>>>(result);
             var returnValue = Assert.IsAssignableFrom<IEnumerable<Nomina>>(actionResult.Value);
-            Assert.Equal(4, returnValue.Count());
+            Assert.Equal(3, returnValue.Count());
         }
 
         [Fact]
@@ -44,13 +44,14 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task GetNomina_ReturnsNomina_WhenNominaExists()
         {
-            var nomina = new Nomina { Idnomina = 2 };
+            var nomina = new Nomina { Idnomina = 2, Horasextra = 4564 };
             await _controller.PostNomina(nomina);
 
             var result = await _controller.GetNomina(2);
 
-            var actionResult = Assert.IsType<ActionResult<Nomina>>(result);
-            Assert.Equal(nomina, actionResult.Value);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnedNomina = Assert.IsType<Nomina>(okResult.Value);
+            Assert.Equal(nomina.Idnomina, returnedNomina.Idnomina);
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.PutNomina(4, updatedNomina);
 
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }

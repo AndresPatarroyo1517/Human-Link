@@ -31,7 +31,7 @@ namespace Human_Link_Web.Server.Controllers
 
             if (user == null)
             {
-                return NotFound("Usuario y/o clave incorrectos Usuario");
+                return NotFound("Usuario y/o clave incorrectos");
             }
 
             // Verificar si la clave ingresada coincide con la encriptación
@@ -40,7 +40,7 @@ namespace Human_Link_Web.Server.Controllers
             if (!result)
             {
                 //return Unauthorized("Clave incorrecta");
-                return NotFound("Usuario y/o clave incorrectos Clave");
+                return NotFound("Usuario y/o clave incorrectos");
             }
 
             var token = _utilidades.generarJWT(user);

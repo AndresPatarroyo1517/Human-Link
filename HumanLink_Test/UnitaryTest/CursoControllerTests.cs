@@ -57,7 +57,7 @@ namespace HumanLink_UnitaryTest
             curso.Nombrecurso = "Curso Actualizado";
             var result = await _controller.PutCurso(2, curso);
 
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.DeleteCurso(5);
 
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }

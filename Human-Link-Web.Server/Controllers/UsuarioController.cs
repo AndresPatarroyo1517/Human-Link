@@ -42,7 +42,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return usuario;
+            return Ok(usuario);
         }
 
 
@@ -97,7 +97,7 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Retorna un estado 204 No Content si la operación fue exitosa
-            return NoContent();
+            return Ok("Usuario actualizado");
         }
 
 
@@ -262,7 +262,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Usuario eliminado");
         }
 
         private bool UsuarioExists(int id)

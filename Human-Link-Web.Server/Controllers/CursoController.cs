@@ -72,7 +72,7 @@ namespace Human_Link_Web.Server.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("Curso actualizado.");
         }
         //Endpoint para crear un curso 
         //Cambiar a uso restringido del JWT
@@ -102,7 +102,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Cursos.Remove(curso);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Curso eliminado.");
         }
 
         private bool CursoExists(int id)

@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
+using Human_Link_Web.Server.ValidationModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +19,12 @@ namespace Human_Link_Web.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+           /* builder.Services.AddValidatorsFromAssemblyContaining<NominaValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<EmpleadoValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CursoValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UsuarioValidator>();*/
+            builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddSingleton<HumanLink_Mongo>(provider =>
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();

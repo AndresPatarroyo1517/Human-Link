@@ -7,7 +7,7 @@ namespace Human_Link_Web.Server.Custom
     {
         private const int saltSize = 128 / 8;
         private const int keySize = 256 / 8;
-        private const int iterations = 10000;
+        private const int iterations = 100;
         private static readonly HashAlgorithmName hashAlgorithmName = HashAlgorithmName.SHA256;
         private static readonly char delimiter = ';';
 

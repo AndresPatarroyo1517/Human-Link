@@ -80,7 +80,7 @@ namespace Human_Link_Web.Server.Controllers
             await stream.CopyToAsync(result);
             result.Position = 0;
 
-            return File(result, "application/octet-stream", fileInfo.Filename);
+            return Ok(File(result, "application/octet-stream", fileInfo.Filename));
         }
 
 

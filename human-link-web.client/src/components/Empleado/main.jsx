@@ -1,7 +1,10 @@
 import CardCursos from './cardCursos';
-import TableInforms from './tableInforms';
+import Documents from './documentos/documents';
 import { useEmpleado } from '../../context/empleadoContext';
 import CardCursoProgreso from './cardCursoProgreso';
+import Info from './Info';
+import DesarrollarCursos from './desarrollarCursos';
+import { CursoProvider } from '../../context/cursoContext';
 
 const Main = () => {
     const { activeMenu } = useEmpleado();
@@ -41,12 +44,13 @@ const Main = () => {
 
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
-                    {/*{activeMenu === 'Mis Cursos' && <TableInforms colum1="Usuario" colum2="Departamento" colum3="Curso" />}*/}
+                    {activeMenu === 'Mis Documentos' && <Documents />}
+                    {activeMenu === 'Info' && <Info />}
+                    <CursoProvider>
                     {activeMenu === 'Mis Cursos' && <CardCursos />}
-                    {activeMenu === 'Mis Documentos' && <TableInforms />}
                     {activeMenu === 'Mi Progreso' && <CardCursoProgreso />}
-                    {/*{activeMenu === 'Añadir Cursos' && <CardCursos />}*/}
-                    {/*{activeMenu === 'Certificados' && <TableInforms colum1="Usuario" colum2="Curso" colum3="Certificado" />}*/}
+                    {activeMenu === 'Desarrollo curso' && <DesarrollarCursos />}
+                    </CursoProvider>
                 </div>
             </div>
         </main>

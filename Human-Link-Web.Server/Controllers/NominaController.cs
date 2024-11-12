@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -29,11 +30,18 @@ namespace Human_Link_Web.Server.Controllers
         //Endpoint para obtener la nomina de un empleado
         //Cambiar el id obtenido por el params, y obtenerlo del JWT que existe en la cookie, aunque debe buscarse la nomina en base al ID usuario y no por la ID del campo
         // GET: HumanLink/Nomina/5
-        [HttpGet("{id}")]
-        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
-        public async Task<ActionResult<Nomina>> GetNomina(int id)
+        [HttpGet("Get")]
+        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea administrador o empleado
+        public async Task<ActionResult<Nomina>> GetNomina()
         {
-            var nomina = await _context.Nominas.FindAsync(id);
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return Unauthorized(); // Si no se encuentra el ID del usuario en las claims, devolver 401 Unauthorized
+            }
+
+            var usuarioId = Convert.ToInt32(id);
+            var nomina = await _context.Nominas.FindAsync(usuarioId);
 
             if (nomina == null)
             {

@@ -24,7 +24,7 @@ namespace Human_Link_Web.Server.Controllers
         //Endpoint para obtener todos los cursos existentes en la base de datos
         // GET: HumanLink/Curso
         [HttpGet]
-        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+        [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
             return await _context.Cursos.ToListAsync();

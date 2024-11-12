@@ -1,0 +1,17 @@
+.video-card {
+    position: relative;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.btn-cuestionario {
+    margin: 10px;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}

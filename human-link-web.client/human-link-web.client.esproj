@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="src\App.css" />
     <None Remove="src\components\Dashboard\Navbar.1.jsx" />
+    <None Remove="src\components\Empleado\desarrolloCursos.css" />
     <None Remove="src\index.css" />
   </ItemGroup>
 </Project>

@@ -2,10 +2,16 @@
 import React, { useState } from "react";
 import cursosService from "../../services/cursosService";
 import { useEffect } from "react";
+import { useEmpleado } from '../../context/empleadoContext';
+import { useCurso } from '../../context/cursoContext';
 
 const CardCursos = () => {
     // Array inicial de cursos
     const [cursos, setCursos] = useState([]);
+
+    const [cursosGeneral, setCursosGeneral] = useState([]);
+
+    const { setActiveMenu } = useEmpleado();
 
     useEffect(() => {
         cursosService.getCursosEmpleado()
@@ -19,9 +25,17 @@ const CardCursos = () => {
     }, []);
 
     useEffect(() => {
-        console.log("Cursos actualizados:", cursos);
-    }, [cursos]);
+        cursosService.getCursos()
+        .then(response => {
+                console.log("Response from getCursos:", response);
+                setCursosGeneral(response);
+            })
+            .catch(error => {
+                console.error('Error al obtener los cursos:', error);
+            });
+    }, []);
 
+    
     const [newCurso, setNewCurso] = useState({
         nombrecurso: "",
         duracion: "",
@@ -29,7 +43,7 @@ const CardCursos = () => {
         descripcion: ""
     });
 
-    const [selectedCurso, setSelectedCurso] = useState(null);
+    const { setSelectedCurso } = useCurso();
 
     const handleInputChange = (e) => {
         setNewCurso({
@@ -48,48 +62,12 @@ const CardCursos = () => {
         });
     };
 
+   
+
     return (
         <>
-            {/* Botón Añadir curso */}
-            <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#aniadirModal">
-                <i className="bi bi-plus-circle"></i> Añadir curso
-            </button>
-
-            {/* Modal para añadir un nuevo curso */}
-            <div className="modal fade" id="aniadirModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Crea un nuevo curso</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="mb-3">
-                                    <label htmlFor="titulo" className="col-form-label">Título:</label>
-                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.nombrecurso} onChange={handleInputChange} />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="descripcion" className="col-form-label">Descripción:</label>
-                                    <textarea className="form-control" id="descripcion" name="descripcion" value={newCurso.descripcion} onChange={handleInputChange}></textarea>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="duracion" className="col-form-label">Duración (Horas):</label>
-                                    <input type="number" className="form-control" id="duracion" name="duracion" value={newCurso.duracion} onChange={handleInputChange} />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="url" className="col-form-label">Url de la imagen:</label>
-                                    <input type="text" className="form-control" id="url" name="url" value={newCurso.url} onChange={handleInputChange} />
-                                </div>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>Añadir</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/* Mis cursos */}
+            <div><h2 className="mb-4">Mis cursos</h2></div>
 
             {/* tarjetas de los cursos */}
             <div className="row">
@@ -102,39 +80,75 @@ const CardCursos = () => {
                                 <button
                                     type="button"
                                     className="btn btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#infoModal"
-                                    onClick={() => setSelectedCurso(curso)}
+                                    onClick={() => {
+                                        setSelectedCurso(curso);
+                                        setActiveMenu('Desarrollo curso')
+                                    }
+                                    }
                                 >
-                                    Saber más
+                                    Ingresar
                                 </button>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {/* cursos */}
+            <div><h2 className="mb-4">Cursos que te podrian interesar</h2></div>
 
-            {/* detalles del curso */}
-            {selectedCurso && (
-                <div className="modal fade" id="infoModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.Nombrecurso}</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                {selectedCurso.Descripcion}
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            {/* tarjetas de los cursos */}
+            <div className="row">
+                {cursosGeneral.map((curso, index) => (
+                    // Verificamos si el curso ya está en 'cursos' antes de renderizarlo
+                    !cursos.some(c => c.Nombrecurso === curso.Nombrecurso) && (
+                        <div key={index} className="col-md-4 mb-4">
+                            <div className="card h-100">
+                                <img src={curso.Url && curso.Url.length > 0 ? curso.Url[0] : "imagen no encontrada"} className="card-img-top" alt={curso.Nombrecurso} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{curso.Nombrecurso}</h5>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target={'#modalcurso' + index} // Aquí eliminamos el '#' extra
+                                    >
+                                        Launch static backdrop modal
+                                    </button>
+
+                                    {/* Modal registro curso */}
+                                    <div className="modal fade" id={'modalcurso' + index} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div className="modal-dialog">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h1 className="modal-title fs-5" id="staticBackdropLabel">{curso.Nombrecurso}</h1>
+                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <h2 className="fs-5">Categoria</h2>
+                                                    <p>{curso.Categoria}</p>
+                                                    <hr />
+                                                    <h2 className="fs-5">Descripcion</h2>
+                                                    <p>{curso.Descripcion}</p>
+                                                    <h2 className="fs-5">Duracion</h2>
+                                                    <p>Este curso consta de un total de {curso.Duracion} Horas</p>
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-success">Inscribirme</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    )
+                ))}
+            </div>
+
         </>
+          
+        
     );
-};
+    };
 
 export default CardCursos;

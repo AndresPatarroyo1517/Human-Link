@@ -1,13 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.jsx';
+import { useEmpleado } from '../../context/empleadoContext.jsx'
 
 const Navbar = () => {
+
+    const { setActiveMenu } = useEmpleado();
+
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
     const cerrarSesion = async () => {
         await logout();
         navigate('/');
+    }
+
+    const linkInfo = (e) => {
+        e.preventDefault();
+        setActiveMenu('Info')
     }
 
     return (
@@ -23,7 +32,7 @@ const Navbar = () => {
                             Mi Cuenta
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a className="dropdown-item" href="#"> <i className="bi bi-person-fill-gear"></i> Configuración</a></li>
+                            <li><a className="dropdown-item" onClick={linkInfo}> <i className="bi bi-person-fill-gear"></i> Configuración</a></li>
                             <li className="li-linea-divisora"><hr className="dropdown-divider" /></li>
                             <li><a className="dropdown-item text-danger" onClick={cerrarSesion}><i className="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
                         </ul>

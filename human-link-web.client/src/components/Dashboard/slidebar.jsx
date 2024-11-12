@@ -5,9 +5,10 @@ const Slidebar = () => {
     const { activeSection, setActiveMenu } = useAdmin();
 
     const options = activeSection === 'Empleados' ? [
+        { label: 'Gestionar Usuarios', icon: 'bi bi-people' },
         { label: 'Asignar Cursos', icon: 'bi bi-person-lines-fill' },
         { label: 'Mis Documentos', icon: 'bi bi-archive' },
-        { label: 'Informes', icon: 'bi bi-file-earmark-medical' }
+        { label: 'Informes', icon: 'bi bi-file-earmark-medical' }   
     ] : [
         { label: 'Añadir Cursos', icon: 'bi bi-folder-plus' },
         { label: 'Mis Documentos', icon: 'bi bi-archive' },

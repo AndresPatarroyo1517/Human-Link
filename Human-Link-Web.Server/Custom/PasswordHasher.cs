@@ -33,17 +33,6 @@ namespace Human_Link_Web.Server.Custom
             return CryptographicOperations.FixedTimeEquals(hash, hashInput);
         }
 
-        //Usar este método para evitar un doble encriptamiento o posibles errores
-        public bool IsPasswordPotentiallyHashed(string password)
-        {
-            // Verifica si la contraseña parece estar hasheada
-            // Asumiendo que usamos BCrypt, que genera hashes de 60 caracteres que empiezan con $2a$, $2b$ o $2y$
-            return password.Length >= 60 &&
-                   (password.StartsWith("$2a$") ||
-                    password.StartsWith("$2b$") ||
-                    password.StartsWith("$2y$"));
-        }
-
         //Usar este método cuando se quieran validar la calidad de las contraseñas
         public bool IsPasswordValid(string password)
         {

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardCursos from './cardCursos';
 import TableInforms from './tableInforms';
 import { useAdmin } from '../../context/adminContext';
@@ -7,7 +7,8 @@ import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 import DocumentManager from './DocumentManager';
-import AsignarCursos from './AsignarCursos'; // Importar el nuevo componente
+import AsignarCursos from './AsignarCursos';
+import CardUsuarios from './cardUsuarios';
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
@@ -51,6 +52,7 @@ const Main = () => {
 
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
+                    {activeMenu === 'Gestionar Usuarios' && <CardUsuarios />}
                     {activeMenu === 'Asignar Cursos' && <AsignarCursos />} {/* Muestra el componente AsignarCursos */}
                     {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aquí */}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}

@@ -1,7 +1,10 @@
 ﻿using Human_Link_Web.Server.Controllers;
 using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using System.Security.Claims;
 
 namespace HumanLink_UnitaryTest
 {
@@ -9,6 +12,7 @@ namespace HumanLink_UnitaryTest
     {
         private readonly HumanLinkContext _context;
         private readonly NominaController _controller;
+        private readonly DefaultHttpContext _httpContext;
 
         public NominaControllerTests()
         {
@@ -17,7 +21,21 @@ namespace HumanLink_UnitaryTest
                 .Options;
 
             _context = new HumanLinkContext(options);
-            _controller = new NominaController(_context);
+            _httpContext = new DefaultHttpContext();
+            var claims = new List<Claim>
+            {
+            new Claim(ClaimTypes.NameIdentifier, "2")
+            };
+            var identity = new ClaimsIdentity(claims, "TestAuth");
+            var principal = new ClaimsPrincipal(identity);
+            _httpContext.User = principal;
+            _controller = new NominaController(_context)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = _httpContext
+                }
+            };
         }
 
         [Fact]
@@ -36,10 +54,23 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task GetNomina_ReturnsNotFound_WhenNominaDoesNotExist()
         {
-            var result = await _controller.GetNomina(99);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, "99") 
+            };
+            var identity = new ClaimsIdentity(claims, "TestAuth");
+            var principal = new ClaimsPrincipal(identity);
+            _httpContext.User = principal;
+            var usuarioId = 99; 
+            var nomina = await _context.Nominas.FirstOrDefaultAsync(n => n.Idnomina == usuarioId);
+            Assert.Null(nomina); 
+            var result = await _controller.GetNomina();
 
-            Assert.IsType<NotFoundResult>(result.Result);
+          
+            var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
+            Assert.Equal(404, notFoundResult.StatusCode);
         }
+
 
         [Fact]
         public async Task GetNomina_ReturnsNomina_WhenNominaExists()
@@ -47,7 +78,7 @@ namespace HumanLink_UnitaryTest
             var nomina = new Nomina { Idnomina = 2, Horasextra = 4564 };
             await _controller.PostNomina(nomina);
 
-            var result = await _controller.GetNomina(2);
+            var result = await _controller.GetNomina();
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnedNomina = Assert.IsType<Nomina>(okResult.Value);

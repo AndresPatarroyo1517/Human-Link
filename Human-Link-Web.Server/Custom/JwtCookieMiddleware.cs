@@ -34,10 +34,12 @@ public class JwtCookieMiddleware
 
                 if (validatedToken is JwtSecurityToken jwtToken)
                 {
-                    try {
+                    try
+                    {
                         context.User = new ClaimsPrincipal(new ClaimsIdentity(jwtToken.Claims, "jwt"));
                     }
-                    catch {
+                    catch
+                    {
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         await context.Response.WriteAsync("Sin autorización: Datos a obtener no encontrados.");
                         return;

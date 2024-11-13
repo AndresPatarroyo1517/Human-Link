@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
-using Human_Link_Web.Server.Custom;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
 namespace Human_Link_Web.Server.Controllers
@@ -42,7 +42,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return usuario;
+            return Ok(usuario);
         }
 
 
@@ -73,12 +73,6 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Verificar si la contraseña ya está hasheada
-            if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-            {
-                return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
-            }
-
             // Cifra la nueva clave
             usuarioExistente.Clave = _passwordHasher.Hash(usuario.Clave);
 
@@ -103,7 +97,7 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Retorna un estado 204 No Content si la operación fue exitosa
-            return NoContent();
+            return Ok("Usuario actualizado");
         }
 
 
@@ -126,12 +120,6 @@ namespace Human_Link_Web.Server.Controllers
                 if (string.IsNullOrEmpty(usuario.Clave))
                 {
                     return BadRequest("La contraseña no puede estar vacía.");
-                }
-
-                // Verificar si la contraseña ya está hasheada
-                if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-                {
-                    return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
                 }
 
                 // Hashear la contraseña
@@ -274,7 +262,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Usuario eliminado");
         }
 
         private bool UsuarioExists(int id)

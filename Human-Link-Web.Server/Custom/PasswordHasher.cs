@@ -9,7 +9,9 @@ namespace Human_Link_Web.Server.Custom
         private const int keySize = 256 / 8;
         private const int iterations = 100;
         private static readonly HashAlgorithmName hashAlgorithmName = HashAlgorithmName.SHA256;
-        private static char delimiter = ';';
+        private static readonly char delimiter = ';';
+
+        public PasswordHasher() { }
 
         public string Hash(string password)
         {
@@ -17,9 +19,6 @@ namespace Human_Link_Web.Server.Custom
             var salt = RandomNumberGenerator.GetBytes(saltSize);
             var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithmName, keySize);
             var result = string.Join(delimiter, Convert.ToBase64String(salt), Convert.ToBase64String(hash));
-
-            // Imprimir información de depuración
-            Console.WriteLine($"Debug - Salt generado: {Convert.ToBase64String(salt)}");
 
             return result;
         }

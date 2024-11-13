@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
-using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -31,7 +31,7 @@ namespace Human_Link_Web.Server.Controllers
 
             if (user == null)
             {
-                return NotFound("Usuario y/o clave incorrectos Usuario");
+                return NotFound("Usuario y/o clave incorrectos");
             }
 
             // Verificar si la clave ingresada coincide con la encriptación
@@ -41,7 +41,7 @@ namespace Human_Link_Web.Server.Controllers
             if (!result)
             {
                 //return Unauthorized("Clave incorrecta");
-                return NotFound("Usuario y/o clave incorrectos Clave");
+                return NotFound("Usuario y/o clave incorrectos");
             }
 
             var token = _utilidades.generarJWT(user);
@@ -54,7 +54,8 @@ namespace Human_Link_Web.Server.Controllers
                     Secure = true
                 });
             }
-            else {
+            else
+            {
                 Response.Cookies.Append("jwt", token, new CookieOptions
                 {
                     HttpOnly = true,

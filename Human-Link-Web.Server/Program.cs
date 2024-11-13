@@ -21,6 +21,12 @@ namespace Human_Link_Web.Server
             builder.Services.AddSwaggerGen();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
             builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping; 
+            });
             builder.Services.AddSingleton<HumanLink_Mongo>(provider =>
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();

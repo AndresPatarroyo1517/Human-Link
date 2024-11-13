@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -28,11 +29,18 @@ namespace Human_Link_Web.Server.Controllers
 
         //Endpoint para obtener un empleado en base a su ID
         // GET: HumanLink/Empleado/:id
-        [HttpGet("Get-{id}")]
-        [Authorize(Policy = "AllPolicy")] // solo permite el consumo del endpoint a usuarios logeados, ya sea adminnistrador o empleado
-        public async Task<ActionResult<Empleado>> GetEmpleado(int id)
+        [HttpGet("Get")]
+        [Authorize(Policy = "AllPolicy")]
+        public async Task<ActionResult<Empleado>> GetEmpleado()
         {
-            var empleado = await _context.Empleados.FindAsync(id);
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return Unauthorized(); // Si no se encuentra el ID del usuario en las claims, devolver 401 Unauthorized
+            }
+
+            var usuarioId = Convert.ToInt32(id);
+            var empleado = await _context.Empleados.FindAsync(usuarioId);
 
             if (empleado == null)
             {

@@ -1,52 +1,88 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
+using Konscious.Security.Cryptography;
 
 namespace Human_Link_Web.Server.Custom
 {
     public class PasswordHasher
     {
-        private const int saltSize = 128 / 8;
-        private const int keySize = 256 / 8;
-        private const int iterations = 100;
-        private static readonly HashAlgorithmName hashAlgorithmName = HashAlgorithmName.SHA256;
-        private static readonly char delimiter = ';';
+        private const int reducedTimeCost = 2; // Valor bajo para acelerar el hashing
+        private const int reducedMemoryCost = 32768; // Reduce la memoria a 32 MB
+        private const int degreeOfParallelism = 1; // Reducido para evitar sobrecarga de hilos
 
         public PasswordHasher() { }
 
+        // Método para hacer el hash de la contraseña
         public string Hash(string password)
         {
-            // Generar un nuevo salt aleatorio para cada hash
-            var salt = RandomNumberGenerator.GetBytes(saltSize);
-            var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithmName, keySize);
-            var result = string.Join(delimiter, Convert.ToBase64String(salt), Convert.ToBase64String(hash));
+            // Convertir la contraseña a un arreglo de bytes
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-            return result;
+            // Generamos el salt
+            var salt = new byte[16];
+            new Random().NextBytes(salt);
+
+            using (var argon2 = new Argon2id(passwordBytes))
+            {
+                // Configuramos el Argon2 con los parámetros adecuados
+                argon2.Salt = salt;
+                argon2.DegreeOfParallelism = degreeOfParallelism;
+                argon2.MemorySize = reducedMemoryCost;
+                argon2.Iterations = reducedTimeCost;
+
+                // Realizamos el hash de la contraseña
+                var hash = argon2.GetBytes(32); // Obtener 32 bytes del hash
+
+                // Combinamos el salt con el hash y lo convertimos a base64
+                return Convert.ToBase64String(salt) + "$" + Convert.ToBase64String(hash);
+            }
         }
 
-        public bool Verify(string passwordHash, string inputPassword)
+        // Método para verificar si la contraseña ingresada coincide con el hash almacenado
+        public bool Verify(string storedPasswordHash, string inputPassword)
         {
-            var elements = passwordHash.Split(delimiter);
-            var salt = Convert.FromBase64String(elements[0]);
-            var hash = Convert.FromBase64String(elements[1]);
-            var hashInput = Rfc2898DeriveBytes.Pbkdf2(inputPassword, salt, iterations, hashAlgorithmName, keySize);
-            return CryptographicOperations.FixedTimeEquals(hash, hashInput);
+            // Separamos el salt del hash almacenado
+            var parts = storedPasswordHash.Split('$');
+            var salt = Convert.FromBase64String(parts[0]);
+            var storedHash = Convert.FromBase64String(parts[1]);
+
+            // Convertir la contraseña ingresada a un arreglo de bytes
+            var inputPasswordBytes = Encoding.UTF8.GetBytes(inputPassword);
+
+            using (var argon2 = new Argon2id(inputPasswordBytes))
+            {
+                // Configuramos el Argon2 con los mismos parámetros que se usaron al almacenar el hash
+                argon2.Salt = salt;
+                argon2.DegreeOfParallelism = degreeOfParallelism;
+                argon2.MemorySize = reducedMemoryCost;
+                argon2.Iterations = reducedTimeCost;
+
+                // Verificamos si la contraseña ingresada coincide con el hash almacenado
+                var computedHash = argon2.GetBytes(32);
+
+                return CompareHashes(computedHash, storedHash);
+            }
         }
 
-        //Usar este método para evitar un doble encriptamiento o posibles errores
-        public bool IsPasswordPotentiallyHashed(string password)
+        // Método para comparar dos hashes
+        private bool CompareHashes(byte[] computedHash, byte[] storedHash)
         {
-            // Verifica si la contraseña parece estar hasheada
-            // Asumiendo que usamos BCrypt, que genera hashes de 60 caracteres que empiezan con $2a$, $2b$ o $2y$
-            return password.Length >= 60 &&
-                   (password.StartsWith("$2a$") ||
-                    password.StartsWith("$2b$") ||
-                    password.StartsWith("$2y$"));
+            if (computedHash.Length != storedHash.Length)
+                return false;
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != storedHash[i])
+                    return false;
+            }
+
+            return true;
         }
 
-        //Usar este método cuando se quieran validar la calidad de las contraseñas
+        // Método para validar que la contraseña cumpla con los requisitos de seguridad
         public bool IsPasswordValid(string password)
         {
-            // Validar que la contraseña cumple con requisitos mínimos de seguridad
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasLowerChar = new Regex(@"[a-z]+");

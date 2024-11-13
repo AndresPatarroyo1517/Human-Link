@@ -146,9 +146,10 @@ namespace Human_Link_Web.Server.Controllers
         }
 
 
-        //EnvPoint para encriptar las claves de la base de datos --BORRAR CUANDO TERMINE EL PROCESO DE DESARROLLO, ES SÓLO PARA AHORRAR TRABAJO--
+        // Endpoint para encriptar las claves de la base de datos --BORRAR CUANDO TERMINE EL PROCESO DE DESARROLLO, ES SÓLO PARA AHORRAR TRABAJO--
         private const int MAX_RETRY_ATTEMPTS = 3;
         private const int RETRY_DELAY_MS = 1000; // 1 segundo entre reintentos
+
         [HttpPost("encriptar-claves")]
         [Authorize(Policy = "AdminPolicy")]
         public async Task<ActionResult> EncryptExistingPasswords()
@@ -191,9 +192,11 @@ namespace Human_Link_Web.Server.Controllers
 
                                     if (usuarioActual != null)
                                     {
-                                        // Cifrar la clave
+                                        // Cifrar la clave con Argon2
                                         var claveOriginal = usuarioActual.Clave;
-                                        usuarioActual.Clave = _passwordHasher.Hash(claveOriginal);
+
+                                        // Aquí generas el hash con Argon2, asumiendo que _passwordHasher está configurado para Argon2
+                                        usuarioActual.Clave = _passwordHasher.Hash(claveOriginal);  // Esto debe estar configurado para usar Argon2
 
                                         await _context.SaveChangesAsync();
                                         scope.Complete();
@@ -246,6 +249,7 @@ namespace Human_Link_Web.Server.Controllers
                 intentosRealizados = intentosConexion
             });
         }
+
 
         //Endpoint para eliminar un usuario de la base de datos
         // DELETE: HumanLink/Usuario/5

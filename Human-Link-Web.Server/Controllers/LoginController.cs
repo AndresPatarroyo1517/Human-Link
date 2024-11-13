@@ -3,6 +3,7 @@ using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -22,54 +23,59 @@ namespace Human_Link_Web.Server.Controllers
             this._passwordHasher = _passwordHasher;
         }
 
-        //Endpoint para hacer inicio de sesión 
+        // Endpoint para hacer inicio de sesión 
         // POST: HumanLink/Login/login
         [HttpPost("login")]
         public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)
         {
+            Debug.WriteLine("Inicio de sesión iniciado.");
+
             var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
 
             if (user == null)
             {
+                Debug.WriteLine("Usuario no encontrado.");
                 return NotFound("Usuario y/o clave incorrectos");
             }
 
-            // Verificar si la clave ingresada coincide con la encriptación
-            /*if (user.Clave == userLogin.Clave)
-            { return NotFound("Usuario y/o clave incorrectos Clave"); }*/
-            var result = _passwordHasher.Verify(user.Clave, userLogin.Clave);
-            if (!result)
+            Debug.WriteLine("Usuario encontrado, verificando clave...");
+
+            // Verificar si la clave ingresada coincide con la encriptación usando PasswordHasher
+            bool isPasswordValid = _passwordHasher.Verify(user.Clave, userLogin.Clave);
+            if (!isPasswordValid)
             {
-                //return Unauthorized("Clave incorrecta");
+                Debug.WriteLine("La clave no coincide.");
                 return NotFound("Usuario y/o clave incorrectos");
             }
 
+            Debug.WriteLine("Clave verificada correctamente. Generando token JWT.");
+
+            // Generar el token JWT
             var token = _utilidades.generarJWT(user);
+
+            // Configurar cookie JWT según la opción de "recordar"
             var remember = userLogin.Recuerdame;
-            if (!remember)
+            var cookieOptions = new CookieOptions
             {
-                Response.Cookies.Append("jwt", token, new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true
-                });
-            }
-            else
-            {
-                Response.Cookies.Append("jwt", token, new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Expires = DateTime.UtcNow.AddDays(1)
-                });
-            }
+                HttpOnly = true,
+                Secure = true,
+                Expires = remember ? DateTime.UtcNow.AddDays(1) : (DateTimeOffset?)null
+            };
+
+            Response.Cookies.Append("jwt", token, cookieOptions);
+
+            Debug.WriteLine("Token JWT configurado correctamente.");
+
             var sesion = new
             {
                 usuario = user.Usuario1,
                 isAdmin = user.Isadmin
             };
+
+            Debug.WriteLine("Inicio de sesión exitoso.");
             return Ok(sesion);
         }
+
 
         //Endpoint para eliminar la cookie
         // POST: HumanLink/Login/logout

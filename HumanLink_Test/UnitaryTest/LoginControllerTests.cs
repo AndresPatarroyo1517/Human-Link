@@ -58,7 +58,7 @@ namespace HumanLink_UnitaryTest
         public async Task PostLogin_InvalidPassword_ReturnsNotFound()
         {
             var userLogin = new Login { Usuario = "jose123", Clave = "456" };
-            var user = new Usuario { Usuario1 = "jose123", Clave = "+T2WCPwsw6Gku1U5CKrzTQ==;6SXMLppYvJNrsAH87NXkB2y7xE2As9uMQstm8uO1OPc=" };
+            var user = new Usuario { Usuario1 = "jose123", Clave = "tksG25ZwVpihuAgtF4/sMg==$+plr9VCZTKRL3dpzIZRF9ssrH6GhBjwBFVeMWZtqf4A=" };
             _mockContext.Setup(c => c.Usuarios)
                 .ReturnsDbSet(new List<Usuario> { user });
 
@@ -74,7 +74,7 @@ namespace HumanLink_UnitaryTest
         public async Task PostLogin_ValidCredentials_ReturnsOk()
         {
             var userLogin = new Login { Usuario = "jose123", Clave = "123", Recuerdame = true };
-            var user = new Usuario { Usuario1 = "jose123", Clave = "6dXo5bIbJAZIX6ndsn6Fuw==;pU21c8DPIuHztCeyjVimhiZ7EQjGm3PFttxAMM7UaF0=", Isadmin = true, Idusuario = 1 };
+            var user = new Usuario { Usuario1 = "jose123", Clave = "CJHzyzs7mOgBH4mCpxJW1w==$b3T6pBT11CvzpB/fyntnes9CUrVip9e/2gYXIPqJVeA=", Isadmin = true, Idusuario = 1 };
             _mockContext.Setup(c => c.Usuarios)
                 .ReturnsDbSet(new List<Usuario> { user });
 

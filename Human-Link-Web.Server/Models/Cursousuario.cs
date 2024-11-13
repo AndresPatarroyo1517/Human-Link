@@ -13,6 +13,8 @@ public partial class Cursousuario
 
     public int? Progreso { get; set; }
 
+    public int[]? Notas { get; set; }
+
     public DateOnly? Fechainicio { get; set; }
 
     public List<int>? Notas { get; set; }

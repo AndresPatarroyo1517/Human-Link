@@ -75,7 +75,28 @@ const cursosService = {
 
         const data = await response.json();
         return data;
+    },
+
+    postCursoUsuarioEmpleado: async (cursoId) => {
+        const response = await fetch(API_URL + '/inscripcion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+            body: JSON.stringify({
+                Idcurso: cursoId,
+                Progreso:0,
+            }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error details:", errorData); 
+        }
+        return response;
     }
+
+
 }
 
 export default cursosService;

@@ -5,7 +5,7 @@ import './DesarrollarCursos.css';
 
 
     const DesarrollarCursos = () => {
-        const apiKey = 'AIzaSyAdRZMAsJHz2KPzYbCr6QCDQI8-zAObpVU'; // Reemplaza con tu API Key de YouTube
+        const apiKey = 'AIzaSyAdRZMAsJHz2KPzYbCr6QCDQI8-zAObpVU';
         const { selectedCurso } = useCurso();
         const [descripciones, setDescripciones] = useState([]);
 
@@ -32,6 +32,8 @@ import './DesarrollarCursos.css';
             fetchDescriptions();
         }, [selectedCurso, apiKey]);
 
+
+        console.log(selectedCurso)
         return (
             <>
                 {selectedCurso.Url.slice(1).map((url, index) => (

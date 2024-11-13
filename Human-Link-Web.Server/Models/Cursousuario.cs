@@ -10,6 +10,8 @@ public partial class Cursousuario
 
     public int? Progreso { get; set; }
 
+    public int[]? Notas { get; set; }
+
     public DateOnly? Fechainicio { get; set; }
 
     public virtual Curso? IdcursoNavigation { get; set; }

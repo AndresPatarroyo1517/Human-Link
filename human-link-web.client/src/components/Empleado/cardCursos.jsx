@@ -1,68 +1,62 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cursosService from "../../services/cursosService";
-import { useEffect } from "react";
 import { useEmpleado } from '../../context/empleadoContext';
 import { useCurso } from '../../context/cursoContext';
 
 const CardCursos = () => {
-    // Array inicial de cursos
     const [cursos, setCursos] = useState([]);
-
     const [cursosGeneral, setCursosGeneral] = useState([]);
-
     const { setActiveMenu } = useEmpleado();
-
-    useEffect(() => {
-        cursosService.getCursosEmpleado()
-            .then(response => {
-                console.log("Response from getCursosEmpleado:", response);
-                setCursos(response);
-            })
-            .catch(error => {
-                console.error('Error al obtener los cursos:', error);
-            });
-    }, []);
-
-    useEffect(() => {
-        cursosService.getCursos()
-        .then(response => {
-                console.log("Response from getCursos:", response);
-                setCursosGeneral(response);
-            })
-            .catch(error => {
-                console.error('Error al obtener los cursos:', error);
-            });
-    }, []);
-
-    
-    const [newCurso, setNewCurso] = useState({
-        nombrecurso: "",
-        duracion: "",
-        url: "",
-        descripcion: ""
-    });
-
     const { setSelectedCurso } = useCurso();
 
-    const handleInputChange = (e) => {
-        setNewCurso({
-            ...newCurso,
-            [e.target.name]: e.target.value
-        });
+    useEffect(() => {
+        cargarCursosEmpleado();
+        cargarCursosGenerales();
+    }, []);
+
+    const cargarCursosEmpleado = async () => {
+        try {
+            const response = await cursosService.getCursosEmpleado();
+            console.log("Response from getCursosEmpleado:", response);
+            setCursos(response);
+        } catch (error) {
+            console.error('Error al obtener los cursos:', error);
+        }
     };
 
-    const handleAddCurso = () => {
-        setCursos([...cursos, newCurso]);
-        setNewCurso({
-            nombrecurso: "",
-            duracion: "",
-            url: "",
-            descripcion: ""
-        });
+    const cargarCursosGenerales = async () => {
+        try {
+            const response = await cursosService.getCursos();
+            console.log("Response from getCursos:", response);
+            setCursosGeneral(response);
+        } catch (error) {
+            console.error('Error al obtener los cursos:', error);
+        }
     };
 
-   
+    const inscribirse = async (Idcurso, modalId) => {
+        try {
+            const response = await cursosService.postCursoUsuarioEmpleado(Idcurso);
+            if (response.ok) {
+                const data = await response.json();
+                alert("Inscripción realizada con éxito.");
+                cargarCursosEmpleado(); // Recargar los cursos del empleado
+
+                // Cerrar el modal manualmente
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    const modalInstance = bootstrap.Modal.getInstance(modal);
+                    modalInstance.hide();
+                }
+            } else {
+                const errorData = await response.json();
+                alert("Hubo un problema con la inscripción: " + errorData.message);
+            }
+        } catch (error) {
+            console.error("Error al inscribirse:", error);
+            alert("Hubo un error al intentar inscribirse.");
+        }
+    };
 
     return (
         <>
@@ -82,9 +76,8 @@ const CardCursos = () => {
                                     className="btn btn-primary"
                                     onClick={() => {
                                         setSelectedCurso(curso);
-                                        setActiveMenu('Desarrollo curso')
-                                    }
-                                    }
+                                        setActiveMenu('Desarrollo curso');
+                                    }}
                                 >
                                     Ingresar
                                 </button>
@@ -93,13 +86,13 @@ const CardCursos = () => {
                     </div>
                 ))}
             </div>
+
             {/* cursos */}
-            <div><h2 className="mb-4">Cursos que te podrian interesar</h2></div>
+            <div><h2 className="mb-4">Cursos que te podrían interesar</h2></div>
 
             {/* tarjetas de los cursos */}
             <div className="row">
                 {cursosGeneral.map((curso, index) => (
-                    // Verificamos si el curso ya está en 'cursos' antes de renderizarlo
                     !cursos.some(c => c.Nombrecurso === curso.Nombrecurso) && (
                         <div key={index} className="col-md-4 mb-4">
                             <div className="card h-100">
@@ -110,7 +103,7 @@ const CardCursos = () => {
                                         type="button"
                                         className="btn btn-primary"
                                         data-bs-toggle="modal"
-                                        data-bs-target={'#modalcurso' + index} // Aquí eliminamos el '#' extra
+                                        data-bs-target={'#modalcurso' + index}
                                     >
                                         Launch static backdrop modal
                                     </button>
@@ -133,7 +126,7 @@ const CardCursos = () => {
                                                     <p>Este curso consta de un total de {curso.Duracion} Horas</p>
                                                 </div>
                                                 <div className="modal-footer">
-                                                    <button type="button" className="btn btn-success">Inscribirme</button>
+                                                    <button type="button" className="btn btn-success" onClick={() => inscribirse(curso.Idcurso, 'modalcurso' + index)}>Inscribirme</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,11 +137,8 @@ const CardCursos = () => {
                     )
                 ))}
             </div>
-
         </>
-          
-        
     );
-    };
+};
 
 export default CardCursos;

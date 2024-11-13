@@ -97,7 +97,7 @@ namespace Human_Link_Web.Server.Controllers
                         {
                             Curso = c,
                             Progreso = cu.Progreso
-                        })
+                    })
                 .ToListAsync();
 
             if (cursosConProgreso == null || !cursosConProgreso.Any())
@@ -107,6 +107,8 @@ namespace Human_Link_Web.Server.Controllers
 
             return Ok(cursosConProgreso);
         }
+
+
 
         // GET: HumanLink/CursoUsuario/:id
         [HttpGet("{id}")]
@@ -164,6 +166,34 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetCursousuario", new { id = cursousuario.Idcuremp }, cursousuario);
         }
+
+        [HttpPost("inscripcion")]
+        [Authorize(Policy = "AllPolicy")]
+        public async Task<ActionResult<Cursousuario>> PostCursousuarioEmpleado([FromBody] Cursousuario cursousuario)
+        {
+            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}");
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return Unauthorized(); // Si no se encuentra el ID del usuario en las claims, devolver 401 Unauthorized
+            }
+
+            cursousuario.Idusuario = Convert.ToInt32(id);
+            cursousuario.Fechainicio = DateOnly.FromDateTime(DateTime.Now);
+
+            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}, idusuario = {cursousuario.Idusuario}, fecha = {cursousuario.Fechainicio}");
+
+            _context.Cursousuarios.Add(cursousuario);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCursousuario", new { id = cursousuario.Idcuremp }, cursousuario);
+        }
+
+
+
+
+
+
 
         // DELETE: HumanLink/CursoUsuario/5
         [HttpDelete("{id}")]

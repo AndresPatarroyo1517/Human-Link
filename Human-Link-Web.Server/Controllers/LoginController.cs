@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
-using Human_Link_Web.Server.Custom;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -15,62 +16,35 @@ namespace Human_Link_Web.Server.Controllers
         private readonly Utilidades _utilidades;
         private readonly PasswordHasher _passwordHasher;
 
-        public LoginController(HumanLinkContext context, Utilidades _utilidades, PasswordHasher _passwordHasher)
+        public LoginController(HumanLinkContext context, Utilidades utilidades, PasswordHasher passwordHasher)
         {
-            this._context = context;
-            this._utilidades = _utilidades;
-            this._passwordHasher = _passwordHasher;
+            _context = context;
+            _utilidades = utilidades;
+            _passwordHasher = passwordHasher;
         }
 
-        //Endpoint para hacer inicio de sesión 
         // POST: HumanLink/Login/login
         [HttpPost("login")]
-        public async Task<ActionResult<Usuario>> PostLogin(Login userLogin)
+        public async Task<ActionResult> PostLogin(Login userLogin)
         {
-            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
+            // Fetch only essential fields from the database
+            var user = await _context.Usuarios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
 
-            if (user == null)
+            // Validate user existence and password
+            if (user == null || !_passwordHasher.Verify(user.Clave, userLogin.Clave))
             {
-                return NotFound("Usuario y/o clave incorrectos Usuario");
+                return NotFound("Usuario y/o clave incorrectos");
             }
 
-            // Verificar si la clave ingresada coincide con la encriptación
-            /*if (user.Clave == userLogin.Clave)
-            { return NotFound("Usuario y/o clave incorrectos Clave"); }*/
-            var result = _passwordHasher.Verify(user.Clave, userLogin.Clave);
-            if (!result)
-            {
-                //return Unauthorized("Clave incorrecta");
-                return NotFound("Usuario y/o clave incorrectos Clave");
-            }
-
+            // Generate JWT and configure cookie
             var token = _utilidades.generarJWT(user);
-            var remember = userLogin.Recuerdame;
-            if (!remember)
-            {
-                Response.Cookies.Append("jwt", token, new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true
-                });
-            }
-            else {
-                Response.Cookies.Append("jwt", token, new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Expires = DateTime.UtcNow.AddDays(1)
-                });
-            }
-            var sesion = new
-            {
-                usuario = user.Usuario1,
-                isAdmin = user.Isadmin
-            };
-            return Ok(sesion);
+            SetJwtCookie(token, userLogin.Recuerdame);
+
+            return Ok(new { usuario = user.Usuario1, isAdmin = user.Isadmin });
         }
 
-        //Endpoint para eliminar la cookie
         // POST: HumanLink/Login/logout
         [HttpPost("logout")]
         public IActionResult Logout()
@@ -78,7 +52,15 @@ namespace Human_Link_Web.Server.Controllers
             Response.Cookies.Delete("jwt");
             return Ok(new { message = "Logout exitoso" });
         }
-
-
+        private void SetJwtCookie(string token, bool remember)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = remember ? DateTime.UtcNow.AddDays(1) : (DateTimeOffset?)null
+            };
+            Response.Cookies.Append("jwt", token, cookieOptions);
+        }
     }
 }

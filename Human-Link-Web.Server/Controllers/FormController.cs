@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Human_Link_Web.Server.Models;
-using Microsoft.AspNetCore.Authorization;
-using Human_Link_Web.Server.Custom;
-using System.Net.Http;
+﻿using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Human_Link_Web.Server.Controllers
 {

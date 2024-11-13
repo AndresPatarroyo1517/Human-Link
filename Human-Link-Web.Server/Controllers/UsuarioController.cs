@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
-using Human_Link_Web.Server.Custom;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
 namespace Human_Link_Web.Server.Controllers
@@ -42,7 +42,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return usuario;
+            return Ok(usuario);
         }
 
 
@@ -73,12 +73,6 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Verificar si la contraseña ya está hasheada
-            if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-            {
-                return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
-            }
-
             // Cifra la nueva clave
             usuarioExistente.Clave = _passwordHasher.Hash(usuario.Clave);
 
@@ -103,7 +97,7 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Retorna un estado 204 No Content si la operación fue exitosa
-            return NoContent();
+            return Ok("Usuario actualizado");
         }
 
 
@@ -126,12 +120,6 @@ namespace Human_Link_Web.Server.Controllers
                 if (string.IsNullOrEmpty(usuario.Clave))
                 {
                     return BadRequest("La contraseña no puede estar vacía.");
-                }
-
-                // Verificar si la contraseña ya está hasheada
-                if (!_passwordHasher.IsPasswordPotentiallyHashed(usuario.Clave))
-                {
-                    return BadRequest("La contraseña parece estar ya hasheada. Por favor, envíe la contraseña sin hashear.");
                 }
 
                 // Hashear la contraseña
@@ -158,9 +146,10 @@ namespace Human_Link_Web.Server.Controllers
         }
 
 
-        //EnvPoint para encriptar las claves de la base de datos --BORRAR CUANDO TERMINE EL PROCESO DE DESARROLLO, ES SÓLO PARA AHORRAR TRABAJO--
+        // Endpoint para encriptar las claves de la base de datos --BORRAR CUANDO TERMINE EL PROCESO DE DESARROLLO, ES SÓLO PARA AHORRAR TRABAJO--
         private const int MAX_RETRY_ATTEMPTS = 3;
         private const int RETRY_DELAY_MS = 1000; // 1 segundo entre reintentos
+
         [HttpPost("encriptar-claves")]
         [Authorize(Policy = "AdminPolicy")]
         public async Task<ActionResult> EncryptExistingPasswords()
@@ -203,9 +192,11 @@ namespace Human_Link_Web.Server.Controllers
 
                                     if (usuarioActual != null)
                                     {
-                                        // Cifrar la clave
+                                        // Cifrar la clave con Argon2
                                         var claveOriginal = usuarioActual.Clave;
-                                        usuarioActual.Clave = _passwordHasher.Hash(claveOriginal);
+
+                                        // Aquí generas el hash con Argon2, asumiendo que _passwordHasher está configurado para Argon2
+                                        usuarioActual.Clave = _passwordHasher.Hash(claveOriginal);  // Esto debe estar configurado para usar Argon2
 
                                         await _context.SaveChangesAsync();
                                         scope.Complete();
@@ -259,6 +250,7 @@ namespace Human_Link_Web.Server.Controllers
             });
         }
 
+
         //Endpoint para eliminar un usuario de la base de datos
         // DELETE: HumanLink/Usuario/5
         [HttpDelete("{id}")]
@@ -274,7 +266,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Usuario eliminado");
         }
 
         private bool UsuarioExists(int id)

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-//ORM de C#:
-using Microsoft.EntityFrameworkCore;
-//Importa clases de Models
+﻿//Importa clases de Models
 using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+//ORM de C#:
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
@@ -93,8 +93,7 @@ namespace Human_Link_Web.Server.Controllers
                 .Join(_context.Cursos,
                     cu => cu.Idcurso,
                     c => c.Idcurso,
-                    (cu, c) => new
-                        {
+                    (cu, c) => new{
                             Curso = c,
                             Progreso = cu.Progreso
                     })

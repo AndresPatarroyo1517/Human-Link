@@ -1,15 +1,17 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Human_Link_Web.Server.Models;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Human_Link_Web.Server.Models;
 
 namespace Human_Link_Web.Server.Custom
 {
     public class Utilidades
     {
         private readonly IConfiguration _configuration;
+
+
         public Utilidades(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -30,7 +32,7 @@ namespace Human_Link_Web.Server.Custom
                 }
                 return builder.ToString();
             }
-            
+
         }
 
         public string generarJWT(Usuario usuario)

@@ -1,4 +1,7 @@
-﻿namespace Human_Link_Web.Server.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Human_Link_Web.Server.Models;
 
 public partial class Cursousuario
 {
@@ -13,6 +16,8 @@ public partial class Cursousuario
     public int[]? Notas { get; set; }
 
     public DateOnly? Fechainicio { get; set; }
+
+    public List<int>? Notas { get; set; }
 
     public virtual Curso? IdcursoNavigation { get; set; }
 

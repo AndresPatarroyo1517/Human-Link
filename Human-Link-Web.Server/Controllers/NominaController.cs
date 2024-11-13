@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Human_Link_Web.Server.Models;
+﻿using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
@@ -48,7 +48,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return nomina;
+            return Ok(nomina);
         }
         //Endpoint para modificar los campos de la nomina
         //Cambiar a uso restringido del JWT, usando el ID del usuario o a todos si es administrador, y opcional cambiar de PUT a PATCH
@@ -63,7 +63,13 @@ namespace Human_Link_Web.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(nomina).State = EntityState.Modified;
+            var existingNomina = await _context.Nominas.FindAsync(id);
+            if (existingNomina == null)
+            {
+                return NotFound();
+            }
+
+            existingNomina.Bonificacion = nomina.Bonificacion;
 
             try
             {
@@ -81,7 +87,7 @@ namespace Human_Link_Web.Server.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("Nómina actualizada.");
         }
 
         //Enpoint para añadir una nomina a la base de datos
@@ -98,7 +104,7 @@ namespace Human_Link_Web.Server.Controllers
 
         //Endpoint para eliminar una nomina de la base de datos
         // DELETE: HumanLink/Nomina/5
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<IActionResult> DeleteNomina(int id)
         {
@@ -111,8 +117,8 @@ namespace Human_Link_Web.Server.Controllers
             _context.Nominas.Remove(nomina);
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+            return Ok("");
+        }*/
 
         private bool NominaExists(int id)
         {

@@ -1,9 +1,11 @@
- using Human_Link_Web.Server.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Human_Link_Web.Server.Custom;
+using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Human_Link_Web.Server.Custom;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Human_Link_Web.Server
 {
@@ -16,23 +18,28 @@ namespace Human_Link_Web.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddHttpClient();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+            builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddControllers()
             .AddJsonOptions(options =>
-                {
-                   options.JsonSerializerOptions.PropertyNamingPolicy = null; // Si deseas mantener el formato original
-                   options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping; // Para asegurar que se manejen correctamente los caracteres especiales
-                });
-            builder.Services.AddSingleton(new HumanLink_Mongo(builder.Configuration.GetConnectionString("MongoContext"), builder.Configuration.GetConnectionString("DatabaseName")));
-            builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options =>{options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext"));});
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            });
+            builder.Services.AddSingleton<HumanLink_Mongo>(provider =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                return new HumanLink_Mongo(configuration);
+            });
+            builder.Services.AddEntityFrameworkNpgsql().AddDbContext<HumanLinkContext>(options => { options.UseNpgsql(builder.Configuration.GetConnectionString("HLContext")); });
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
-                    builder.WithOrigins("https://localhost:5173") 
-                           .AllowAnyMethod()  
+                    builder.WithOrigins("https://localhost:5173")
+                           .AllowAnyMethod()
                            .AllowAnyHeader()
-                           .AllowCredentials(); 
+                           .AllowCredentials();
                 });
             });
 
@@ -57,7 +64,8 @@ namespace Human_Link_Web.Server
                     (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]!))
                 };
             })
-            .AddCookie(config => {
+            .AddCookie(config =>
+            {
                 config.LoginPath = "/HumanLink/Login/login";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromDays(1);
@@ -76,7 +84,7 @@ namespace Human_Link_Web.Server
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            
+
 
             if (app.Environment.IsDevelopment())
             {
@@ -89,7 +97,7 @@ namespace Human_Link_Web.Server
             app.UseAuthentication();
 
             app.UseCors("AllowSpecificOrigin");
-            
+
             app.UseRouting();
 
             app.UseAuthorization();

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Human_Link_Web.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Human_Link_Web.Server.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -27,7 +22,8 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
-            return await _context.Cursos.ToListAsync();
+            var cursos = await _context.Cursos.ToListAsync();
+            return Ok(cursos);
         }
 
         //Endpoint para obtener un curso en especifico usando el ID
@@ -43,7 +39,7 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound();
             }
 
-            return curso;
+            return Ok(curso);
         }
 
         //Endpoint para actualizar algún campo del curso 
@@ -76,7 +72,7 @@ namespace Human_Link_Web.Server.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("Curso actualizado.");
         }
         //Endpoint para crear un curso 
         //Cambiar a uso restringido del JWT
@@ -106,7 +102,7 @@ namespace Human_Link_Web.Server.Controllers
             _context.Cursos.Remove(curso);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Curso eliminado.");
         }
 
         private bool CursoExists(int id)

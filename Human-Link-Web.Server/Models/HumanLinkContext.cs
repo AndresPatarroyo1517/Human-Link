@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Human_Link_Web.Server.Models;
 
@@ -13,6 +15,8 @@ public partial class HumanLinkContext : DbContext
     {
     }
 
+    public virtual DbSet<Cuestionario> Cuestionarios { get; set; }
+
     public virtual DbSet<Curso> Cursos { get; set; }
 
     public virtual DbSet<Cursousuario> Cursousuarios { get; set; }
@@ -25,6 +29,21 @@ public partial class HumanLinkContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Cuestionario>(entity =>
+        {
+            entity.HasKey(e => e.IdCuestionario).HasName("cuestionarios_pkey");
+
+            entity.ToTable("cuestionarios");
+
+            entity.Property(e => e.IdCuestionario).HasColumnName("id_cuestionario");
+            entity.Property(e => e.Idcurso).HasColumnName("idcurso");
+            entity.Property(e => e.Urlcuestionario).HasColumnName("urlcuestionario");
+
+            entity.HasOne(d => d.IdcursoNavigation).WithMany(p => p.Cuestionarios)
+                .HasForeignKey(d => d.Idcurso)
+                .HasConstraintName("cuestionarios_idcurso_fkey");
+        });
+
         modelBuilder.Entity<Curso>(entity =>
         {
             entity.HasKey(e => e.Idcurso).HasName("cursos_pkey");
@@ -33,7 +52,7 @@ public partial class HumanLinkContext : DbContext
 
             entity.Property(e => e.Idcurso).HasColumnName("idcurso");
             entity.Property(e => e.Categoria)
-                .HasMaxLength(10)
+                .HasMaxLength(40)
                 .HasColumnName("categoria");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(200)
@@ -43,7 +62,7 @@ public partial class HumanLinkContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("nombrecurso");
             entity.Property(e => e.Url)
-                .HasMaxLength(100)
+                .HasColumnType("character varying(100)[]")
                 .HasColumnName("url");
         });
 
@@ -57,6 +76,7 @@ public partial class HumanLinkContext : DbContext
             entity.Property(e => e.Fechainicio).HasColumnName("fechainicio");
             entity.Property(e => e.Idcurso).HasColumnName("idcurso");
             entity.Property(e => e.Idusuario).HasColumnName("idusuario");
+            entity.Property(e => e.Notas).HasColumnName("notas");
             entity.Property(e => e.Progreso).HasColumnName("progreso");
 
             entity.HasOne(d => d.IdcursoNavigation).WithMany(p => p.Cursousuarios)
@@ -76,7 +96,7 @@ public partial class HumanLinkContext : DbContext
 
             entity.Property(e => e.Idempleado).HasColumnName("idempleado");
             entity.Property(e => e.Cargo)
-                .HasMaxLength(20)
+                .HasMaxLength(40)
                 .HasColumnName("cargo");
             entity.Property(e => e.Departamento)
                 .HasMaxLength(30)
@@ -85,7 +105,7 @@ public partial class HumanLinkContext : DbContext
             entity.Property(e => e.Fechacontratacion).HasColumnName("fechacontratacion");
             entity.Property(e => e.Fechaterminacioncontrato).HasColumnName("fechaterminacioncontrato");
             entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
+                .HasMaxLength(40)
                 .HasColumnName("nombre");
             entity.Property(e => e.Salario).HasColumnName("salario");
 
@@ -108,7 +128,7 @@ public partial class HumanLinkContext : DbContext
 
             entity.HasOne(d => d.IdempleadoNavigation).WithMany(p => p.Nominas)
                 .HasForeignKey(d => d.Idempleado)
-                .HasConstraintName("nomina_idempleado_fkey");
+                .HasConstraintName("fk_empleado");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -116,6 +136,8 @@ public partial class HumanLinkContext : DbContext
             entity.HasKey(e => e.Idusuario).HasName("usuario_pkey");
 
             entity.ToTable("usuario");
+
+            entity.HasIndex(e => e.Usuario1, "usuario_unico").IsUnique();
 
             entity.Property(e => e.Idusuario).HasColumnName("idusuario");
             entity.Property(e => e.Clave)

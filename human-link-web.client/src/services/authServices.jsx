@@ -1,48 +1,50 @@
 const API_URL_LOGIN = 'https://localhost:7019/HumanLink/Login/login';
 const API_URL_LOGOUT = 'https://localhost:7019/HumanLink/Login/logout';
 
-export const login = async ({ usuario1, clave, recordar}) => {
+const postRequest = async (url, body = {}) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error en la solicitud');
+    }
+    return response.json();
+};
+
+export const loginService = async ( usuario1, clave, recordar ) => {
     const body = {
-        usuario: usuario1, 
+        usuario: usuario1,
         clave: clave,
         recordar: recordar
     };
+    const data = await postRequest(API_URL_LOGIN, body);
 
-    const response = await fetch(API_URL_LOGIN, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: "include",
-        body: JSON.stringify(body)
-    });
-    console.log(body)
-    if (!response.ok) {
-        throw new Error('Credenciales incorrectas');
-    }
-    const data = await response.json();
-    recordar
-        ? window.localStorage.setItem('user', JSON.stringify(data))
-        : window.sessionStorage.setItem('user', JSON.stringify(data))
+    saveUser(data, recordar);
+    return data;
+};
+export const logoutService = async () => {
+    const data = await postRequest(API_URL_LOGOUT);
+    deleteUser();
     return data;
 };
 
-
-export const logout = async () => {
-    const response = await fetch(API_URL_LOGOUT, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    });
-
-    if (!response.ok) {
-        throw new Error('No se pudo eliminar la cookie');
+const saveUser = (data, recordar) => {
+    const userData = JSON.stringify(data);
+    if (recordar) {
+        localStorage.setItem('user', userData);
+    } else {
+        sessionStorage.setItem('user', userData);
     }
-    const data = await response.json();
+};
+
+const deleteUser = () => {
     localStorage.removeItem('user');
     sessionStorage.removeItem('user');
-
-    return data;
-}
+};

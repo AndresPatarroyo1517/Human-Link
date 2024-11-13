@@ -1,27 +1,43 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { createContext, useState, useEffect } from 'react';
-import { login as loginService, logout as logoutService} from '../services/authServices.jsx';
+import { loginService, logoutService } from '../services/authServices.jsx';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({ username: "", isAdmin: false });
+    const [user, setUser] = useState(null);
 
-    const login = async (username, password, recordar) => {
-        const userData = await loginService(username, password, recordar);
-        
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+        if (storedUser) {
+            setUser(storedUser);
+        }
+    }, []);
+
+    const login = async (usuario1, clave, recordar) => {
+        const userData = await loginService( usuario1, clave, recordar );
+
         setUser(userData);
+
+        if (recordar) {
+            localStorage.setItem('user', JSON.stringify(userData));
+        } else {
+            sessionStorage.setItem('user', JSON.stringify(userData));
+        }
+
         return userData;
     };
 
     const logout = async () => {
-        await logoutService()
+        await logoutService();
         setUser(null);
+        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout}}>
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

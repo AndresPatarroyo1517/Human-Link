@@ -16,20 +16,24 @@ namespace Human_Link_Web.Server.Controllers
 
         [Authorize(Policy = "AllPolicy")]
         [HttpPost]
-        public async Task<IActionResult> SubirArchivo(IFormFile file)
+        public async Task<IActionResult> SubirArchivo(IFormFile file, [FromForm] string tipoDocumento)
         {
             var propietario = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
             if (file == null || file.Length == 0)
                 return BadRequest("No se ha subido ningún archivo.");
+
+            if (string.IsNullOrWhiteSpace(tipoDocumento))
+                return BadRequest("Tipo de documento no especificado.");
 
             using (var stream = file.OpenReadStream())
             {
                 ObjectId fileId = await _context.GridFS.UploadFromStreamAsync(file.FileName, stream);
                 Archivo nuevoArchivo = new()
                 {
-                    ArchivoPath = fileId.ToString(), 
+                    ArchivoPath = fileId.ToString(),
                     Propietario = propietario,
-                    NombreArchivo = (file.FileName).ToLower()
+                    NombreArchivo = file.FileName.ToLower(),
+                    TipoDocumento = tipoDocumento // Asigna el nuevo campo
                 };
 
                 await _context.Archivos.InsertOneAsync(nuevoArchivo);
@@ -37,6 +41,7 @@ namespace Human_Link_Web.Server.Controllers
 
             return Ok(new { mensaje = "Archivo subido exitosamente" });
         }
+
 
         [Authorize(Policy = "AllPolicy")]
         [HttpGet]
@@ -47,21 +52,30 @@ namespace Human_Link_Web.Server.Controllers
             {
                 Id = archivo.ArchivoPath,
                 Propietario = archivo.Propietario,
-                NombreArchivo = archivo.NombreArchivo
+                NombreArchivo = archivo.NombreArchivo,
+                TipoDocumento = archivo.TipoDocumento // Incluye el nuevo campo
             }).ToList();
 
             return Ok(resultados);
         }
+
 
         [Authorize(Policy = "AllPolicy")]
         [HttpGet("query/{nombreArchivo}")]
         public async Task<IActionResult> ObtenerArchivosByName(string nombreArchivo)
         {
             var filter = Builders<Archivo>.Filter.Regex(a => a.NombreArchivo, new BsonRegularExpression($"^{nombreArchivo.ToLower()}.*", "i"));
-
             var archivos = await _context.Archivos.Find(filter).ToListAsync();
 
-            return Ok(archivos);
+            var resultados = archivos.Select(archivo => new
+            {
+                Id = archivo.ArchivoPath,
+                Propietario = archivo.Propietario,
+                NombreArchivo = archivo.NombreArchivo,
+                TipoDocumento = archivo.TipoDocumento // Incluye el nuevo campo
+            }).ToList();
+
+            return Ok(resultados);
         }
 
         [Authorize(Policy = "AllPolicy")]

@@ -27,7 +27,7 @@ namespace HumanLink_UnitaryTest
             _mockHttpContext.Setup(x => x.Response).Returns(new DefaultHttpContext().Response);
 
             _mockConfiguration = new Mock<IConfiguration>();
-            _mockConfiguration.Setup(c => c["Jwt:key"]).Returns("this_is_a_very_secure_key_12345678"); //Tiene que ser una cadena de 32 bits, por el método de encriptación HS256
+            _mockConfiguration.Setup(c => c["Jwt:key"]).Returns("thi_is_a_very_secure_key_12345678"); //Tiene que ser una cadena de 32 bits, por el método de encriptación HS256
 
             var utilidades = new Utilidades(_mockConfiguration.Object);
 
@@ -49,7 +49,7 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.PostLogin(userLogin);
 
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal("Usuario y/o clave incorrectos", notFoundResult.Value);
             Assert.Equal((int)HttpStatusCode.NotFound, notFoundResult.StatusCode);
         }
@@ -64,7 +64,7 @@ namespace HumanLink_UnitaryTest
 
             var result = await _controller.PostLogin(userLogin);
 
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal("Usuario y/o clave incorrectos", notFoundResult.Value);
             Assert.Equal((int)HttpStatusCode.NotFound, notFoundResult.StatusCode);
         }
@@ -79,7 +79,7 @@ namespace HumanLink_UnitaryTest
                 .ReturnsDbSet(new List<Usuario> { user });
 
             var result = await _controller.PostLogin(userLogin);
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var okResult = Assert.IsType<OkObjectResult>(result);
 
             var response = JObject.FromObject(okResult.Value);
             Assert.Equal("jose123", response["usuario"].ToString());

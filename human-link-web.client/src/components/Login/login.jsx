@@ -6,25 +6,30 @@ import './Login.css';
 const Login = () => {
     const [usuario1, setUsuario1] = useState('');
     const [clave, setClave] = useState('');
-    const { user, login } = useAuth();
-    const navigate = useNavigate();
-    const [errorLogin, setErrorLogin] = useState(false);
     const [recordar, setRecordar] = useState(false);
+    const [errorLogin, setErrorLogin] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const usuarioLogin = await login({ usuario1, clave, recordar });
+        setLoading(true);
+        setErrorLogin(false);
 
-            if (usuarioLogin && usuarioLogin.isAdmin) {
+        try {
+            const userLogin = await login(usuario1, clave, recordar);
+            if (userLogin.isAdmin) {
                 navigate('/AdminDashboard');
-            } else if (usuarioLogin) {
+            } else {
                 navigate('/dashboard');
             }
-            setErrorLogin(false);
         } catch (error) {
             setErrorLogin(true);
             console.error('Error en el login:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -32,9 +37,11 @@ const Login = () => {
         <div className="container">
             <div className="screen">
                 <div className="screen__content">
-                    {errorLogin ? <div className="div-errorLogin">
-                        <p>Usuario y/o clave incorrectos.</p>
-                    </div> : null}
+                    {errorLogin && (
+                        <div className="div-errorLogin">
+                            <p>Usuario y/o clave incorrectos.</p>
+                        </div>
+                    )}
                     <form className="login" onSubmit={handleSubmit}>
                         <div className="login__field">
                             <i className="login__icon fas fa-user"></i>
@@ -63,14 +70,16 @@ const Login = () => {
                                 <input
                                     type="checkbox"
                                     checked={recordar}
-                                    onChange={(e) => setRecordar(e.target.checked)} 
+                                    onChange={(e) => setRecordar(e.target.checked)}
                                 />
                                 <span>Recordarme</span>
                             </label>
                         </div>
 
-                        <button className="button login__submit" type="submit">
-                            <span className="button__text">Iniciar Sesión</span>
+                        <button className="button login__submit" type="submit" disabled={loading}>
+                            <span className="button__text">
+                                {loading ? "Iniciando..." : "Iniciar Sesión"}
+                            </span>
                             <i className="button__icon fas fa-chevron-right"></i>
                         </button>
                     </form>
@@ -93,4 +102,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -1,4 +1,7 @@
-﻿namespace Human_Link_Web.Server.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Human_Link_Web.Server.Models;
 
 public partial class Usuario
 {

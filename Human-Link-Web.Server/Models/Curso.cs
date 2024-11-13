@@ -1,4 +1,7 @@
-﻿namespace Human_Link_Web.Server.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Human_Link_Web.Server.Models;
 
 public partial class Curso
 {
@@ -12,7 +15,9 @@ public partial class Curso
 
     public string? Categoria { get; set; }
 
-    public string[]? Url { get; set; }
+    public List<string>? Url { get; set; }
+
+    public virtual ICollection<Cuestionario> Cuestionarios { get; set; } = new List<Cuestionario>();
 
     public virtual ICollection<Cursousuario> Cursousuarios { get; set; } = new List<Cursousuario>();
 }

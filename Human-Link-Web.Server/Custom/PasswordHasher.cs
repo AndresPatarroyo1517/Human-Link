@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Konscious.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Konscious.Security.Cryptography;
 
 namespace Human_Link_Web.Server.Custom
 {
@@ -21,7 +21,10 @@ namespace Human_Link_Web.Server.Custom
 
             // Generamos el salt
             var salt = new byte[16];
-            new Random().NextBytes(salt);
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
 
             using (var argon2 = new Argon2id(passwordBytes))
             {
@@ -71,14 +74,14 @@ namespace Human_Link_Web.Server.Custom
             if (computedHash.Length != storedHash.Length)
                 return false;
 
+            int result = 0;
             for (int i = 0; i < computedHash.Length; i++)
             {
-                if (computedHash[i] != storedHash[i])
-                    return false;
+                result |= computedHash[i] ^ storedHash[i];
             }
-
-            return true;
+            return result == 0;
         }
+
 
         // Método para validar que la contraseña cumpla con los requisitos de seguridad
         public bool IsPasswordValid(string password)

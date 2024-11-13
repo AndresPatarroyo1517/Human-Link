@@ -3,7 +3,6 @@ using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using System.Security.Claims;
 
 namespace HumanLink_UnitaryTest
@@ -56,17 +55,17 @@ namespace HumanLink_UnitaryTest
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, "99") 
+                new Claim(ClaimTypes.NameIdentifier, "99")
             };
             var identity = new ClaimsIdentity(claims, "TestAuth");
             var principal = new ClaimsPrincipal(identity);
             _httpContext.User = principal;
-            var usuarioId = 99; 
+            var usuarioId = 99;
             var nomina = await _context.Nominas.FirstOrDefaultAsync(n => n.Idnomina == usuarioId);
-            Assert.Null(nomina); 
+            Assert.Null(nomina);
             var result = await _controller.GetNomina();
 
-          
+
             var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
             Assert.Equal(404, notFoundResult.StatusCode);
         }

@@ -1,10 +1,11 @@
-const API_URL_DOCUMENTS = 'https://localhost:7019/HumanLink/Archivos';
+const API_URL_DOCUMENTS = 'https://localhost:7019/api/Archivos';
 
 const documentsService = {
     // Subir un documento
-    uploadDocument: async (file) => {
+    uploadDocument: async (file, tipoDocumento) => {
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('tipoDocumento', tipoDocumento);
 
         const response = await fetch(API_URL_DOCUMENTS, {
             method: 'POST',
@@ -18,6 +19,24 @@ const documentsService = {
 
         return await response.json();
     },
+    uploadDocumentVarios: async (file, tipoDocumento) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('tipoDocumento', tipoDocumento);
+
+        const response = await fetch(API_URL_DOCUMENTS + '/varios', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al subir el documento');
+        }
+
+        return await response.json();
+    },
+
 
     // Obtener todos los documentos
     getDocuments: async () => {
@@ -49,7 +68,22 @@ const documentsService = {
 
         return await response.json();
     },
+    getDocumentosUsuario: async () => {
+        const response = await fetch(`${API_URL_DOCUMENTS}/propietario`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+        });
 
+        if (!response.ok) {
+            throw new Error('Error al consultar los documentos');
+        }
+
+        const data = await response.json();
+        return data;
+    },
     // Descargar un documento
     downloadDocument: async (id) => {
         const response = await fetch(`${API_URL_DOCUMENTS}/descargar/${id}`, {
@@ -62,7 +96,9 @@ const documentsService = {
         }
 
         return response.blob(); // Devolver el documento como blob
-    }
+    },
+
+
 };
 
 export default documentsService;

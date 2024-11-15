@@ -43,6 +43,8 @@ namespace Human_Link_Web.Server
                 });
             });
 
+            builder.Services.AddHttpClient();
+
             builder.Services.AddSingleton<Utilidades>();
             builder.Services.AddScoped<PasswordHasher>();
 

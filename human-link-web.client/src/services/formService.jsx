@@ -19,6 +19,24 @@ const formService = {
         const data = await response.json();
         return data;
     },
+
+    putCargarNota: async (body) => {
+        const response = await fetch(API_URL_FORM_SQL + "/cargar-nota", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error en la solicitud');
+        }
+        const data = await response.json();
+        return data;
+    }
 }
 
 export default formService;

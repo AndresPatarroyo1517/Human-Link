@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCurso } from '../../context/cursoContext';
 import './DesarrollarCursos.css';
+import formService from '../../services/formService';
 
 
     const DesarrollarCursos = () => {
@@ -9,10 +10,29 @@ import './DesarrollarCursos.css';
         const { selectedCurso } = useCurso();
         const [descripciones, setDescripciones] = useState([]);
 
+        const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+
         const obtenerVideoId = (url) => {
             const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(regex);
             return match ? match[1] : null;
+        };
+
+        const handleQuizClick = () => {
+            setIsQuizCompleted(true);
+        };
+
+        const handleCompleteQuiz = async () => {
+            setIsQuizCompleted(false);
+
+            const body = {
+                idcuremp: 0,
+                idusuario: 0,
+                idcurso: selectedCurso.Idcurso,
+                progreso: 0,
+                notas: []
+            };
+            const response = await formService.putCargarNota(body);
         };
 
         useEffect(() => {
@@ -58,7 +78,12 @@ import './DesarrollarCursos.css';
                                     ></iframe>
                                 </div>
                                 <p className="mt-3"><strong>Descripción:</strong> {descripciones[index]}</p>
-                                <button className="btn btn-secondary bottom-0 end-0 m-3">Cuestionario</button>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLScQUXiRBXzSpb_unC0wDAC0VYN1IWZBc1o6ZZozAZUXMJ9rZA/viewform?usp=sf_link" target="_blank">
+                                    <button className="btn btn-secondary bottom-0 end-0 m-3" onClick={handleQuizClick}>Cuestionario</button>
+                                </a>
+                                <button className="btn btn-success" onClick={handleCompleteQuiz} disabled={!isQuizCompleted}>
+                                    Finalizar cuestionario
+                                </button>
                             </div>
                         </div>
                     </div>

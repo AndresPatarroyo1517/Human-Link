@@ -10,7 +10,6 @@ const cursosService = {
                 'Content-Type': 'application/json',
             },
             credentials: 'include', // Enviar cookies con la solicitud
-            /*body: JSON.stringify(userData),*/ // Convertir el objeto a JSON
         });
 
         if (!response.ok) {
@@ -29,7 +28,6 @@ const cursosService = {
                 'Content-Type': 'application/json',
             },
             credentials: 'include', // Enviar cookies con la solicitud
-            /*body: JSON.stringify(userData),*/ // Convertir el objeto a JSON
         });
 
         if (!response.ok) {
@@ -48,7 +46,6 @@ const cursosService = {
                 'Content-Type': 'application/json',
             },
             credentials: 'include', // Enviar cookies con la solicitud
-            /*body: JSON.stringify(userData),*/ // Convertir el objeto a JSON
         });
 
         if (!response.ok) {
@@ -58,6 +55,23 @@ const cursosService = {
         const data = await response.json();
         return data;
     },
+    getIdCurEmpp: async () => { 
+        const response = await fetch(API_URL + "/Idcuremp", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al consultar los cursos del usuario');
+        }
+
+        const data = await response.json();
+        return data;
+    },
+
 
     // Obtener todos los cursos con CursoUsuario y Curso
     getAllCursosCategoria: async () => {
@@ -86,17 +100,36 @@ const cursosService = {
             credentials: 'include', // Enviar cookies con la solicitud
             body: JSON.stringify({
                 Idcurso: cursoId,
-                Progreso:0,
+                Progreso: 0,
             }),
         });
+
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Error details:", errorData); 
+            console.error("Error details:", errorData);
         }
         return response;
-    }
+    },
 
+    // Eliminar curso del usuario
+    deleteCursoUsuarioEmpleado: async (Idcurso) => {
+        try {
+            const response = await fetch(`${API_URL}/empleado/${Idcurso}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            }
+            );
 
+            if (!response.ok) {
+                throw new Error('No se pudo eliminar el curso');
+            }
+
+            return response;
+        } catch (error) {
+            console.error('Error al eliminar el curso:', error);
+            throw error;
+        }
+    },
 }
 
 export default cursosService;

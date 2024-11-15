@@ -124,6 +124,40 @@ namespace Human_Link_Web.Server.Controllers
             return cursousuario;
         }
 
+        //tare el idcuremp
+        [HttpGet("Idcuremp")]
+        [Authorize(Policy = "AllPolicy")] // Verifica que el usuario esté autenticado, ya sea admin o empleado
+        public async Task<ActionResult<IEnumerable<Cursousuario>>> GetCursousuariosIdcuremp()
+        {
+            try
+            {
+                var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (id == null)
+                {
+                    return Unauthorized("El usuario no está autenticado.");
+                }
+
+                var usuarioId = Convert.ToInt32(id); 
+
+                var cursousuarios = await _context.Cursousuarios
+                    .Where(cu => cu.Idusuario == usuarioId)  
+                    .ToListAsync();
+
+                if (cursousuarios == null || !cursousuarios.Any())
+                {
+                    return NotFound("No se encontraron registros para el usuario especificado.");
+                }
+
+                return Ok(cursousuarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error al obtener los cursos de usuario: " + ex.Message);
+            }
+        }
+
+
         // PUT: HumanLink/CursoUsuario/5
         [HttpPut("{id}")]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
@@ -215,5 +249,23 @@ namespace Human_Link_Web.Server.Controllers
         {
             return _context.Cursousuarios.Any(e => e.Idcuremp == id);
         }
+        // DELETE: HumanLink/CursoUsuario/5
+        [HttpDelete("empleado/{id}")]
+        [Authorize(Policy = "AllPolicy")] // Permite el consumo del endpoint a todos los usuarios autenticados
+        public async Task<IActionResult> DeleteCursoUsuarioEmpleado(int id)
+        {
+            var cursoUsuario = await _context.Cursousuarios.FindAsync(id);
+            if (cursoUsuario == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cursousuarios.Remove(cursoUsuario);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
     }
 }

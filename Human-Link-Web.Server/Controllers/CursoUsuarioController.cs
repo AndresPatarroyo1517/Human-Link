@@ -19,6 +19,18 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
         }
 
+        public class CursoUsuariosResponse
+        {
+            public string NombreCurso { get; set; }
+            public int CantidadUsuarios { get; set; }
+            public DateOnly? FechaInicioMasReciente { get; set; }
+
+            public double PromedioProgreso { get; set; }
+
+            public double PromedioNotas { get; set; }
+        }
+
+
         // GET: HumanLink/CursoUsuario
         [HttpGet]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
@@ -49,6 +61,27 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             return Ok(cursosUsuario);
+        }
+
+        [HttpGet("usuarios-en-curso")]
+        public async Task<ActionResult<IEnumerable<CursoUsuariosResponse>>> GetUsuariosPorCurso()
+        {
+            var resultado = await _context.Cursousuarios
+                .GroupBy(cu => cu.Idcurso)
+                .Select(grupo => new CursoUsuariosResponse
+                {
+                    NombreCurso = grupo.FirstOrDefault().IdcursoNavigation.Nombrecurso,
+                    CantidadUsuarios = grupo.Count(),
+                    FechaInicioMasReciente = grupo.Max(cu => cu.Fechainicio),
+                    PromedioProgreso = grupo.Average(cu => cu.Progreso ?? 0),
+                    PromedioNotas = grupo
+                        .Average(cu => cu.Notas != null && cu.Notas.Any()
+                            ? cu.Notas.Average(n => n) 
+                            : 0)
+                })
+                .ToListAsync();
+
+            return Ok(resultado);
         }
 
         // GET: HumanLink/CursoUsuario/id
@@ -157,12 +190,19 @@ namespace Human_Link_Web.Server.Controllers
 
         // POST: HumanLink/CursoUsuario
         [HttpPost]
-        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<ActionResult<Cursousuario>> PostCursousuario(Cursousuario cursousuario)
         {
+            // Validar si el usuario ya está inscrito en este curso
+            var existeInscripcion = await _context.Cursousuarios
+                .AnyAsync(c => c.Idusuario == cursousuario.Idusuario && c.Idcurso == cursousuario.Idcurso);
+
+            if (existeInscripcion)
+            {
+                return Conflict(new { message = "El usuario ya está inscrito en este curso." });
+            }
             _context.Cursousuarios.Add(cursousuario);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetCursousuario", new { id = cursousuario.Idcuremp }, cursousuario);
         }
 

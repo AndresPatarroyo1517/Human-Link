@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import usuariosService from "../../services/usuariosService";
-import empleadosService from "../../services/empleadosService"; // Asegúrate de tener este servicio para cargar empleados
+import empleadosService from "../../services/empleadosService"; 
 
 const UserManagementTable = () => {
     const [usuarios, setUsuarios] = useState([]);

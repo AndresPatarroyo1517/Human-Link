@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth.jsx';
 import './Login.css';
@@ -10,8 +10,18 @@ const Login = () => {
     const [errorLogin, setErrorLogin] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const { login } = useAuth();
+    const {user, login } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            if (user.isAdmin) {
+                navigate('/AdminDashboard');
+            } else {
+                navigate('/dashboard');
+            }
+        }
+    }, [user, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

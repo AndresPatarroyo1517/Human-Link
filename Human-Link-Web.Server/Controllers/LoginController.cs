@@ -27,19 +27,26 @@ namespace Human_Link_Web.Server.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> PostLogin(Login userLogin)
         {
-            // Fetch only essential fields from the database
             var user = await _context.Usuarios
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Usuario1 == userLogin.Usuario);
+                .AsNoTracking()  
+                .Where(u => u.Usuario1 == userLogin.Usuario)
+                .Select(u => new {u.Idusuario, u.Usuario1, u.Clave, u.Isadmin })  
+                .FirstOrDefaultAsync();
 
-            // Validate user existence and password
             if (user == null || !_passwordHasher.Verify(user.Clave, userLogin.Clave))
             {
                 return NotFound("Usuario y/o clave incorrectos");
             }
 
-            // Generate JWT and configure cookie
-            var token = _utilidades.generarJWT(user);
+            // Generate JWT token
+            var token = _utilidades.generarJWT(new Usuario
+            {
+                Idusuario = user.Idusuario,  
+                Usuario1 = user.Usuario1,
+                Isadmin = user.Isadmin
+            });
+
+            // Set JWT token in cookies
             SetJwtCookie(token, userLogin.Recuerdame);
 
             return Ok(new { usuario = user.Usuario1, isAdmin = user.Isadmin });
@@ -56,9 +63,9 @@ namespace Human_Link_Web.Server.Controllers
         {
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true,
-                Secure = true,
-                Expires = remember ? DateTime.UtcNow.AddDays(1) : (DateTimeOffset?)null
+                HttpOnly = true,   
+                Secure = true,     
+                Expires = remember ? DateTime.UtcNow.AddDays(7) : (DateTimeOffset?)null 
             };
             Response.Cookies.Append("jwt", token, cookieOptions);
         }

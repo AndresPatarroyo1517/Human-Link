@@ -24,15 +24,9 @@ namespace Human_Link_Web.Server.Custom
                 // Computar el hash
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(texto));
 
-                // Convertir el array de bytes a String
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
+                // Convertir el array de bytes a String en hexadecimal sin guiones
+                return string.Concat(bytes.Select(b => b.ToString("x2")));
             }
-
         }
 
         public string generarJWT(Usuario usuario)
@@ -57,7 +51,5 @@ namespace Human_Link_Web.Server.Custom
 
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
         }
-
-
     }
 }

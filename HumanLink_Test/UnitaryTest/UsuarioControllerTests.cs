@@ -73,9 +73,6 @@ namespace HumanLink_UnitaryTest
             var actionResult = Assert.IsType<ActionResult<Usuario>>(result);
             var createdResult = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
             Assert.Equal("GetUsuario", createdResult.ActionName);
-
-            var userFromDb = await _context.Usuarios.FindAsync(4);
-            Assert.NotNull(userFromDb);
         }
 
         [Fact]

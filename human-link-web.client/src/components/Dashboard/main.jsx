@@ -7,8 +7,8 @@ import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
-import DocumentManager from './DocumentManager';
-import AsignarCursos from './AsignarCursos'; // Importar el nuevo componente
+import DocumentManager from './documentManager';
+import AsignarCursos from './asignarCursos'; // Importar el nuevo componente
 
 
 const Main = () => {

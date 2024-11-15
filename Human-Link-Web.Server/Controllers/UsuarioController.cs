@@ -73,12 +73,6 @@ namespace Human_Link_Web.Server.Controllers
             {
                 return NotFound("Usuario no encontrado.");
             }
-
-            // Verificar las propiedades antes de la actualización
-            Console.WriteLine($"Recibiendo Usuario1: {usuario.Usuario1}, Correo: {usuario.Correo}");
-            Console.WriteLine($"Usuario Existente - Usuario1: {usuarioExistente.Usuario1}, Correo: {usuarioExistente.Correo}");
-
-            // Aquí agregamos el hash de la clave
             usuarioExistente.Clave = _passwordHasher.Hash(usuario.Clave);
 
             // Actualizamos los campos que se pueden modificar
@@ -107,8 +101,7 @@ namespace Human_Link_Web.Server.Controllers
                 }
             }
 
-            // Retorna un estado 204 No Content si la operación fue exitosa
-            return NoContent();
+            return Ok("Usuario actualizado correctamente.");
         }
 
 
@@ -119,11 +112,8 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AdminPolicy")]
         public async Task<ActionResult<Usuario>> PostUsuario([FromBody] Usuario usuario)
         {
-            using var transaction = _context.Database.BeginTransaction();
-
             try
             {
-                // Validar que el usuario no sea nulo
                 if (usuario == null)
                 {
                     return BadRequest("El usuario no puede ser nulo.");
@@ -156,13 +146,10 @@ namespace Human_Link_Web.Server.Controllers
                     }
                     await _context.SaveChangesAsync();
                 }
-
-                await transaction.CommitAsync();
                 return CreatedAtAction("GetUsuario", new { id = usuario.Idusuario }, usuario);
             }
             catch (Exception ex)
             {
-                await transaction.RollbackAsync();
                 return StatusCode(500, "Error interno del servidor al procesar la solicitud: " + ex.Message);
             }
         }
@@ -278,37 +265,27 @@ namespace Human_Link_Web.Server.Controllers
         {
             try
             {
-                Console.WriteLine($"Recibida solicitud para eliminar el usuario con ID: {id}");
-
                 var usuario = await _context.Usuarios.FindAsync(id);
 
                 if (usuario == null)
                 {
-                    Console.WriteLine($"No se encontró el usuario con ID: {id}");
-                    return NotFound();
+                    return NotFound("Usuario no encontrado.");
                 }
 
-                // Verificar si hay dependencias que puedan causar el error
-                Console.WriteLine($"Eliminando usuario con ID: {id}...");
                 _context.Usuarios.Remove(usuario);
                 await _context.SaveChangesAsync();
 
-                Console.WriteLine($"Usuario con ID: {id} eliminado exitosamente.");
-                return NoContent();
+                return Ok("Usuario eliminado correctamente.");
             }
             catch (Exception ex)
             {
-                // Detallar información adicional en el catch
-                Console.WriteLine($"Error al eliminar el usuario con ID: {id}. Excepción: {ex.Message}");
-                Console.WriteLine($"Pila de la excepción: {ex.StackTrace}");
-
-                // Si es un error de base de datos (posibles problemas de referencia)
+                var errorMessage = $"Error al eliminar el usuario con ID: {id}. Excepción: {ex.Message}";
                 if (ex.InnerException != null)
                 {
-                    Console.WriteLine($"Detalles internos del error: {ex.InnerException.Message}");
+                    errorMessage += $" Detalles internos del error: {ex.InnerException.Message}";
                 }
 
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+                return StatusCode(500, errorMessage);
             }
         }
 

@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("HumanLink/[controller]")]
     [ApiController]
     public class ArchivosController : ControllerBase
     {
@@ -19,6 +19,21 @@ namespace Human_Link_Web.Server.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Policy = "AllPolicy")]
+        [HttpGet()]
+        public async Task<IActionResult> GetArchivos()
+        {
+            var archivos = await _context.Archivos
+                    .Find(FilterDefinition<Archivo>.Empty) 
+                    .ToListAsync();
+
+            if (archivos == null || archivos.Count == 0)
+                return NotFound("No se encontraron archivos.");
+
+            return Ok(archivos);
+        }
+
 
         [Authorize(Policy = "AllPolicy")]
         [HttpPost()]

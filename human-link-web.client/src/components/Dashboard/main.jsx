@@ -8,7 +8,7 @@ import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 import DocumentManager from './documentManager';
-import AsignarCursos from './asignarCursos'; // Importar el nuevo componente
+import AsignarCursos from './asignarCursos'; 
 
 
 const Main = () => {

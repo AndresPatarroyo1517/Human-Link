@@ -1,4 +1,4 @@
-const API_URL_DOCUMENTS = 'https://localhost:7019/api/Archivos';
+const API_URL_DOCUMENTS = 'https://localhost:7019/HumanLink/Archivos';
 
 const documentsService = {
     // Subir un documento

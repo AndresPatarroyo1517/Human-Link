@@ -1,5 +1,7 @@
-const API_CUROSUSUARIOS = 'https://localhost:7019/HumanLink/CursoUsuario/usuarios-en-curso';
-const API_METRICASNOMINA = 'https://localhost:7019/HumanLink/Nomina/metricas-nomina';
+const API_CUROSUSUARIOS = 'https://localhost:7019/HumanLink/CursoUsuario/usuarios-en-curso'
+const API_METRICASNOMINA = 'https://localhost:7019/HumanLink/Nomina/metricas-nomina'
+const API_USUARIOCURSO = 'https://localhost:7019/HumanLink/Usuario/usuario/2/salario'
+const API_USUARIONOMINA = ''
 
 export const fetchCursosUsuarios = async () => {
     try {

@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
-import Plotly from "plotly.js";
+import Plotly from 'plotly.js-dist';
 import 'jspdf-autotable';
 import { fetchCursosUsuarios, fetchMetricasNomina } from '../../services/pdfService.jsx';
 import './informes.css'; 
 import BarrasCursosCategoria from "../graficosCursos/barrasCursosCategoria";
-export function Informes() {
+
+export const Informes = () => {
     const [dataUC, setDataUC] = useState([]);
     const [mNomina, setMNomina] = useState({});
     const [showMoreCursos, setShowMoreCursos] = useState(false);
@@ -31,7 +32,7 @@ export function Informes() {
         doc.autoTable({
             startY: 20,
             head: [["Nómina Total", "Bonificación Total", "Emp. sin Bon.", "Emp. con Bon.", "Emp. sin Hr.", "Emp. con Hr."]],
-            body: [
+            body: [[
                 mNomina.TotalNomina,
                 mNomina.TotalBonificacion,
                 mNomina.PromedioHorasExtras,
@@ -39,27 +40,43 @@ export function Informes() {
                 mNomina.EmpleadosConBonificacion,
                 mNomina.EmpleadosSinHorasExtras,
                 mNomina.EmpleadosConHorasExtras
-            ],
+            ]],
         });
         doc.save("MetricasNomina.pdf");
     };
 
-    // Función para exportar el gráfico a PDF
-    const pdfConGrafico = () => {
+    const pdfCursoUsuario = async () => {
         const doc = new jsPDF();
-        doc.text("Reporte de Cursos con Gráfico", 7, 7);
-                doc.autoTable({
-                    startY: 130,
-                    head: [["Nombre del Curso", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
-                    body: dataUC.map(curso => [
-                        curso.NombreCurso,
-                        curso.CantidadUsuarios,
-                        curso.FechaInicioMasReciente,
-                        curso.PromedioProgreso,
-                        curso.PromedioNotas
-                    ]),
-                });
-                doc.save("ReporteConGrafico.pdf");
+
+        try {
+            const graficoElement = document.querySelector('.contenedor-grafico');
+            if (!graficoElement) {
+                throw new Error('No se encontró el elemento del gráfico');
+            }
+            const imageData = await Plotly.toImage(graficoElement.querySelector('.js-plotly-plot'), {
+                format: 'png',
+                width: 800,
+                height: 400
+            });
+            doc.text("Reporte de Cursos con Gráfico", 7, 7);
+            doc.addImage(imageData, 'PNG', 10, 20, 190, 95);
+            doc.autoTable({
+                startY: 130,
+                head: [["Nombre del Curso", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
+                body: dataUC.map(curso => [
+                    curso.NombreCurso,
+                    curso.CantidadUsuarios,
+                    curso.FechaInicioMasReciente,
+                    curso.PromedioProgreso,
+                    curso.PromedioNotas
+                ]),
+            });
+
+            doc.save("ReporteConGrafico.pdf");
+        } catch (error) {
+            console.error('Error al generar el PDF:', error);
+            alert('Error al generar el PDF. Por favor, intente nuevamente.');
+        }
     };
 
     return (
@@ -94,7 +111,7 @@ export function Informes() {
                             {showMoreCursos ? "Ver menos" : "Ver más"}
                         </button>
                     )}
-                    <button className="export-button" onClick={pdfConGrafico}>Exportar con Gráfico</button>
+                    <button className="export-button" onClick={pdfCursoUsuario}>Exportar con Gráfico</button>
                 </div>
                 <div className="table-column">
                     <h2 className="informes-title">Métricas de Nómina</h2>
@@ -125,6 +142,7 @@ export function Informes() {
                     <button className="export-button" onClick={pdfMetricaNomina}>Exportar métricas</button>
                 </div>
             </div>
+            <BarrasCursosCategoria />
         </div>
-    )
-}
+    );
+};

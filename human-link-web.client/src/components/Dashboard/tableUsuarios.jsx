@@ -358,7 +358,7 @@ const UserManagementTable = () => {
                                         className="form-control"
                                         id="clave"
                                         name="clave"
-                                        value={selectedUsuario?.Clave || ""}
+                                        value={ ""}
                                         onChange={(e) => setSelectedUsuario({ ...selectedUsuario, Clave: e.target.value })}
                                     />
                                 </div>

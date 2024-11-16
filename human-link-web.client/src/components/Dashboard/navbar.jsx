@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar navbar-expand-lg custom-navbar-bg px-4">
-            <a className="navbar-brand" href="#">Mi Empresa</a>
+            <a className="navbar-brand">OROCRUZ</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

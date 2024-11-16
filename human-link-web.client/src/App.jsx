@@ -41,7 +41,6 @@ const App = () => {
                     } />
                     <Route path="/Informes" element={
                         <Informes />
-                           
                     } />
                 </Routes>
             </BrowserRouter>

@@ -19,13 +19,38 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
             _passwordHasher = passwordHasher;
         }
+
+        public class UsuarioDto
+        {
+            public int Idusuario { get; set; }
+            public string Usuario1 { get; set; }
+            public string Correo { get; set; }
+            public bool? Isadmin { get; set; }
+            public bool? Isemailverified { get; set; }
+            public ICollection<Cursousuario> Cursousuarios { get; set; }
+            public ICollection<Empleado> Empleados { get; set; }
+        }
+
+
         //Endpoint para obtener todos los usuarios y sus datos
         // GET: HumanLink/Usuario
         [HttpGet]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<UsuarioDto>>> GetUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            var usuarios = await _context.Usuarios
+                .Select(u => new UsuarioDto
+                {
+                    Idusuario = u.Idusuario,
+                    Usuario1 = u.Usuario1,
+                    Correo = u.Correo,
+                    Isadmin = u.Isadmin,
+                    Isemailverified = u.Isemailverified,
+                    Cursousuarios = u.Cursousuarios,
+                    Empleados = u.Empleados
+                })
+                .ToListAsync();
+            return Ok(usuarios);
         }
 
 
@@ -288,6 +313,71 @@ namespace Human_Link_Web.Server.Controllers
                 return StatusCode(500, errorMessage);
             }
         }
+
+        [HttpGet("usuario/{idUsuario}/cursos")]
+        public async Task<ActionResult<IEnumerable<object>>> GetProgresoCursos(int idUsuario)
+        {
+            var cursosUsuario = await _context.Cursousuarios
+                .Include(cu => cu.IdcursoNavigation)
+                .Where(cu => cu.Idusuario == idUsuario)
+                .Select(cu => new
+                {
+                    NombreCurso = cu.IdcursoNavigation.Nombrecurso, 
+                    Progreso = cu.Progreso,
+                    Notas = cu.Notas,
+                    FechaInicio = cu.Fechainicio
+                })
+                .ToListAsync();
+
+            if (!cursosUsuario.Any())
+            {
+                return NotFound($"No se encontraron cursos para el usuario con ID {idUsuario}");
+            }
+
+            return Ok(cursosUsuario);
+        }
+
+        [HttpGet("usuario/{idUsuario}/salario")]
+        public async Task<ActionResult<object>> GetSalarioCalculado(int idUsuario)
+        {
+            var empleado = await _context.Empleados
+                .Include(e => e.Nominas)
+                .FirstOrDefaultAsync(e => e.EmpleadoUsuario == idUsuario);
+
+            if (empleado == null)
+            {
+                return NotFound($"No se encontró empleado para el usuario con ID {idUsuario}");
+            }
+            var ultimaNomina = await _context.Nominas
+                .Where(n => n.Idempleado == empleado.Idempleado)
+                .OrderByDescending(n => n.Idnomina)
+                .FirstOrDefaultAsync();
+
+            if (ultimaNomina == null)
+            {
+                return NotFound($"No se encontró nómina para el empleado con ID {empleado.Idempleado}");
+            }
+
+            decimal salarioBase = empleado.Salario ?? 0;
+            decimal valorHoraExtra = (salarioBase / 30 / 8) * 1.25m; 
+            decimal totalHorasExtra = (ultimaNomina.Horasextra ?? 0) * valorHoraExtra;
+            decimal bonificacion = ultimaNomina.Bonificacion ?? 0;
+
+            var salarioCalculado = new
+            {
+                Empleado = empleado.Nombre,
+                Cargo = empleado.Cargo,
+                Departamento = empleado.Departamento,
+                SalarioBase = salarioBase,
+                HorasExtra = ultimaNomina.Horasextra,
+                ValorHorasExtra = Math.Round(totalHorasExtra, 2),
+                Bonificacion = bonificacion,
+                SalarioTotal = Math.Round(salarioBase + totalHorasExtra + bonificacion, 2)
+            };
+
+            return Ok(salarioCalculado);
+        }
+
 
         private bool UsuarioExists(int id)
         {

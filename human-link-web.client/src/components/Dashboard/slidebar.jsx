@@ -1,6 +1,5 @@
-import React from 'react';
 import { useAdmin } from '../../context/adminContext';
-
+import logo from '../../assets/hl.png'
 const Slidebar = () => {
     const { activeSection, setActiveMenu } = useAdmin();
 
@@ -19,8 +18,9 @@ const Slidebar = () => {
         <nav id="sidebar" className="col-md-3 col-lg-2 d-md-block bg-light sidebar borde-content">
             <div className="position-sticky pt-3">
                 <div className="text-center my-4">
-                    <div className="logo-placeholder bg-secondary rounded-circle mx-auto mb-3"></div>
-                    <h5>LOGO</h5>
+                    <div className="logo-placeholder rounded-circle mx-auto mb-3">
+                        <img src={logo} style={{ width: '6rem', height: '6rem' }}></img>
+                    </div>
                 </div>
                 <ul className="nav flex-column">
                     {options.map((option, index) => (

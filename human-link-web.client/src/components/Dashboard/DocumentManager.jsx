@@ -96,7 +96,7 @@ const DocumentManager = () => {
                     <tr>
                         <th></th>
                         <th>Documentos</th>
-                        <th>Tamaño</th>
+                        <th>Verificación</th>
                         <th>Fecha subida</th>
                     </tr>
                 </thead>
@@ -111,7 +111,7 @@ const DocumentManager = () => {
                                 />
                             </td>
                             <td>{document.NombreArchivo}</td>
-                            <td>{document.Tamanio}</td>
+                            <td>{document.Estado}</td>
                             <td>{new Date(document.Fecha).toLocaleDateString()}</td>
                         </tr>
                     ))}

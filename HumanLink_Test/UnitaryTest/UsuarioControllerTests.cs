@@ -1,8 +1,10 @@
 ﻿using Human_Link_Web.Server.Controllers;
 using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
+using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Human_Link_Web.Server.Controllers.UsuarioController;
 
 namespace HumanLink_UnitaryTest
 {
@@ -26,20 +28,18 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task GetUsuarios_ReturnsAllUsuarios()
         {
-            var usuarios = new List<Usuario>
-            {
-            new Usuario { Idusuario = 1, Clave = "password1" },
-            new Usuario { Idusuario = 2, Clave = "password2" }
-            };
-            _context.Usuarios.AddRange(usuarios);
-
+            _context.Usuarios.AddRange(
+                 new Usuario { Idusuario = 1, Usuario1 = "user1", Correo = "user1@email.com", Isadmin = true, Isemailverified = true },
+                 new Usuario { Idusuario = 2, Usuario1 = "user2", Correo = "user2@email.com", Isadmin = false, Isemailverified = false }
+             );
             await _context.SaveChangesAsync();
 
             var result = await _controller.GetUsuarios();
 
-            var actionResult = Assert.IsType<ActionResult<IEnumerable<Usuario>>>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<Usuario>>(actionResult.Value);
-            Assert.Equal(3, returnValue.Count());
+            var actionResult = Assert.IsType<ActionResult<IEnumerable<UsuarioDto>>>(result);
+            var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var usuarios = Assert.IsType<List<UsuarioDto>>(okResult.Value);
+            Assert.Equal(3, usuarios.Count);
         }
 
         [Fact]

@@ -4,7 +4,6 @@ import "./visualizacionDatos.css";
 import BarrasCursos from "../graficosCursos/barrasCursos";
 import { useEffect } from "react";
 import formService from "../../services/formService";
-import { Informes } from '../Informes/informes.jsx'
 
 const VisualizacionDatos = () => {
 
@@ -23,7 +22,6 @@ const VisualizacionDatos = () => {
             <TortaInscritos />
             <BarrasCursosCategoria />
             <BarrasCursos />
-            <Informes/>
         </div>
     );
 };

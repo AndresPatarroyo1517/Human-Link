@@ -9,7 +9,6 @@ export function Informes() {
     const [dataUC, setDataUC] = useState([]);
     const [mNomina, setMNomina] = useState({});
     const [showMoreCursos, setShowMoreCursos] = useState(false);
-    const barrasCursosCategoriaRef = useRef(null);
 
     useEffect(() => {
         const obtenerDatos = async () => {
@@ -19,7 +18,6 @@ export function Informes() {
                 setDataUC(data);
                 setMNomina(metricas);
             } catch (error) {
-                console.error("Error al cargar los datos:", error);
                 setDataUC([]);
                 setMNomina({});
             }
@@ -50,13 +48,6 @@ export function Informes() {
     const pdfConGrafico = () => {
         const doc = new jsPDF();
         doc.text("Reporte de Cursos con Gráfico", 7, 7);
-
-        // Convertir el gráfico en imagen
-        Plotly.toImage(barrasCursosCategoriaRef.current, { format: 'png', width: 500, height: 300 })
-            .then((imgData) => {
-                // Añadir el gráfico como imagen en el PDF
-                doc.addImage(imgData, 'PNG', 10, 20, 180, 100); // Posición y tamaño
-                // Añadir la tabla de datos (si lo deseas también)
                 doc.autoTable({
                     startY: 130,
                     head: [["Nombre del Curso", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
@@ -69,8 +60,6 @@ export function Informes() {
                     ]),
                 });
                 doc.save("ReporteConGrafico.pdf");
-            })
-            .catch(error => console.error("Error al generar imagen del gráfico:", error));
     };
 
     return (
@@ -135,9 +124,6 @@ export function Informes() {
                     </table>
                     <button className="export-button" onClick={pdfMetricaNomina}>Exportar métricas</button>
                 </div>
-            </div>
-            <div ref={barrasCursosCategoriaRef}>
-                <BarrasCursosCategoria />
             </div>
         </div>
     )

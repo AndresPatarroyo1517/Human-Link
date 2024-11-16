@@ -97,12 +97,13 @@ const DocumentManager = () => {
                         <th></th>
                         <th>Documentos</th>
                         <th>Verificación</th>
+                        <th>Propietario</th>
                         <th>Fecha subida</th>
                     </tr>
                 </thead>
                 <tbody>
                     {documents.map((document) => (
-                        <tr key={document.Id}>
+                        <tr key={document.Id.Timestamp}>
                             <td>
                                 <input
                                     type="radio"
@@ -112,6 +113,7 @@ const DocumentManager = () => {
                             </td>
                             <td>{document.NombreArchivo}</td>
                             <td>{document.Estado}</td>
+                            <td>{document.Propietario}</td>
                             <td>{new Date(document.Fecha).toLocaleDateString()}</td>
                         </tr>
                     ))}
@@ -172,8 +174,8 @@ const DocumentManager = () => {
                                 </div>
                             </div>
                             <div className="employee-results" style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', maxHeight: '200px', overflowY: 'scroll' }}>
-                                {employees.map((employee) => (
-                                    <div key={employee.Id} className="d-flex align-items-center mb-1">
+                                {employees.map((employee, index) => (
+                                    <div key={index} className="d-flex align-items-center mb-1">
                                         <div
                                             onClick={() => handleEmployeeSelect(employee)}
                                             className={`rounded-circle me-2 ${selectedEmployee === employee ? 'bg-success' : 'bg-secondary'}`}

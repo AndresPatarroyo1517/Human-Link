@@ -28,22 +28,48 @@ export const Informes = () => {
 
     const pdfMetricaNomina = () => {
         const doc = new jsPDF();
-        doc.text("Reporte de Métricas de Nómina", 6, 6);
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("Reporte de Métricas de Nómina", 20, 20);
+        doc.setFontSize(12);
+        doc.text("Fecha: " + new Date().toLocaleDateString(), 160, 20);
+
         doc.autoTable({
-            startY: 20,
+            startY: 30,
             head: [["Nómina Total", "Bonificación Total", "Emp. sin Bon.", "Emp. con Bon.", "Emp. sin Hr.", "Emp. con Hr."]],
             body: [[
-                mNomina.TotalNomina,
-                mNomina.TotalBonificacion,
-                mNomina.PromedioHorasExtras,
-                mNomina.EmpleadosSinBonificacion,
-                mNomina.EmpleadosConBonificacion,
-                mNomina.EmpleadosSinHorasExtras,
-                mNomina.EmpleadosConHorasExtras
+                mNomina.TotalNomina || 'No disponible',
+                mNomina.TotalBonificacion || 'No disponible',
+                mNomina.PromedioHorasExtras || 'No disponible',
+                mNomina.EmpleadosSinBonificacion || 'No disponible',
+                mNomina.EmpleadosConBonificacion || 'No disponible',
+                mNomina.EmpleadosSinHorasExtras || 'No disponible',
+                mNomina.EmpleadosConHorasExtras || 'No disponible'
             ]],
+            theme: "grid",
+            headStyles: {
+                fillColor: [47, 85, 151], 
+                textColor: 255, 
+                fontStyle: "bold",
+                halign: "center"
+            },
+            bodyStyles: {
+                fontSize: 10,
+                valign: "middle", 
+                halign: "center" 
+            },
+            columnStyles: {
+                0: { cellWidth: 'auto' },
+            },
+            margin: { top: 30, bottom: 30 },
         });
+
+        doc.setFontSize(8);
+        doc.text("HumanLink Software - Todos los derechos reservados", 100, doc.internal.pageSize.height - 10, { align: "center" });
         doc.save("MetricasNomina.pdf");
     };
+
 
     const pdfCursoUsuario = async () => {
         const doc = new jsPDF();
@@ -53,13 +79,21 @@ export const Informes = () => {
             if (!graficoElement) {
                 throw new Error('No se encontró el elemento del gráfico');
             }
+
             const imageData = await Plotly.toImage(graficoElement.querySelector('.js-plotly-plot'), {
                 format: 'png',
                 width: 800,
                 height: 400
             });
-            doc.text("Reporte de Cursos con Gráfico", 7, 7);
-            doc.addImage(imageData, 'PNG', 10, 20, 190, 95);
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(16);
+            doc.text("Reporte de Cursos con Gráfico", 20, 20);
+            doc.setFontSize(12);
+            doc.text("Fecha: " + new Date().toLocaleDateString(), 160, 20);
+
+            doc.addImage(imageData, 'PNG', 10, 30, 190, 95);
+
             doc.autoTable({
                 startY: 130,
                 head: [["Nombre del Curso", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
@@ -67,17 +101,35 @@ export const Informes = () => {
                     curso.NombreCurso,
                     curso.CantidadUsuarios,
                     curso.FechaInicioMasReciente,
-                    curso.PromedioProgreso,
-                    curso.PromedioNotas
+                    `${curso.PromedioProgreso}%`,
+                    curso.PromedioNotas || 'No disponible'
                 ]),
+                theme: "grid",
+                headStyles: {
+                    fillColor: [47, 85, 151], 
+                    textColor: 255, 
+                    fontStyle: "bold",
+                    halign: "center"
+                },
+                bodyStyles: {
+                    fontSize: 10,
+                    valign: "middle",
+                    halign: "center"
+                },
+                columnStyles: {
+                    0: { cellWidth: 'auto' },
+                },
+                margin: { top: 30, bottom: 30 },
             });
-
+            doc.setFontSize(8);
+            doc.text("HumanLink Software - Todos los derechos reservados", 100, doc.internal.pageSize.height - 10, { align: "center" });
             doc.save("ReporteConGrafico.pdf");
         } catch (error) {
             console.error('Error al generar el PDF:', error);
             alert('Error al generar el PDF. Por favor, intente nuevamente.');
         }
     };
+
 
     return (
         <div className="informes-container">

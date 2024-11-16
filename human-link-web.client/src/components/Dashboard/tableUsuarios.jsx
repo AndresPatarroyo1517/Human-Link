@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import usuariosService from "../../services/usuariosService";
-import empleadosService from "../../services/empleadosService"; 
+import React, { useState, useEffect } from "react"
+import usuariosService from "../../services/usuariosService"
+import empleadosService from "../../services/empleadosService"
+import { InformePerso } from '../Informes/informePerso'
 
 const UserManagementTable = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -191,6 +192,7 @@ const UserManagementTable = () => {
                         <th>Nombre de Usuario</th>
                         <th>Correo</th>
                         <th>Acciones</th>
+                        <th>Reportes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,7 +215,7 @@ const UserManagementTable = () => {
                                             className="btn btn-primary me-2"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editUserModal"
-                                            onClick={() => openEditModal(usuario)} // Abre el modal de edición
+                                            onClick={() => openEditModal(usuario)} 
                                         >
                                             Editar
                                         </button>
@@ -223,6 +225,9 @@ const UserManagementTable = () => {
                                         >
                                             Eliminar
                                         </button>
+                                    </td>
+                                    <td>
+                                        <InformePerso id={usuario.Idusuario} />
                                     </td>
                                 </tr>
                             ))

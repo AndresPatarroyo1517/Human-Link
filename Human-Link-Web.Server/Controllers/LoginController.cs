@@ -3,7 +3,6 @@ using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -28,9 +27,9 @@ namespace Human_Link_Web.Server.Controllers
         public async Task<ActionResult> PostLogin(Login userLogin)
         {
             var user = await _context.Usuarios
-                .AsNoTracking()  
+                .AsNoTracking()
                 .Where(u => u.Usuario1 == userLogin.Usuario)
-                .Select(u => new {u.Idusuario, u.Usuario1, u.Clave, u.Isadmin })  
+                .Select(u => new { u.Idusuario, u.Usuario1, u.Clave, u.Isadmin })
                 .FirstOrDefaultAsync();
 
             if (user == null || !_passwordHasher.Verify(user.Clave, userLogin.Clave))
@@ -41,7 +40,7 @@ namespace Human_Link_Web.Server.Controllers
             // Generate JWT token
             var token = _utilidades.generarJWT(new Usuario
             {
-                Idusuario = user.Idusuario,  
+                Idusuario = user.Idusuario,
                 Usuario1 = user.Usuario1,
                 Isadmin = user.Isadmin
             });
@@ -63,9 +62,9 @@ namespace Human_Link_Web.Server.Controllers
         {
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true,   
-                Secure = true,     
-                Expires = remember ? DateTime.UtcNow.AddDays(7) : (DateTimeOffset?)null 
+                HttpOnly = true,
+                Secure = true,
+                Expires = remember ? DateTime.UtcNow.AddDays(7) : (DateTimeOffset?)null
             };
             Response.Cookies.Append("jwt", token, cookieOptions);
         }

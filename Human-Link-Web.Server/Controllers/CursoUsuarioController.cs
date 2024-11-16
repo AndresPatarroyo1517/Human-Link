@@ -63,6 +63,7 @@ namespace Human_Link_Web.Server.Controllers
             return Ok(cursosUsuario);
         }
 
+        [Authorize(Policy = "AdminPolicy")]
         [HttpGet("usuarios-en-curso")]
         public async Task<ActionResult<IEnumerable<CursoUsuariosResponse>>> GetUsuariosPorCurso()
         {
@@ -76,7 +77,7 @@ namespace Human_Link_Web.Server.Controllers
                     PromedioProgreso = grupo.Average(cu => cu.Progreso ?? 0),
                     PromedioNotas = grupo
                         .Average(cu => cu.Notas != null && cu.Notas.Any()
-                            ? cu.Notas.Average(n => n) 
+                            ? cu.Notas.Average(n => n)
                             : 0)
                 })
                 .ToListAsync();
@@ -126,9 +127,10 @@ namespace Human_Link_Web.Server.Controllers
                 .Join(_context.Cursos,
                     cu => cu.Idcurso,
                     c => c.Idcurso,
-                    (cu, c) => new{
-                            Curso = c,
-                            Progreso = cu.Progreso
+                    (cu, c) => new
+                    {
+                        Curso = c,
+                        Progreso = cu.Progreso
                     })
                 .ToListAsync();
 

@@ -17,6 +17,23 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
         }
 
+        public class NominaMetricsResponse
+        {
+            public decimal TotalNomina { get; set; }
+            public decimal PromedioHorasExtras { get; set; }
+            public decimal TotalBonificacion { get; set; }
+            public int EmpleadosSinBonificacion { get; set; }
+            public int EmpleadosConBonificacion { get; set; }
+            public int EmpleadosSinHorasExtras { get; set; }
+            public int EmpleadosConHorasExtras { get; set; }
+            public decimal PorcentajeEmpleadosSinBonificacion { get; set; }
+            public decimal PorcentajeEmpleadosConBonificacion { get; set; }
+            public decimal PorcentajeEmpleadosSinHorasExtras { get; set; }
+            public decimal PorcentajeEmpleadosConHorasExtras { get; set; }
+        }
+
+
+
         //Endpoint para obtener la nomina de todos los empleados
         //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Nomina
@@ -101,24 +118,28 @@ namespace Human_Link_Web.Server.Controllers
 
             return CreatedAtAction("GetNomina", new { id = nomina.Idnomina }, nomina);
         }
-
-        //Endpoint para eliminar una nomina de la base de datos
-        // DELETE: HumanLink/Nomina/5
-        /*[HttpDelete("{id}")]
-        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
-        public async Task<IActionResult> DeleteNomina(int id)
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet("metricas-nomina")]
+        public async Task<ActionResult<NominaMetricsResponse>> GetMetricasNomina()
         {
-            var nomina = await _context.Nominas.FindAsync(id);
-            if (nomina == null)
+            var nominas = await _context.Nominas.ToListAsync();
+
+            var informe = new NominaMetricsResponse
             {
-                return NotFound();
-            }
-
-            _context.Nominas.Remove(nomina);
-            await _context.SaveChangesAsync();
-
-            return Ok("");
-        }*/
+                TotalNomina = nominas.Sum(n => n.Totalnomina ?? 0),
+                TotalBonificacion = nominas.Sum(n => n.Bonificacion ?? 0),
+                PromedioHorasExtras = (decimal)nominas.Average(n => n.Horasextra ?? 0),
+                EmpleadosSinBonificacion = nominas.Count(n => n.Bonificacion == 0),
+                EmpleadosConBonificacion = nominas.Count(n => n.Bonificacion > 0),
+                EmpleadosSinHorasExtras = nominas.Count(n => n.Horasextra == 0),
+                EmpleadosConHorasExtras = nominas.Count(n => n.Horasextra > 0),
+                PorcentajeEmpleadosSinBonificacion = (nominas.Count(n => n.Bonificacion == 0) / (decimal)nominas.Count()) * 100,
+                PorcentajeEmpleadosConBonificacion = (nominas.Count(n => n.Bonificacion > 0) / (decimal)nominas.Count()) * 100,
+                PorcentajeEmpleadosSinHorasExtras = (nominas.Count(n => n.Horasextra == 0) / (decimal)nominas.Count()) * 100,
+                PorcentajeEmpleadosConHorasExtras = (nominas.Count(n => n.Horasextra > 0) / (decimal)nominas.Count()) * 100
+            };
+            return Ok(informe);
+        }
 
         private bool NominaExists(int id)
         {

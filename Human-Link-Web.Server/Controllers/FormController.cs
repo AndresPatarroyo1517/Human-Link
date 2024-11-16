@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -27,7 +26,7 @@ namespace Human_Link_Web.Server.Controllers
         {
             var url = "https://script.google.com/macros/s/AKfycbwFZDpEVlFt6EfRxF0z04JE6MlI1j0LUqLI1lVjK-2Y2PpLQRor5t-nmLrfUxRmKl76/exec";
             var response = await _httpClient.GetStringAsync(url);
-            
+
             return Ok(response);
         }
 

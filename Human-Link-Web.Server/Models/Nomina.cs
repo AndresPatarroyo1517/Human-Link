@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Human_Link_Web.Server.Models;
+﻿namespace Human_Link_Web.Server.Models;
 
 public partial class Nomina
 {

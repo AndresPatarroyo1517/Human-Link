@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "chart.js": "^4.4.6",
+    "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "plotly.js": "^2.35.2",

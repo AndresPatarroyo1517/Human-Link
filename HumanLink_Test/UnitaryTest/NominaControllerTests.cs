@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static Human_Link_Web.Server.Controllers.NominaController;
 
 namespace HumanLink_UnitaryTest
 {
@@ -47,7 +48,7 @@ namespace HumanLink_UnitaryTest
 
             var actionResult = Assert.IsType<ActionResult<IEnumerable<Nomina>>>(result);
             var returnValue = Assert.IsAssignableFrom<IEnumerable<Nomina>>(actionResult.Value);
-            Assert.Equal(3, returnValue.Count());
+            Assert.Equal(6, returnValue.Count());
         }
 
         [Fact]
@@ -87,7 +88,7 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task PostNomina_CreatesNomina()
         {
-            var newNomina = new Nomina { Idnomina = 3 };
+            var newNomina = new Nomina { Idnomina = 9 };
 
             var result = await _controller.PostNomina(newNomina);
 
@@ -98,14 +99,50 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task PutNomina_UpdatesExistingNomina()
         {
-            var existingNomina = new Nomina { Idnomina = 4, Bonificacion = 14 };
+            var existingNomina = new Nomina { Idnomina = 10, Bonificacion = 14 };
             await _controller.PostNomina(existingNomina);
 
-            var updatedNomina = new Nomina { Idnomina = 4, Bonificacion = 16 };
+            var updatedNomina = new Nomina { Idnomina = 10, Bonificacion = 16 };
 
-            var result = await _controller.PutNomina(4, updatedNomina);
+            var result = await _controller.PutNomina(10, updatedNomina);
 
             Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task GetMetricasNomina_ReturnsCorrectMetrics()
+        {
+            _context.Nominas.Add(new Nomina
+            {
+                Totalnomina = 1000,
+                Bonificacion = 200,
+                Horasextra = 10
+            });
+            _context.Nominas.Add(new Nomina
+            {
+                Totalnomina = 1200,
+                Bonificacion = 0,
+                Horasextra = 5
+            });
+            _context.Nominas.Add(new Nomina
+            {
+                Totalnomina = 1500,
+                Bonificacion = 500,
+                Horasextra = 15
+            });
+            await _context.SaveChangesAsync();
+
+            var result = await _controller.GetMetricasNomina();
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var response = Assert.IsType<NominaMetricsResponse>(okResult.Value);
+
+            Assert.Equal(3700, response.TotalNomina);
+            Assert.Equal(700, response.TotalBonificacion);
+            Assert.Equal(1148.5, (double)response.PromedioHorasExtras);
+            Assert.Equal(25, (double)response.PorcentajeEmpleadosSinBonificacion, 2);
+            Assert.Equal(50, (double)response.PorcentajeEmpleadosConBonificacion, 2);
+            Assert.Equal(0, (double)response.PorcentajeEmpleadosSinHorasExtras, 2);
+            Assert.Equal(100, (double)response.PorcentajeEmpleadosConHorasExtras, 2);
         }
     }
 }

@@ -5,8 +5,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using System.Security.Claims;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Human_Link_Web.Server.Controllers
 {

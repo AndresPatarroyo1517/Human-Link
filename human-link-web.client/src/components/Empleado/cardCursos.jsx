@@ -6,12 +6,14 @@ import { useCurso } from '../../context/cursoContext';
 const CardCursos = () => {
     const [cursos, setCursos] = useState([]);
     const [cursosGeneral, setCursosGeneral] = useState([]);
+    const [idcuremp, setIdcuremp] = useState([]);
     const { setActiveMenu } = useEmpleado();
     const { setSelectedCurso } = useCurso();
 
     useEffect(() => {
         cargarCursosEmpleado();
         cargarCursosGenerales();
+        cargarIdCurEmp();
     }, []);
 
     const cargarCursosEmpleado = async () => {
@@ -34,20 +36,33 @@ const CardCursos = () => {
         }
     };
 
+    const cargarIdCurEmp = async () => {
+        try {
+            const response = await cursosService.getIdCurEmpp();
+            console.log("Response from getIdCurEmpp:", response);
+            setIdcuremp(response);
+        } catch (error) {
+            console.error('Error al obtener los cursos:', error);
+        }
+    };
+
+
     const inscribirse = async (Idcurso, modalId) => {
         try {
             const response = await cursosService.postCursoUsuarioEmpleado(Idcurso);
             if (response.ok) {
-                const data = await response.json();
                 alert("Inscripción realizada con éxito.");
-                cargarCursosEmpleado(); // Recargar los cursos del empleado
-
-                // Cerrar el modal manualmente
                 const modal = document.getElementById(modalId);
                 if (modal) {
                     const modalInstance = bootstrap.Modal.getInstance(modal);
                     modalInstance.hide();
                 }
+                // Recargar los cursos y IDs relacionados
+                await cargarCursosEmpleado();
+                await cargarIdCurEmp();
+
+                // Cerrar el modal manualmente
+                
             } else {
                 const errorData = await response.json();
                 alert("Hubo un problema con la inscripción: " + errorData.message);
@@ -72,15 +87,20 @@ const CardCursos = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{curso.Nombrecurso}</h5>
                                 <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                        setSelectedCurso(curso);
-                                        setActiveMenu('Desarrollo curso');
-                                    }}
-                                >
-                                    Ingresar
-                                </button>
+    type="button"
+    className="btn btn-primary"
+    onClick={() => {
+        const cursoSeleccionado = cursos.find(c => c.Idcurso === curso.Idcurso);
+        if (cursoSeleccionado) {
+            setSelectedCurso([cursoSeleccionado, idcuremp]);
+            setActiveMenu('Desarrollo curso');
+        } else {
+            alert("Curso no disponible en este momento. Por favor, recargue la página.");
+        }
+    }}
+>
+    Ingresar
+</button>
                             </div>
                         </div>
                     </div>

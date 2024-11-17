@@ -3,6 +3,7 @@ import { useCurso } from '../../context/cursoContext';
 import { useEmpleado } from  '../../context/empleadoContext';
 import './DesarrollarCursos.css';
 import formService from '../../services/formService';
+import cursosService from '../../services/cursosService'
 
 const DesarrollarCursos = () => {
     const apiKey = 'AIzaSyAdRZMAsJHz2KPzYbCr6QCDQI8-zAObpVU';
@@ -17,12 +18,6 @@ const DesarrollarCursos = () => {
     };
 
         const [isQuizCompleted, setIsQuizCompleted] = useState(false);
-
-        const obtenerVideoId = (url) => {
-            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : null;
-        };
 
         const handleQuizClick = () => {
             setIsQuizCompleted(true);
@@ -41,21 +36,53 @@ const DesarrollarCursos = () => {
             const response = await formService.putCargarNota(body);
         };
 
-        useEffect(() => {
-            const fetchDescriptions = async () => {
-                const descriptions = await Promise.all(selectedCurso.Url.slice(1).map(async (url) => {
-                    const videoId = obtenerVideoId(url);
-                    if (videoId) {
-                        const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`);
-                        const data = await response.json();
-                        return data.items[0]?.snippet?.description || 'Descripci�n no disponible';
-                    }
-                } catch (error) {
-                    console.error("Error al eliminar el curso:", error);
+    useEffect(() => {
+        const fetchDescriptions = async () => {
+            const descriptions = await Promise.all(selectedCurso[0].Url.slice(1).map(async (url) => {
+                const videoId = obtenerVideoId(url);
+                if (videoId) {
+                    const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`);
+                    const data = await response.json();
+                    return data.items[0]?.snippet?.description || 'Descripción no disponible';
                 }
+                return 'Descripción no disponible';
+            }));
+            setDescripciones(descriptions);
+        };
+
+        fetchDescriptions();
+    }, [selectedCurso, apiKey]);
+
+const eliminar = async (modalId) => {
+    const curso = selectedCurso[0];
+    const idcuremp = selectedCurso[1];
+
+    for (const id of idcuremp) {
+        if (id.Idcurso === curso.Idcurso) {
+            try {
+                const response = await cursosService.deleteCursoUsuarioEmpleado(id.Idcuremp);
+                if (response.ok) {
+                    alert("Curso eliminado con éxito.");
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        const modalInstance = bootstrap.Modal.getInstance(modal);
+                        modalInstance.hide();
+                    }
+                    setActiveMenu('Mis Cursos');
+                    // Recargar cursos del empleado
+                    await cargarCursosEmpleado();
+
+                    // Cerrar el modal
+
+                } else {
+                    alert(`Error al eliminar el curso: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error("Error al eliminar el curso:", error);
             }
         }
-    };
+    }
+};
 
 
 
@@ -64,8 +91,8 @@ const DesarrollarCursos = () => {
         console.log(selectedCurso)
         return (
             <>
-                <h2 className="mb-4">{selectedCurso.Nombrecurso}</h2>
-                {selectedCurso.Url.slice(1).map((url, index) => (
+                <h2 className="mb-4">{selectedCurso[0].Nombrecurso}</h2>
+                {selectedCurso[0].Url.slice(1).map((url, index) => (
                     <div key={index} className="video-card position-relative p-3 mb-4">
                         <p className="d-inline-flex gap-1">
                             <a className="btn btn-primary" data-bs-toggle="collapse" href={'#parte' + index} role="button" aria-expanded="false" aria-controls={'parte' + index}>
@@ -106,15 +133,15 @@ const DesarrollarCursos = () => {
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar curso {selectedCurso[0].Nombrecurso }</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar curso {selectedCurso[0].Nombrecurso}</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                si guarda los cambios se eliminara su progreso y notas que tenga en el curso �Desea continuar?
+                                si guarda los cambios se eliminara su progreso y notas que tenga en el curso ¿Desea continuar?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onClick={() => eliminar('exampleModal') }>Save changes</button>
+                                <button type="button" class="btn btn-primary" onClick={() => eliminar('exampleModal')}>Save changes</button>
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@ const TortaInscritos = () => {
     if (usuariosData.length == 0 && cursosData.length == 0) {
         return <div>Cargando datos...</div>;
     }
-    usuariosData.filter((usuario) => console.log(usuariosInscritosIds.has(usuario.Idusuario)))
+    
     const inscritos = usuariosData.filter((usuario) => usuariosInscritosIds.has(usuario.Idusuario)).length;
     const noInscritos = usuariosData.length - inscritos;
 

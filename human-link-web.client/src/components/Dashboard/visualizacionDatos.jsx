@@ -8,6 +8,7 @@ import BarrasCursosCategoria from "../graficosCursos/barrasCursosCategoria";
 import PromedioNotasCurso from "../graficosCursos/promedioNotasCurso";
 import TortaNominaExtras from "../graficosCursos/tortaHorasExtras";
 import ProgresoUsuarios from "../graficosCursos/progresoUsuarios";
+import Estadisticas from "../graficosCursos/estadisticas";
 
 const VisualizacionDatos = () => {
 
@@ -22,15 +23,20 @@ const VisualizacionDatos = () => {
     //})
 
     return (
-        <div className="contenedor-graficos">
-            <TortaInscritos />
-            <BarrasCursosCategoria />
-            <BarrasCursos />
-            <PromedioNotasCurso />
-            <TortaNominaExtras />
-            <ProgresoUsuarios />
-            {/*Aqui no ponga una grafica de nomina, la requiero para que se exporte al PDF*/}
-            {/*<Informes/>*/}
+        <div>
+            <div>
+                <Estadisticas />
+            </div>
+            <div className="contenedor-graficos">
+                <TortaInscritos />
+                <BarrasCursosCategoria />
+                <BarrasCursos />
+                <PromedioNotasCurso />
+                <TortaNominaExtras />
+                <ProgresoUsuarios />
+                {/*Aqui no ponga una grafica de nomina, la requiero para que se exporte al PDF*/}
+                {/*<Informes/>*/}
+            </div>
         </div>
     );
 };

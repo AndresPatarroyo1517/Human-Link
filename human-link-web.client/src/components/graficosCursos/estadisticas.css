@@ -1,0 +1,63 @@
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    /*padding: 20px;
+    margin-top: 30px;*/
+    margin-bottom: 15px;
+}
+
+.estadisticas-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+    .estadisticas-item:hover {
+        transform: scale(1.02);
+    }
+
+    .estadisticas-item h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .estadisticas-item p {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0px;
+    }
+
+.total-cursos {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.total-usuarios {
+    background-color: #2196F3;
+    color: white;
+}
+
+.total-inscritos {
+    background-color: #FF9800;
+    color: white;
+}
+
+.total-no-inscritos {
+    background-color: #F44336;
+    color: white;
+}
+
+.total-bonificaciones {
+    background-color: #9C27B0;
+    color: white;
+}
+
+.promedio-horas-extras {
+    background-color: #00BCD4;
+    color: white;
+}

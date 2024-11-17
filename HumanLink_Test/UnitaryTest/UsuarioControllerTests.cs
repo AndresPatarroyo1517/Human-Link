@@ -1,7 +1,6 @@
 ﻿using Human_Link_Web.Server.Controllers;
 using Human_Link_Web.Server.Custom;
 using Human_Link_Web.Server.Models;
-using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Human_Link_Web.Server.Controllers.UsuarioController;

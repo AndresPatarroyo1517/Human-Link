@@ -25,7 +25,7 @@ namespace Human_Link_Web.Server.Controllers
         public async Task<IActionResult> GetArchivos()
         {
             var archivos = await _context.Archivos
-                    .Find(FilterDefinition<Archivo>.Empty) 
+                    .Find(FilterDefinition<Archivo>.Empty)
                     .ToListAsync();
 
             if (archivos == null || archivos.Count == 0)

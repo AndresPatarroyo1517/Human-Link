@@ -3,7 +3,7 @@ const API_BASE_URL = 'https://localhost:7019/HumanLink/Empleado';
 const empleadosService = {
     // Obtener información del empleado logueado
     getEmpleado: async () => {
-        const response = await fetch(API_URL, { // No es necesario pasar el ID en la URL
+        const response = await fetch(API_BASE_URL + '/Get', { // No es necesario pasar el ID en la URL
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

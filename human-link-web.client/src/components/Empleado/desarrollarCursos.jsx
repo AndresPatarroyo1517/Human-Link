@@ -56,6 +56,7 @@ import formService from '../../services/formService';
         console.log(selectedCurso)
         return (
             <>
+                <h2 className="mb-4">{selectedCurso.Nombrecurso}</h2>
                 {selectedCurso.Url.slice(1).map((url, index) => (
                     <div key={index} className="video-card position-relative p-3 mb-4">
                         <p className="d-inline-flex gap-1">

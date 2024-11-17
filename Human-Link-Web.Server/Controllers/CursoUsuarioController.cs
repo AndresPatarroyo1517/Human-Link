@@ -51,6 +51,7 @@ namespace Human_Link_Web.Server.Controllers
                         idusuario = cu.Idusuario,
                         cursoId = cu.Idcurso,
                         progreso = cu.Progreso,
+                        notas = cu.Notas,
                         fechaInicio = cu.Fechainicio
                     })
                 .ToListAsync();

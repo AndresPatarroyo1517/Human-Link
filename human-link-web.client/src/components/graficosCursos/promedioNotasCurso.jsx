@@ -1,47 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import Plot from 'react-plotly.js';
-import cursosService from '../../services/cursosService';
-import './Style-graficos.css';
+import React, { useState, useEffect } from "react";
+import Plot from "react-plotly.js";
+import cursosService from "../../services/cursosService";
+import "./Style-graficos.css";
 
-const BarrasCursos = () => {
+const PromedioNotasCurso = () => {
     const [data, setData] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
 
     useEffect(() => {
         cursosService.getAllCursosCategoria()
-            .then(response => {
+            .then((response) => {
                 // Obtener todas las categorías sin duplicados
                 const categoriasUnicas = [...new Set(response.map(curso => curso.categoria))];
                 setCategorias(categoriasUnicas);
-                console.log(response);
 
-                // Agrupar cursos por categoría y contar inscritos por curso
+                // Agrupar cursos por categoría y calcular el promedio de notas
                 const groupedData = response.reduce((acc, curso) => {
                     if (!acc[curso.categoria]) {
                         acc[curso.categoria] = {};
                     }
                     const nombreCurso = curso.nombrecurso;
+
                     if (!acc[curso.categoria][nombreCurso]) {
-                        acc[curso.categoria][nombreCurso] = new Set(); // Usar Set para contar usuarios únicos
+                        acc[curso.categoria][nombreCurso] = { notas: [] };
                     }
-                    acc[curso.categoria][nombreCurso].add(curso.idusuario);
+
+                    // Agregar las notas del curso al arreglo correspondiente
+                    if (curso.notas && curso.notas.length > 0) {
+                        acc[curso.categoria][nombreCurso].notas.push(...curso.notas);
+                    }
                     return acc;
                 }, {});
 
                 // Convertir el objeto agrupado en un formato adecuado para graficar
                 const formattedData = Object.keys(groupedData).reduce((acc, categoria) => {
-                    acc[categoria] = Object.keys(groupedData[categoria]).map(nombreCurso => ({
-                        nombreCurso,
-                        inscritos: groupedData[categoria][nombreCurso].size
-                    }));
+                    acc[categoria] = Object.keys(groupedData[categoria]).map(nombreCurso => {
+                        const notas = groupedData[categoria][nombreCurso].notas;
+                        const promedio = notas.length > 0
+                            ? notas.reduce((sum, nota) => sum + nota, 0) / notas.length
+                            : 0;
+                        return {
+                            nombreCurso,
+                            promedioNotas: promedio
+                        };
+                    });
                     return acc;
                 }, {});
 
                 setData(formattedData);
             })
-            .catch(error => {
-                console.error('Error al obtener los datos: ', error);
+            .catch((error) => {
+                console.error("Error al obtener los datos: ", error);
             });
     }, []);
 
@@ -51,8 +61,8 @@ const BarrasCursos = () => {
         : [];
 
     // Extraer datos para el gráfico
-    const xData = cursosFiltrados.map(curso => curso.nombreCurso);
-    const yData = cursosFiltrados.map(curso => curso.inscritos);
+    const xData = cursosFiltrados.map((curso) => curso.nombreCurso);
+    const yData = cursosFiltrados.map((curso) => curso.promedioNotas);
 
     // Generar colores únicos para cada barra
     const colors = xData.map(() =>
@@ -86,20 +96,20 @@ const BarrasCursos = () => {
                         {
                             x: xData,
                             y: yData,
-                            type: 'bar',
+                            type: "bar",
                             marker: { color: colors },
-                            name: 'Cantidad de Inscritos',
+                            name: "Promedio de Notas",
                         },
                     ]}
                     layout={{
-                        title: `Cantidad de Inscritos por Curso en "${categoriaSeleccionada}"`,
+                        title: `Promedio de Notas por Curso en "${categoriaSeleccionada}"`,
                         xaxis: {
-                            title: 'Cursos',
+                            title: "Cursos",
                             automargin: true,
                         },
                         yaxis: {
-                            title: 'Cantidad de Inscritos',
-                            range: [0, Math.max(...yData) + 1], // Ajustar rango del eje Y
+                            title: "Promedio de Notas",
+                            range: [0, 50], // Ajustar el rango del eje Y
                         },
                         height: 330,
                         margin: {
@@ -116,5 +126,5 @@ const BarrasCursos = () => {
     );
 };
 
-export default BarrasCursos;
+export default PromedioNotasCurso;
 

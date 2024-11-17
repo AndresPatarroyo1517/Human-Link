@@ -56,7 +56,7 @@ const TortaInscritos = () => {
                 layout={{
                     title: "Porcentaje de Inscritos vs No Inscritos",
                     //width: "100%",
-                    //height: "100%",
+                    height: 350,
                     margin: { t: 50, l: 50, r: 50, b: 50 },
                 }}
                 config={{ responsive: true }}

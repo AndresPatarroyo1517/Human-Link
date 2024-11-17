@@ -1,8 +1,9 @@
 .contenedor-grafico {
     width: 100%;
     max-width: 800px;
+    height: 350px;
 }
 
-.contenedor-grafico div {
-    width: 100%;
-}
+    .contenedor-grafico div {
+        width: 100%;
+    }

@@ -7,17 +7,9 @@ const BarrasCursosCategoria = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        cursosService.getCursos()
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.error('Error al obtener los datos: ', error);
-            });
-
         cursosService.getAllCursosCategoria()
             .then(response => {
-                console.log(response)
+                console.log(response);
                 // Agrupar cursos por categoría y contar la cantidad de inscritos
                 const groupedData = response.reduce((acc, curso) => {
                     acc[curso.categoria] = (acc[curso.categoria] || 0) + 1;
@@ -37,7 +29,6 @@ const BarrasCursosCategoria = () => {
             });
     }, []);
 
-    // Si no hay datos aún, se puede mostrar un loading
     if (data.length === 0) {
         return <div>Cargando datos...</div>;
     }
@@ -45,6 +36,13 @@ const BarrasCursosCategoria = () => {
     // Extraer datos para el gráfico
     const xData = data.map(item => item.categoria);
     const yData = data.map(item => item.cantidad);
+
+    // Generar colores únicos para cada barra
+    const colors = xData.map(() =>
+        `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
+            Math.random() * 255
+        )}, ${Math.floor(Math.random() * 255)}, 1)`
+    );
 
     return (
         <div className="contenedor-grafico">
@@ -54,9 +52,9 @@ const BarrasCursosCategoria = () => {
                         x: xData,
                         y: yData,
                         type: 'bar',
-                        marker: { color: 'rgba(40, 78, 250, 0.5)' },
-                        name: 'Cantidad de Inscritos'
-                    }
+                        marker: { color: colors },
+                        name: 'Cantidad de Inscritos',
+                    },
                 ]}
                 layout={{
                     title: 'Cantidad de Inscritos por Categoría',
@@ -66,16 +64,15 @@ const BarrasCursosCategoria = () => {
                     },
                     yaxis: {
                         title: 'Cantidad de Inscritos',
-                        range: [0, Math.max(...yData) + 1] // Ajustar rango del eje Y
+                        range: [0, Math.max(...yData) + 1], // Ajustar rango del eje Y
                     },
-                    //width: 500,
-                    //height: 300,
+                    height: 350,
                     margin: {
                         l: 40,
                         r: 30,
                         t: 50,
-                        b: 40
-                    }
+                        b: 40,
+                    },
                 }}
                 config={{ responsive: true }}
             />
@@ -84,3 +81,4 @@ const BarrasCursosCategoria = () => {
 };
 
 export default BarrasCursosCategoria;
+

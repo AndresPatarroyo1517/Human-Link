@@ -109,7 +109,7 @@ const PromedioNotasCurso = () => {
                         },
                         yaxis: {
                             title: "Promedio de Notas",
-                            range: [0, 50], // Ajustar el rango del eje Y
+                            range: [0, 50],
                         },
                         height: 330,
                         margin: {

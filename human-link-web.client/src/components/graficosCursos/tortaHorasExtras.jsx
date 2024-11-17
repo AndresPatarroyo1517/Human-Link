@@ -48,10 +48,10 @@ const TortaHorasExtras = () => {
                     title: 'Porcentaje de Empleados con y sin Horas Extras',
                     height: 350,
                     margin: {
-                        l: 40,
-                        r: 40,
-                        t: 40,
-                        b: 40,
+                        l: 50,
+                        r: 50,
+                        t: 50,
+                        b: 50,
                     },
                 }}
                 config={{ responsive: true }}

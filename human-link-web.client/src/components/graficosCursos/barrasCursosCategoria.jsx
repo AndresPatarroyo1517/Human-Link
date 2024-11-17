@@ -64,7 +64,7 @@ const BarrasCursosCategoria = () => {
                     },
                     yaxis: {
                         title: 'Cantidad de Inscritos',
-                        range: [0, Math.max(...yData) + 1], // Ajustar rango del eje Y
+                        range: [0, Math.max(...yData) + 1],
                     },
                     height: 350,
                     margin: {

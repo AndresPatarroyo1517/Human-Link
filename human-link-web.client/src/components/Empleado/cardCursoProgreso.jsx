@@ -27,6 +27,7 @@ const CardCursoProgreso = () => {
 
     return (
         <>
+            <h2 className="mb-4">Progreso de tus cursos</h2>
             <div className="row">
                 {cursos.map((curso, index) => (
                     <div key={index} className="contenedor-card">

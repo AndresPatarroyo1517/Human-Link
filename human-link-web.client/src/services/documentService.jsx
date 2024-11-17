@@ -57,7 +57,7 @@ const documentsService = {
 
     // Obtener documentos por nombre
     getDocumentsByName: async (documentName) => {
-        const response = await fetch(`${API_URL_DOCUMENTS}/query/${documentName}`, {
+        const response = await fetch(`${ API_URL_DOCUMENTS }/query/${ documentName }`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -96,6 +96,18 @@ const documentsService = {
         }
 
         return response.blob(); // Devolver el documento como blob
+    },
+    deleteDocument: async (id) => {
+        const response = await fetch(`${API_URL_DOCUMENTS}/eliminar/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar el documento');
+        }
+
+        return await response.json();
     },
 
 

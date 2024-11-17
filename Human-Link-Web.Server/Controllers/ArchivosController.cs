@@ -25,7 +25,7 @@ namespace Human_Link_Web.Server.Controllers
         public async Task<IActionResult> GetArchivos()
         {
             var archivos = await _context.Archivos
-                    .Find(FilterDefinition<Archivo>.Empty) 
+                    .Find(FilterDefinition<Archivo>.Empty)
                     .ToListAsync();
 
             if (archivos == null || archivos.Count == 0)
@@ -179,5 +179,34 @@ namespace Human_Link_Web.Server.Controllers
 
             return File(result, "application/octet-stream", fileInfo.Filename);
         }
+
+
+        [Authorize(Policy = "AllPolicy")]
+        [HttpDelete("eliminar/{id}")]
+        public async Task<IActionResult> DeleteArchivo(string id)
+        {
+            var propietario = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            if (propietario == null)
+                return Unauthorized("Usuario no autenticado.");
+
+            var fileId = new ObjectId(id);
+
+            // Buscar el archivo en la base de datos
+            var archivo = await _context.Archivos
+                .Find(a => a.Propietario == propietario && a.ArchivoPath == id)
+                .FirstOrDefaultAsync();
+
+            if (archivo == null)
+                return NotFound("Archivo no encontrado.");
+
+            // Eliminar el archivo en GridFS
+            await _context.GridFS.DeleteAsync(fileId);
+
+            // Eliminar el documento en la base de datos
+            await _context.Archivos.DeleteOneAsync(a => a.Id == archivo.Id);
+
+            return Ok(new { mensaje = "Archivo eliminado exitosamente" });
+        }
+
     }
 }

@@ -3,24 +3,22 @@ import documentsService from '../../../services/documentService';
 
 const Documents = () => {
     const [documentos, setDocumentos] = useState([]);
+    const [archivoSeleccionado, setArchivoSeleccionado] = useState(null); // Estado para el archivo seleccionado
     const titleDocuments = ['Hoja de Vida', 'Documento de Identidad', 'Certificados de Educacion y Formacion', 'Documentos Varios'];
 
-    // Función para cargar documentos desde el servicio
     const cargarDocumentos = async () => {
         try {
             const response = await documentsService.getDocumentosUsuario();
-            setDocumentos(response); // Actualiza el estado con los documentos
+            setDocumentos(response);
         } catch (error) {
             console.error('Error al obtener los documentos:', error);
         }
     };
 
-    // Llamar a cargarDocumentos al montar el componente
     useEffect(() => {
         cargarDocumentos();
     }, []);
 
-    // Descargar documento
     const descargarDocumento = async (id, nombreArchivo) => {
         try {
             const blob = await documentsService.downloadDocument(id);
@@ -35,7 +33,6 @@ const Documents = () => {
         }
     };
 
-    // Función para subir documentos, seleccionando el método de subida según el tipo de documento
     const handleSubirDocumento = async (e, tipoDocumento) => {
         e.preventDefault();
         const file = e.target.elements.file.files[0];
@@ -51,10 +48,25 @@ const Documents = () => {
             } else {
                 await documentsService.uploadDocument(file, tipoDocumento);
             }
-            cargarDocumentos(); // Recargar la lista de documentos después de la subida
+            cargarDocumentos();
             alert('Archivo subido exitosamente');
         } catch (error) {
             console.error('Error al subir el documento:', error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await documentsService.deleteDocument(id);
+            alert('Archivo eliminado exitosamente');
+            cargarDocumentos(); // Recargar documentos después de eliminar
+            setArchivoSeleccionado(null); // Limpiar el archivo seleccionado
+            const modal = document.getElementById('deleteModal'); // Cerrar el modal manualmente
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            modalInstance.hide();
+        } catch (error) {
+            console.error(error);
+            alert('Hubo un error al eliminar el archivo');
         }
     };
 
@@ -72,27 +84,36 @@ const Documents = () => {
                                         <h5 className="card-title">{tipoDocumento}</h5>
                                         {documentosSubidos.length > 0 ? (
                                             <>
-                                                <p className="card-text">
-                                                    Archivo Subido: {documentosSubidos[0].NombreArchivo}
-                                                </p>
-                                                {documentosSubidos.length > 1 && (
-                                                    <ul>
-                                                        {documentosSubidos.slice(1).map((tipoDoc, idx) => (
-                                                            <li key={idx}>{tipoDoc.NombreArchivo}</li>
-                                                        ))}
-                                                    </ul>
-                                                )}
-                                                <button
-                                                    className="btn btn-secondary"
-                                                    onClick={() => descargarDocumento(documentosSubidos[0].Id, documentosSubidos[0].NombreArchivo)}
-                                                >
-                                                    Descargar
-                                                </button>
+                                                <p className="card-text">Archivo Subido</p>
+                                                <ul className="list-group">
+                                                    {documentosSubidos.map((tipoDoc, idx) => (
+                                                        <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+                                                            {tipoDoc.NombreArchivo}
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal"
+                                                                onClick={() => setArchivoSeleccionado(tipoDoc)} // Almacena el archivo seleccionado
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
                                                 <form onSubmit={(e) => handleSubirDocumento(e, tipoDocumento)}>
-                                                    <div className="form-group">
+                                                    <div className="form-group mt-2">
                                                         <input type="file" className="form-control-file" name="file" />
                                                     </div>
-                                                    <button type="submit" className="btn btn-primary mt-2">Actualizar</button>
+                                                    <button type="submit" className="btn btn-primary m-2">Actualizar</button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-secondary m-2"
+                                                        onClick={() => descargarDocumento(documentosSubidos[0].Id, documentosSubidos[0].NombreArchivo)}
+                                                    >
+                                                        Descargar
+                                                    </button>
                                                 </form>
                                             </>
                                         ) : (
@@ -111,6 +132,31 @@ const Documents = () => {
                             </div>
                         );
                     })}
+                </div>
+            </div>
+
+            {/* Modal para eliminar archivo */}
+            <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="deleteModalLabel">Seguro que deseas borrar este archivo</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            {archivoSeleccionado ? archivoSeleccionado.NombreArchivo : 'Cargando...'}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => handleDelete(archivoSeleccionado.Id)}
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

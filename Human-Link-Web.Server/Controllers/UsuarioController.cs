@@ -322,7 +322,7 @@ namespace Human_Link_Web.Server.Controllers
                 .Where(cu => cu.Idusuario == idUsuario)
                 .Select(cu => new
                 {
-                    NombreCurso = cu.IdcursoNavigation.Nombrecurso, 
+                    NombreCurso = cu.IdcursoNavigation.Nombrecurso,
                     Progreso = cu.Progreso,
                     Notas = cu.Notas,
                     FechaInicio = cu.Fechainicio
@@ -359,7 +359,7 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             decimal salarioBase = empleado.Salario ?? 0;
-            decimal valorHoraExtra = (salarioBase / 30 / 8) * 1.25m; 
+            decimal valorHoraExtra = (salarioBase / 30 / 8) * 1.25m;
             decimal totalHorasExtra = (ultimaNomina.Horasextra ?? 0) * valorHoraExtra;
             decimal bonificacion = ultimaNomina.Bonificacion ?? 0;
 

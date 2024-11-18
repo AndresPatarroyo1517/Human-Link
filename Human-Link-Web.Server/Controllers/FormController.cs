@@ -37,7 +37,7 @@ namespace Human_Link_Web.Server.Controllers
             var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var idUsuario = id != null ? Convert.ToInt32(id) : 0;
             var usuario = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var jsonResponse = await _httpClient.GetStringAsync("https://script.google.com/macros/s/AKfycbwFZDpEVlFt6EfRxF0z04JE6MlI1j0LUqLI1lVjK-2Y2PpLQRor5t-nmLrfUxRmKl76/exec");
+            var jsonResponse = await _httpClient.GetStringAsync("https://script.google.com/macros/s/AKfycbxhMit92deD1WgbKHMIjdYO0FCnl1CojNyW-GbKmBZSIk9SAxyZ79fT8fST16cTHXw/exec");
 
             var responseList = JsonSerializer.Deserialize<List<FormResponse>>(jsonResponse);
 
@@ -52,32 +52,77 @@ namespace Human_Link_Web.Server.Controllers
                 .ToList();
 
             var ultimaNota = filteredResponse.LastOrDefault()?.score;
+            var respuestaFecha = filteredResponse.LastOrDefault()?.timestamp;
 
-            if (ultimaNota == null)
+            var objCursoUsuario = new Cursousuario
             {
-                return NotFound("No se encontró ninguna nota para el usuario especificado.");
+                Idcurso = cursousuario.Idcurso,
+                Notas = null
+            };
+
+            if (ultimaNota == null || respuestaFecha == null || !ValidarFechaYHora(respuestaFecha))
+            {
+                return Ok(objCursoUsuario);
+                //return NotFound("No se encontró ninguna nota para el usuario especificado.");
             }
 
-            var cursoUsuario = await _context.Cursousuarios
+
+            var bdCursoUsuario = await _context.Cursousuarios
                 .FirstOrDefaultAsync(c => c.Idcurso == cursousuario.Idcurso && c.Idusuario == idUsuario);
 
-            if (cursoUsuario == null)
+            if (bdCursoUsuario == null)
             {
                 return NotFound("No se encontró el curso-usuario especificado con los IDs proporcionados.");
             }
 
-            if (cursoUsuario.Notas == null)
+            if (bdCursoUsuario.Notas == null)
             {
-                cursoUsuario.Notas = new List<int>();
+                bdCursoUsuario.Notas = new List<int>();
             }
-            cursoUsuario.Notas.Add(ultimaNota.Value);
+            bdCursoUsuario.Notas.Add(ultimaNota.Value);
 
-            _context.Entry(cursoUsuario).Property(c => c.Notas).IsModified = true;
+            _context.Entry(bdCursoUsuario).Property(c => c.Notas).IsModified = true;
 
             await _context.SaveChangesAsync();
 
-            return Ok(cursoUsuario);
+            return Ok(bdCursoUsuario);
         }
+
+        // True: fecha y hora valida
+        // False: fecha u hora fuera del rango
+        private static bool ValidarFechaYHora(String fecha)
+        {
+            // Parsear la fecha recibida en formato ISO 8601
+            DateTime fechaRecibida = DateTime.Parse(fecha, null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+            // Convertir la fecha recibida a la hora local
+            DateTime fechaRecibidaLocal = fechaRecibida.ToLocalTime();
+
+            // Obtener la fecha y hora actual en hora local
+            DateTime fechaActualLocal = DateTime.Now;
+
+            // Verificar si la fecha recibida coincide con la fecha actual (mismo día)
+            if (fechaRecibidaLocal.Date == fechaActualLocal.Date)
+            {
+                // Calcular el rango de 5 minutos hacia atrás
+                DateTime rangoInicio = fechaActualLocal.AddMinutes(-5);
+
+                // Verificar si la hora recibida está dentro del rango
+                if (fechaRecibidaLocal >= rangoInicio && fechaRecibidaLocal <= fechaActualLocal)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }

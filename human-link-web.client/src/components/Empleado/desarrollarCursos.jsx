@@ -10,6 +10,11 @@ const DesarrollarCursos = () => {
     const { selectedCurso } = useCurso();
     const { setActiveMenu } = useEmpleado();
     const [descripciones, setDescripciones] = useState([]);
+    const [estadoNotas, setEstadoNotas] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
     const obtenerVideoId = (url) => {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -25,15 +30,39 @@ const DesarrollarCursos = () => {
 
         const handleCompleteQuiz = async () => {
             setIsQuizCompleted(false);
-
+            setIsLoading(true);
+            console.log(selectedCurso);
             const body = {
                 idcuremp: 0,
                 idusuario: 0,
-                idcurso: selectedCurso.Idcurso,
+                idcurso: selectedCurso[0].Idcurso,
                 progreso: 0,
                 notas: []
             };
             const response = await formService.putCargarNota(body);
+            setIsLoading(false);
+            console.log(response);
+            if (response.Notas == null) {
+                /*alert("No se ha enviado ninguna respuesta.");*/
+                setIsError(true);
+                setModalMessage("Ninguna nota fue cargada en la base de datos.");
+                setShowModal(true);
+            } else {
+                /*alert("Nota cargada exitosamente.");*/
+                setIsError(false);
+                setModalMessage("Nota cargada exitosamente en la base de datos.");
+                setShowModal(true);
+            }
+
+            //if (estadoNota.length != 0 && isQuizCompleted) {
+            //    console.log(estadoNota);
+            //    if (estadoNota.Nota == null) {
+            //        alert("No se ha enviado ninguna respuesta.");
+            //    } else if (estadoNota.length > 2) {
+            //        alert("Nota cargada exitosamente.");
+            //    }
+            //}
+
         };
 
     useEffect(() => {
@@ -83,11 +112,6 @@ const eliminar = async (modalId) => {
         }
     }
 };
-
-
-
-
-
         console.log(selectedCurso)
         return (
             <>
@@ -120,28 +144,68 @@ const eliminar = async (modalId) => {
                                 <button className="btn btn-success" onClick={handleCompleteQuiz} disabled={!isQuizCompleted}>
                                     Finalizar cuestionario
                                 </button>
+                                {isLoading && (
+                                    <div className="d-flex justify-content-center">
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden">Cargando...</span>
+                                        </div>
+                                    </div>
+                                )}
+                                {showModal && (
+                                    <div
+                                        className="modal fade show"
+                                        style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                                        tabIndex="-1"
+                                    >
+                                        <div className="modal-dialog">
+                                            <div className={`modal-content ${isError ? 'bg-danger text-white' : ''}`}>
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title">{isError ?
+                                                        'No se ha enviado ninguna respuesta' : 'Respuesta recibida'}</h5>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-close"
+                                                        onClick={() => setShowModal(false)}
+                                                    ></button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <p>{modalMessage}</p>
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-primary"
+                                                        onClick={() => setShowModal(false)}
+                                                    >
+                                                        Cerrar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 ))}
 
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Eliminar curso
                 </button>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar curso {selectedCurso[0].Nombrecurso}</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Eliminar curso {selectedCurso[0].Nombrecurso}</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 si guarda los cambios se eliminara su progreso y notas que tenga en el curso ¿Desea continuar?
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onClick={() => eliminar('exampleModal')}>Save changes</button>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" onClick={() => eliminar('exampleModal')}>Save changes</button>
                             </div>
                         </div>
                     </div>

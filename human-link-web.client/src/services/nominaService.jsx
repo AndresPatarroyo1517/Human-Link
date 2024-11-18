@@ -1,9 +1,10 @@
 const API_URL = 'https://localhost:7019/HumanLink/Nomina';
 
 
+
 const NominaService = {
     getNomina: async () => {
-        const response = await fetch(API_URL + "/Get", {
+        const response = await fetch(API_URL+'/Get', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -12,11 +13,36 @@ const NominaService = {
         });
 
         if (!response.ok) {
-            throw new Error('Error al consultar la nómina');
+            throw new Error('Error al consultar la nï¿½mina');
         }
 
         const data = await response.json();
         return data;
+    },
+
+    updateNominaEmpleado: async (updatedNomina, nominaId) => {
+        try {
+            console.log('Datos ingresados ' + updatedNomina, 'id: ' + nominaId)
+            const response = await fetch(API_URL + '/' + nominaId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(updatedNomina), // Solo enviamos los campos modificados
+            });
+
+            if (response.ok) {
+                alert('Nï¿½mina actualizada con ï¿½xito');
+            } else {
+                const errorData = await response.json();
+                console.error("Error al actualizar la nï¿½mina:", errorData);
+                alert('Error al actualizar la nï¿½mina');
+            }
+        } catch (error) {
+            console.error("Error actualizando la nï¿½mina:", error);
+            alert('Ocurriï¿½ un error al actualizar la nï¿½mina');
+        }
     },
 
     getMetricasNomina: async () => {
@@ -29,7 +55,7 @@ const NominaService = {
         });
 
         if (!response.ok) {
-            throw new Error('Error al consultar la nómina');
+            throw new Error('Error al consultar la nï¿½mina');
         }
 
         const data = await response.json();

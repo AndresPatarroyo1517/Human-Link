@@ -365,6 +365,7 @@ namespace Human_Link_Web.Server.Controllers
 
             var salarioCalculado = new
             {
+                IdNomina = ultimaNomina.Idnomina,
                 Empleado = empleado.Nombre,
                 Cargo = empleado.Cargo,
                 Departamento = empleado.Departamento,

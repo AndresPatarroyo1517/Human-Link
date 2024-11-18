@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import cursosService from "../../services/cursosService";
 import usuariosService from "../../services/usuariosService";
 import NominaService from "../../services/nominaService";

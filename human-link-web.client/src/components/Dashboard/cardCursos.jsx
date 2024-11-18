@@ -9,13 +9,13 @@ const CardCursos = () => {
             titulo: "Curso ReactJS - OpenBootcamp",
             duracion: 10,
             url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
-            descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
+            descripcion: "Aprender�s c�mo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
         },
         {
             titulo: "Curso Java Script - OpenBootcamp",
             duracion: 8,
             url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
-            descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
+            descripcion: "Con NodeJS podr�s trabajar con JavaScript en el servidor y crear aplicaciones r�pidas y escalables."
         }
     ]);
 
@@ -65,9 +65,7 @@ const CardCursos = () => {
 
     const handleAddCurso = async () => {
         try {
-            // Aquí deberías hacer la llamada al servicio para guardar el curso
-            // Suponiendo que tienes un endpoint para crear un nuevo curso
-            await cursosService.addCurso(newCurso); // Asegúrate de tener este método implementado en el servicio
+            await cursosService.addCurso(newCurso); 
             setCursos([...cursos, newCurso]);
             // Restablecer el formulario
             setNewCurso({
@@ -84,12 +82,10 @@ const CardCursos = () => {
 
     return (
         <>
-            {/* Botón Añadir curso */}
             <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#aniadirModal">
-                <i className="bi bi-plus-circle"></i> Añadir curso
+                <i className="bi bi-plus-circle"></i> A�adir curso
             </button>
 
-            {/* Modal para añadir un nuevo curso */}
             <div className="modal fade" id="aniadirModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">

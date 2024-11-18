@@ -1,8 +1,7 @@
 import TortaInscritos from "../graficosCursos/tortaInscritos";
 import "./visualizacionDatos.css";
 import BarrasCursos from "../graficosCursos/barrasCursos";
-import { useEffect } from "react";
-import formService from "../../services/formService";
+import { useState } from "react";
 import { Informes } from "../Informes/informes";
 import BarrasCursosCategoria from "../graficosCursos/barrasCursosCategoria";
 import PromedioNotasCurso from "../graficosCursos/promedioNotasCurso";
@@ -12,15 +11,11 @@ import Estadisticas from "../graficosCursos/estadisticas";
 
 const VisualizacionDatos = () => {
 
-    //useEffect(() => {
-    //    formService.getRespuestas()
-    //        .then(response => {
-    //            console.log(response)
-    //        })
-    //        .catch(error => {
-    //            console.error("Error al consultar formularios: " + error)
-    //        })
-    //})
+    const [imageSrc, setImageSrc] = useState(null);
+
+    const manejarImagenGenerada = (imageData) => {
+        setImageSrc(imageData)
+    }
 
     return (
         <div>
@@ -29,13 +24,12 @@ const VisualizacionDatos = () => {
             </div>
             <div className="contenedor-graficos">
                 <TortaInscritos />
-                <BarrasCursosCategoria />
+                <BarrasCursosCategoria onImagenGenerada={manejarImagenGenerada} />
                 <BarrasCursos />
                 <PromedioNotasCurso />
                 <TortaNominaExtras />
                 <ProgresoUsuarios />
-                {/*Aqui no ponga una grafica de nomina, la requiero para que se exporte al PDF*/}
-                {/*<Informes/>*/}
+                <Informes imageSrc={imageSrc} style={{ gridColumn: 'span 2' }} />
             </div>
         </div>
     );

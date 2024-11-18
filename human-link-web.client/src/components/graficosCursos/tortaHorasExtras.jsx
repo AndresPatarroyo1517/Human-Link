@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import nominaService from '../../services/nominaService';
 import './Style-graficos.css';
@@ -10,7 +10,6 @@ const TortaHorasExtras = () => {
         nominaService.getMetricasNomina()
             .then(response => {
                 setData(response);
-                console.log(response);
             })
             .catch(error => {
                 console.error('Error al obtener los datos: ', error);
@@ -27,7 +26,7 @@ const TortaHorasExtras = () => {
     } = data;
 
     return (
-        <div className="contenedor-grafico contenedor-torta">
+        <div className="contenedor-grafico-export">
             <Plot
                 data={[
                     {

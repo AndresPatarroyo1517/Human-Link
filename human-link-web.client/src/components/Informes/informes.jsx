@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
-import Plotly from 'plotly.js-dist';
 import 'jspdf-autotable';
 import { fetchCursosUsuarios, fetchMetricasNomina } from '../../services/pdfService.jsx';
 import './informes.css'; 
-import BarrasCursosCategoria from "../graficosCursos/barrasCursosCategoria";
+import  InformeAnalisis  from './informeAnalisis.jsx';
 
-export const Informes = () => {
+export const Informes = ({ imageSrc}) => {
     const [dataUC, setDataUC] = useState([]);
     const [mNomina, setMNomina] = useState({});
     const [showMoreCursos, setShowMoreCursos] = useState(false);
+    const [isImageReady, setIsImageReady] = useState(false); 
 
     useEffect(() => {
         const obtenerDatos = async () => {
@@ -26,6 +26,14 @@ export const Informes = () => {
         obtenerDatos();
     }, []);
 
+    useEffect(() => {
+        if (imageSrc) {
+            setIsImageReady(true);  
+        } else {
+            setIsImageReady(false); 
+        }
+    }, [imageSrc]);
+
     const pdfMetricaNomina = () => {
         const doc = new jsPDF();
 
@@ -37,11 +45,10 @@ export const Informes = () => {
 
         doc.autoTable({
             startY: 30,
-            head: [["Nómina Total", "Bonificación Total", "Emp. sin Bon.", "Emp. con Bon.", "Emp. sin Hr.", "Emp. con Hr."]],
+            head: [["Nómina Total", "Bonificación Total", "Emp. con Bon.", "Emp. sin Bon.", "Emp. con Hr.", "Emp. sin Hr."]],
             body: [[
                 mNomina.TotalNomina || 'No disponible',
                 mNomina.TotalBonificacion || 'No disponible',
-                mNomina.PromedioHorasExtras || 'No disponible',
                 mNomina.EmpleadosSinBonificacion || 'No disponible',
                 mNomina.EmpleadosConBonificacion || 'No disponible',
                 mNomina.EmpleadosSinHorasExtras || 'No disponible',
@@ -49,15 +56,15 @@ export const Informes = () => {
             ]],
             theme: "grid",
             headStyles: {
-                fillColor: [47, 85, 151], 
-                textColor: 255, 
+                fillColor: [47, 85, 151],
+                textColor: 255,
                 fontStyle: "bold",
                 halign: "center"
             },
             bodyStyles: {
                 fontSize: 10,
-                valign: "middle", 
-                halign: "center" 
+                valign: "middle",
+                halign: "center"
             },
             columnStyles: {
                 0: { cellWidth: 'auto' },
@@ -75,16 +82,6 @@ export const Informes = () => {
         const doc = new jsPDF();
 
         try {
-            const graficoElement = document.querySelector('.contenedor-grafico');
-            if (!graficoElement) {
-                throw new Error('No se encontró el elemento del gráfico');
-            }
-
-            const imageData = await Plotly.toImage(graficoElement.querySelector('.js-plotly-plot'), {
-                format: 'png',
-                width: 800,
-                height: 400
-            });
 
             doc.setFont("helvetica", "bold");
             doc.setFontSize(16);
@@ -92,22 +89,23 @@ export const Informes = () => {
             doc.setFontSize(12);
             doc.text("Fecha: " + new Date().toLocaleDateString(), 160, 20);
 
-            doc.addImage(imageData, 'PNG', 10, 30, 190, 95);
+            doc.addImage(imageSrc, 'PNG', 10, 30, 190, 95);
 
             doc.autoTable({
                 startY: 130,
-                head: [["Nombre del Curso", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
+                head: [["Nombre del Curso", "Categoría", "Cantidad de Usuarios", "Fecha de Inicio", "Progreso", "Prom. Notas"]],
                 body: dataUC.map(curso => [
                     curso.NombreCurso,
+                    curso.CategoriaCurso || 'No pertenece a ninguna categoría',
                     curso.CantidadUsuarios,
                     curso.FechaInicioMasReciente,
                     `${curso.PromedioProgreso}%`,
-                    curso.PromedioNotas || 'No disponible'
+                    curso.PromedioNotas || 'No disponible' 
                 ]),
                 theme: "grid",
                 headStyles: {
-                    fillColor: [47, 85, 151], 
-                    textColor: 255, 
+                    fillColor: [47, 85, 151],
+                    textColor: 255,
                     fontStyle: "bold",
                     halign: "center"
                 },
@@ -132,69 +130,55 @@ export const Informes = () => {
 
 
     return (
-        <div className="informes-container">
-            <div className="tables-container">
-                <div className="table-column">
-                    <h2 className="informes-title">Usuarios por Curso</h2>
-                    <table className="informes-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre del Curso</th>
-                                <th>Cantidad de Usuarios</th>
-                                <th>Fecha de Inicio más Reciente</th>
-                                <th>Promedio del progreso</th>
-                                <th>Promedio de notas</th>
+        <div className="contenedor-completo">
+            <div className="contenedor-tabla">
+                <h2 className="informes-title">Usuarios por Curso</h2>
+                <table className="informes-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Curso</th>
+                            <th>Cantidad de Usuarios</th>
+                            <th>Fecha de Inicio más Reciente</th>
+                            <th>Promedio del progreso</th>
+                            <th>Promedio de notas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {dataUC.slice(0, showMoreCursos ? dataUC.length : 10).map((curso, index) => (
+                            <tr key={index}>
+                                <td>{curso.NombreCurso}</td>
+                                <td>{curso.CantidadUsuarios}</td>
+                                <td>{curso.FechaInicioMasReciente}</td>
+                                <td>{curso.PromedioProgreso}</td>
+                                <td>{curso.PromedioNotas}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {dataUC.slice(0, showMoreCursos ? dataUC.length : 10).map((curso, index) => (
-                                <tr key={index}>
-                                    <td>{curso.NombreCurso}</td>
-                                    <td>{curso.CantidadUsuarios}</td>
-                                    <td>{curso.FechaInicioMasReciente}</td>
-                                    <td>{curso.PromedioProgreso}</td>
-                                    <td>{curso.PromedioNotas}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {dataUC.length > 10 && (
-                        <button className="show-more-button" onClick={() => setShowMoreCursos(prev => !prev)}>
-                            {showMoreCursos ? "Ver menos" : "Ver más"}
-                        </button>
-                    )}
-                    <button className="export-button" onClick={pdfCursoUsuario}>Exportar con Gráfico</button>
-                </div>
-                <div className="table-column">
-                    <h2 className="informes-title">Métricas de Nómina</h2>
-                    <table className="informes-table">
-                        <thead>
-                            <tr>
-                                <th>Nómina Total</th>
-                                <th>Bonificación Total</th>
-                                <th>Promedio de Horas extras</th>
-                                <th>Empleados sin Bonificación</th>
-                                <th>Empleados con Bonificación</th>
-                                <th>Empleados sin Horas extras</th>
-                                <th>Empleados con Horas extras</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{mNomina.TotalNomina}</td>
-                                <td>{mNomina.TotalBonificacion}</td>
-                                <td>{mNomina.PromedioHorasExtras}</td>
-                                <td>{mNomina.EmpleadosSinBonificacion}</td>
-                                <td>{mNomina.EmpleadosConBonificacion}</td>
-                                <td>{mNomina.EmpleadosSinHorasExtras}</td>
-                                <td>{mNomina.EmpleadosConHorasExtras}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button className="export-button" onClick={pdfMetricaNomina}>Exportar métricas</button>
+                        ))}
+                    </tbody>
+                </table>
+                {dataUC.length > 10 && (
+                    <button className="show-more-button" onClick={() => setShowMoreCursos((prev) => !prev)}>
+                        {showMoreCursos ? "Ver menos" : "Ver más"}
+                    </button>
+                )}
+                <div className="button-container">
+                <button
+                    className="export-button"
+                    onClick={pdfCursoUsuario}
+                    disabled={!isImageReady} 
+                >
+                    Exportar con Gráfico
+                </button>
+                <button
+                    className="export-button"
+                    onClick={pdfMetricaNomina}
+                    disabled={!isImageReady} 
+                >
+                    Exportar métricas
+                    </button>
+                    <InformeAnalisis/>
                 </div>
             </div>
-            <BarrasCursosCategoria />
         </div>
     );
 };
+

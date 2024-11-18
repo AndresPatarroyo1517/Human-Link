@@ -7,3 +7,13 @@
     .contenedor-grafico div {
         width: 100%;
     }
+
+.contenedor-grafico-export {
+   width: 100%;
+    max-width: 800px;
+    height: 350px;
+}
+
+.contenedor-grafico-export div {
+    width: 100%;
+}

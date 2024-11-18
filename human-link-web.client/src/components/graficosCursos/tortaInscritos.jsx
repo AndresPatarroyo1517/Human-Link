@@ -14,8 +14,6 @@ const TortaInscritos = () => {
             .then(response => {
                 setCursosData(response);
                 setUsuariosInscritosIds(new Set(response.map((curso) => curso.idusuario)));
-                console.log(response.map((curso) => curso.idusuario));
-                console.log(response);
             })
             .catch(error => {
                 console.error('Error al obtener los datos de cursos: ', error);
@@ -23,14 +21,12 @@ const TortaInscritos = () => {
         usuariosService.getUsuarios()
             .then(response => {
                 setUsuariosData(response);
-                console.log(response);
             })
             .catch(error => {
                 console.error('Error al obtener los datos de usuarios: ', error);
             });
     }, []);
 
-    // Si no hay datos aún, se puede mostrar un loading
     if (usuariosData.length == 0 && cursosData.length == 0) {
         return <div>Cargando datos...</div>;
     }
@@ -55,7 +51,6 @@ const TortaInscritos = () => {
                 ]}
                 layout={{
                     title: "Porcentaje de Inscritos vs No Inscritos",
-                    //width: "100%",
                     height: 350,
                     margin: { t: 50, l: 50, r: 50, b: 50 },
                 }}

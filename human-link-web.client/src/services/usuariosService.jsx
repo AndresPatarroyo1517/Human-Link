@@ -1,7 +1,6 @@
 const API_URL = 'https://localhost:7019/HumanLink/Usuario';
 
 const usuariosService = {
-    // Obtener usuarios
     getUsuarios: async () => {
         try {
             const response = await fetch(API_URL, {
@@ -12,17 +11,13 @@ const usuariosService = {
                 credentials: 'include'
             });
 
-            // Imprimir en consola el código de estado y el texto de respuesta
-            console.log("Código de estado:", response.status);
 
             if (!response.ok) {
-                const errorText = await response.text();  // Obtener texto de error si no es JSON
+                const errorText = await response.text(); 
                 console.error("Error en la respuesta del servidor:", errorText);
                 throw new Error(`Error al consultar los usuarios: ${response.status} - ${errorText}`);
             }
-
             const data = await response.json();
-            console.log("Datos recibidos:", data);  // Verificar datos recibidos en la consola
             return data;
         } catch (error) {
             console.error("Error al intentar obtener usuarios:", error);
@@ -59,9 +54,6 @@ const usuariosService = {
     // El servicio updateUsuario ya debería funcionar correctamente con esta respuesta
     updateUsuario: async (id, usuarioData) => {
         try {
-            console.log("Enviando datos de actualización:", usuarioData);
-
-            // Asegurarse de que el ID en el objeto coincida con el ID del endpoint
             usuarioData.Idusuario = id;
 
             const response = await fetch(`${API_URL}/${id}`, {
@@ -77,13 +69,10 @@ const usuariosService = {
 
             // Manejar específicamente la respuesta 204
             if (response.status === 204) {
-                console.log("Usuario actualizado exitosamente");
-                // Retornar los datos enviados ya que la respuesta está vacía
                 return usuarioData;
             }
 
             if (!response.ok) {
-                // Intentar obtener el mensaje de error del servidor
                 const errorData = await response.text();
                 throw new Error(errorData || 'Error al actualizar el usuario');
             }

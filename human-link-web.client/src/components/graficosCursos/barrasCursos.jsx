@@ -11,25 +11,20 @@ const BarrasCursos = () => {
     useEffect(() => {
         cursosService.getAllCursosCategoria()
             .then(response => {
-                // Obtener todas las categorías sin duplicados
                 const categoriasUnicas = [...new Set(response.map(curso => curso.categoria))];
                 setCategorias(categoriasUnicas);
-                console.log(response);
-
-                // Agrupar cursos por categoría y contar inscritos por curso
                 const groupedData = response.reduce((acc, curso) => {
                     if (!acc[curso.categoria]) {
                         acc[curso.categoria] = {};
                     }
                     const nombreCurso = curso.nombrecurso;
                     if (!acc[curso.categoria][nombreCurso]) {
-                        acc[curso.categoria][nombreCurso] = new Set(); // Usar Set para contar usuarios únicos
+                        acc[curso.categoria][nombreCurso] = new Set();
                     }
                     acc[curso.categoria][nombreCurso].add(curso.idusuario);
                     return acc;
                 }, {});
 
-                // Convertir el objeto agrupado en un formato adecuado para graficar
                 const formattedData = Object.keys(groupedData).reduce((acc, categoria) => {
                     acc[categoria] = Object.keys(groupedData[categoria]).map(nombreCurso => ({
                         nombreCurso,
@@ -45,16 +40,12 @@ const BarrasCursos = () => {
             });
     }, []);
 
-    // Filtrar los cursos por la categoría seleccionada
     const cursosFiltrados = categoriaSeleccionada
         ? data[categoriaSeleccionada] || []
         : [];
-
-    // Extraer datos para el gráfico
     const xData = cursosFiltrados.map(curso => curso.nombreCurso);
     const yData = cursosFiltrados.map(curso => curso.inscritos);
 
-    // Generar colores únicos para cada barra
     const colors = xData.map(() =>
         `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
             Math.random() * 255
@@ -63,7 +54,7 @@ const BarrasCursos = () => {
 
     return (
         <div className="contenedor-grafico contenedor-barrasCursos">
-            {/* Menú desplegable para seleccionar la categoría */}
+           
             <select
                 value={categoriaSeleccionada}
                 onChange={(e) => setCategoriaSeleccionada(e.target.value)}
@@ -77,7 +68,6 @@ const BarrasCursos = () => {
                 ))}
             </select>
 
-            {/* Si no hay datos aún, se puede mostrar un loading */}
             {cursosFiltrados.length === 0 ? (
                 <div>Cargando datos o no hay cursos en esta categoría...</div>
             ) : (
@@ -99,7 +89,7 @@ const BarrasCursos = () => {
                         },
                         yaxis: {
                             title: 'Cantidad de Inscritos',
-                            range: [0, Math.max(...yData) + 1], // Ajustar rango del eje Y
+                            range: [0, Math.max(...yData) + 1], 
                         },
                         height: 330,
                         margin: {

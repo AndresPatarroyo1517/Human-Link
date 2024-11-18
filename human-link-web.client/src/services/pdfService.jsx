@@ -1,6 +1,7 @@
 const API_CUROSUSUARIOS = 'https://localhost:7019/HumanLink/CursoUsuario/usuarios-en-curso'
 const API_METRICASNOMINA = 'https://localhost:7019/HumanLink/Nomina/metricas-nomina'
 const API_PERSO = 'https://localhost:7019/HumanLink/Usuario/usuario'
+const API_ANALISIS = 'https://localhost:7019/HumanLink/CursoUsuario/dashboard'
 
 
 export const fetchCursosUsuarios = async () => {
@@ -59,6 +60,22 @@ export const fetchNominaPerso = async (id) => {
         });
         if (!response.ok) {
             throw new Error("Error al obtener los datos personalizados del usuario con su salario");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return [];
+    }
+};
+
+export const fetchAnalisis = async () => {
+    try {
+        const response = await fetch(API_ANALISIS, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (!response.ok) {
+            throw new Error("Error al obtener los datos de análisis");
         }
         return await response.json();
     } catch (error) {

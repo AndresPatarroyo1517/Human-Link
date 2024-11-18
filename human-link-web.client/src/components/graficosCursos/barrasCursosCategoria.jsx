@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Plot from 'react-plotly.js';
+import Plotly from 'plotly.js-dist';
 import cursosService from '../../services/cursosService';
 import './Style-graficos.css';
 
-const BarrasCursosCategoria = () => {
+const BarrasCursosCategoria = ({ onImagenGenerada }) => {
     const [data, setData] = useState([]);
+    const imageC = useRef(null);
 
     useEffect(() => {
         cursosService.getAllCursosCategoria()
             .then(response => {
-                console.log(response);
-                // Agrupar cursos por categoría y contar la cantidad de inscritos
                 const groupedData = response.reduce((acc, curso) => {
                     acc[curso.categoria] = (acc[curso.categoria] || 0) + 1;
                     return acc;
                 }, {});
 
-                // Convertir el objeto agrupado en un array para graficar
                 const formattedData = Object.keys(groupedData).map(categoria => ({
                     categoria,
                     cantidad: groupedData[categoria]
@@ -25,19 +24,47 @@ const BarrasCursosCategoria = () => {
                 setData(formattedData);
             })
             .catch(error => {
-                console.error('Error al obtener los datos: ', error);
             });
     }, []);
+
+    useEffect(() => {
+        const generarImagen = async () => {
+            const graficoElement = document.querySelector('.contenedor-grafico-export');
+            if (!graficoElement) {
+                throw new Error('No se encontró el elemento del gráfico');
+            }
+
+            try {
+                const imageData = await Plotly.toImage(graficoElement.querySelector('.js-plotly-plot'), {
+                    format: 'png',
+                    width: 800,
+                    height: 400
+                });
+
+                if (onImagenGenerada) {
+                    onImagenGenerada(imageData); 
+                }
+
+                if (imageC.current) {
+                    imageC.current.src = imageData;  
+                }
+            } catch (error) {
+                //console.error('Error al generar la imagen del gráfico:', 'tabla');
+            }
+        };
+
+        if (data.length > 0) {
+            generarImagen();
+        }
+    }, [data, onImagenGenerada]);
 
     if (data.length === 0) {
         return <div>Cargando datos...</div>;
     }
 
-    // Extraer datos para el gráfico
     const xData = data.map(item => item.categoria);
     const yData = data.map(item => item.cantidad);
 
-    // Generar colores únicos para cada barra
     const colors = xData.map(() =>
         `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
             Math.random() * 255
@@ -45,7 +72,7 @@ const BarrasCursosCategoria = () => {
     );
 
     return (
-        <div className="contenedor-grafico">
+        <div className="contenedor-grafico-export">
             <Plot
                 data={[
                     {
@@ -81,4 +108,3 @@ const BarrasCursosCategoria = () => {
 };
 
 export default BarrasCursosCategoria;
-

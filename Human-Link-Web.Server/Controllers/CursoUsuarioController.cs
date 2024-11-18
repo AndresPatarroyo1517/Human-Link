@@ -28,6 +28,8 @@ namespace Human_Link_Web.Server.Controllers
             public double PromedioProgreso { get; set; }
 
             public double PromedioNotas { get; set; }
+
+            public string CategoriaCurso { get; set; }
         }
 
 
@@ -79,7 +81,8 @@ namespace Human_Link_Web.Server.Controllers
                     PromedioNotas = grupo
                         .Average(cu => cu.Notas != null && cu.Notas.Any()
                             ? cu.Notas.Average(n => n)
-                            : 0)
+                            : 0),
+                    CategoriaCurso = grupo.FirstOrDefault().IdcursoNavigation.Categoria
                 })
                 .ToListAsync();
 
@@ -265,12 +268,6 @@ namespace Human_Link_Web.Server.Controllers
             return CreatedAtAction("GetCursousuario", new { id = cursousuario.Idcuremp }, cursousuario);
         }
 
-
-
-
-
-
-
         // DELETE: HumanLink/CursoUsuario/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
@@ -307,6 +304,91 @@ namespace Human_Link_Web.Server.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet("dashboard")]
+        public async Task<ActionResult> GetDashboardStats()
+        {
+            try
+            {
+                var salaryStats = await _context.Empleados
+                    .GroupBy(e => e.Departamento)
+                    .Select(g => new
+                    {
+                        Departamento = g.Key,
+                        SalarioPromedio = g.Average(e => e.Salario),
+                        SalarioTotal = g.Sum(e => e.Salario)
+                    })
+                    .ToListAsync();
+
+                var courseStats = await _context.Cursos
+                    .Join(_context.Cursousuarios,
+                        c => c.Idcurso,
+                        cu => cu.Idcurso,
+                        (c, cu) => new { c, cu })
+                    .GroupBy(x => x.c.Nombrecurso)
+                    .Select(g => new
+                    {
+                        NombreCurso = g.Key,
+                        ProgresoPromedio = g.Average(x => x.cu.Progreso),
+                        TotalParticipantes = g.Count()
+                    })
+                    .ToListAsync();
+
+                var employeeCount = await _context.Empleados
+                    .GroupBy(e => new { e.Departamento, e.Cargo })
+                    .Select(g => new
+                    {
+                        Departamento = g.Key.Departamento,
+                        Cargo = g.Key.Cargo,
+                        TotalEmpleados = g.Count()
+                    })
+                    .ToListAsync();
+
+                var bonusStats = await _context.Empleados
+                    .Join(_context.Nominas,
+                        e => e.Idempleado,
+                        n => n.Idempleado,
+                        (e, n) => new { e, n })
+                    .GroupBy(x => x.e.Departamento)
+                    .Select(g => new
+                    {
+                        Departamento = g.Key,
+                        TotalBonificaciones = g.Sum(x => x.n.Bonificacion),
+                        EmpleadosConBono = g.Count()
+                    })
+                    .ToListAsync();
+
+                var popularCourses = await _context.Cursos
+                    .Join(_context.Cursousuarios,
+                        c => c.Idcurso,
+                        cu => cu.Idcurso,
+                        (c, cu) => new { c, cu })
+                    .GroupBy(x => x.c.Nombrecurso)
+                    .Select(g => new 
+                    {
+                        NombreCurso = g.Key,
+                        TotalInscritos = g.Count()
+                    })
+                    .OrderByDescending(x => x.TotalInscritos)
+                    .ToListAsync();
+
+
+                var response = new
+                {
+                    SalaryStats = salaryStats,
+                    CourseStats = courseStats,
+                    EmployeeCount = employeeCount,
+                    BonusStats = bonusStats,
+                    PopularCourses = popularCourses
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al obtener las estadísticas", error = ex.Message });
+            }
         }
 
 

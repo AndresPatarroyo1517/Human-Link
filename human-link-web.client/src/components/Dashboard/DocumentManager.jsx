@@ -42,20 +42,36 @@ const DocumentManager = () => {
     };
 
     const handleUpload = async () => {
-        if (!file) return;
+        if (!file) {
+            alert("Por favor, selecciona un archivo antes de subirlo.");
+            return;
+        }
+
+        const tipoDocumento = "general"; // Puedes ajustar este valor según tu lógica
 
         try {
-            await documentService.uploadFile(file);
+            // Subir el documento
+            await documentService.uploadDocument(file, tipoDocumento);
+
+            // Limpiar el estado del archivo seleccionado
             setFile(null);
-            loadDocuments();
+
+            // Recargar la lista de documentos
+            await loadDocuments();
+
+            alert("Documento subido correctamente.");
         } catch (error) {
             console.error("Error al subir el archivo:", error);
+            alert("Hubo un problema al subir el documento. Por favor, inténtalo de nuevo.");
         }
     };
 
+
     const handleDocumentSelect = (document) => {
+        console.log('Documento seleccionado:', document); // Verificar el objeto document al seleccionarlo
         setSelectedDocument(document);
     };
+
 
     const handleAssignEmployeeClick = () => {
         setShowAssignModal(true); // Mostrar el modal para asignar empleado
@@ -83,6 +99,45 @@ const DocumentManager = () => {
             setSelectedEmployee(null); // Reiniciar el empleado seleccionado
         }
     };
+    const handleDelete = async () => {
+        if (!selectedDocument) {
+            alert("Por favor, selecciona un documento para eliminar.");
+            return;
+        }
+
+        console.log('Documento seleccionado:', selectedDocument); // Verificar el objeto completo
+
+        const confirmDelete = window.confirm(`¿Estás seguro de que deseas eliminar el documento: ${selectedDocument.NombreArchivo}?`);
+        if (!confirmDelete) return;
+
+        try {
+            // Usar ArchivoPath como ID
+            const documentId = selectedDocument.ArchivoPath;
+
+            if (!documentId) {
+                throw new Error('El documento seleccionado no tiene un ID válido.');
+            }
+
+            console.log('ID del documento para eliminar:', documentId); // Verificar el ID antes de enviarlo
+
+            // Llamar al servicio para eliminar el documento
+            await documentService.deleteDocument(documentId);
+
+            // Recargar la lista de documentos
+            await loadDocuments();
+
+            // Limpiar el documento seleccionado
+            setSelectedDocument(null);
+
+            alert("Documento eliminado correctamente.");
+        } catch (error) {
+            console.error("Error al eliminar el documento:", error);
+            alert("Hubo un problema al eliminar el documento. Por favor, inténtalo de nuevo.");
+        }
+    };
+
+
+
 
     return (
         <div>
@@ -122,7 +177,13 @@ const DocumentManager = () => {
 
             {/* Botones para gestionar documentos */}
             <div className="d-flex flex-column">
-                <button className="btn btn-light mb-2">Eliminar Documento</button>
+                <button
+                    className="btn btn-light mb-2"
+                    onClick={handleDelete}
+                    disabled={!selectedDocument} // Deshabilitar si no hay documento seleccionado
+                >
+                    Eliminar Documento
+                </button>
                 <button className="btn btn-light mb-2" onClick={handleAssignEmployeeClick}>
                     Asignar a Empleado
                 </button>

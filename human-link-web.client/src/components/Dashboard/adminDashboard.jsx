@@ -1,6 +1,7 @@
 import Navbar from "./navbar.jsx";
 import Slidebar from './slidebar';
-import Main from './main.jsx';
+import Main from '../Admin/mainAdmin.jsx';
+import
 import { AdminProvider } from '../../context/adminContext.jsx';
 import './adminDashboard.css';
 

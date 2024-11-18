@@ -73,24 +73,34 @@ namespace Human_Link_Web.Server.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
-        public async Task<IActionResult> PutNomina(int id, Nomina nomina)
+        public async Task<IActionResult> PutNomina(int id, [FromBody] Nomina nomina)
         {
-            if (id != nomina.Idnomina)
-            {
-                return BadRequest();
-            }
-
-            var existingNomina = await _context.Nominas.FindAsync(id);
+            // Buscamos la nómina por Idnomina (el id que se pasa en la URL)
+            var existingNomina = await _context.Nominas.FindAsync(id);  // 'id' corresponde a Idnomina
             if (existingNomina == null)
             {
                 return NotFound();
             }
 
-            existingNomina.Bonificacion = nomina.Bonificacion;
+            // Actualizamos los campos de la nómina con los valores del cuerpo de la solicitud
+            if (nomina.Bonificacion.HasValue)
+            {
+                existingNomina.Bonificacion = nomina.Bonificacion;
+            }
+
+            if (nomina.Horasextra.HasValue)
+            {
+                existingNomina.Horasextra = nomina.Horasextra;
+            }
+
+            if (nomina.Totalnomina.HasValue)
+            {
+                existingNomina.Totalnomina = nomina.Totalnomina;
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();  // Guardamos los cambios
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -106,6 +116,7 @@ namespace Human_Link_Web.Server.Controllers
 
             return Ok("Nómina actualizada.");
         }
+
 
         //Enpoint para añadir una nomina a la base de datos
         // POST: HumanLink/Nomina

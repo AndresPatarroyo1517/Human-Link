@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import usuariosService from "../../services/usuariosService"
 import empleadosService from "../../services/empleadosService"
 import { InformePerso } from '../Informes/informePerso'
+import { fetchNominaPerso } from '../../services/pdfService.jsx'; 
+import NominaService from '../../services/nominaService'; 
 
 const UserManagementTable = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -15,6 +17,8 @@ const UserManagementTable = () => {
     });
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedUsuario, setSelectedUsuario] = useState(null);
+    const [nomina, setNomina] = useState([]);
+
 
     useEffect(() => {
         loadUsuarios();
@@ -171,6 +175,118 @@ const UserManagementTable = () => {
         setSelectedUsuario(usuario); // Establecer el usuario seleccionado
     };
 
+    const openEditNominaModal = async (usuario) => {
+        resetForm()
+        setSelectedUsuario(usuario); // Actualizamos el estado con el usuario seleccionado
+        try {
+            // Usamos usuario.Idusuario directamente
+            const nominaData = await fetchNominaPerso(usuario.Idusuario);
+
+            // Verificamos si la respuesta tiene las claves que esperamos
+            if (nominaData && nominaData.Empleado) {
+                setNomina(nominaData); // Actualizamos el estado de nomina con los datos obtenidos
+                console.log(nominaData); // Mostramos los datos obtenidos en la consola
+            } else {
+                console.log('Error al traer los datos o no se encontraron registros de nómina');
+                setNomina([]); // Limpiamos el estado de nomina si no hay datos válidos
+            }
+        } catch (error) {
+            console.error("Error al obtener la nómina:", error);
+            setNomina([]); // Limpiamos los datos en caso de error
+        }
+    };
+
+    const initialNominaState = { horasExtra: '', bonificacion: '' };
+
+    const [formDataNomina, setFormDataNomina] = useState(initialNominaState);
+    const [showNegativeWarning, setShowNegativeWarning] = useState(false);
+    const [showOvertimeWarning, setShowOvertimeWarning] = useState(false);
+    const [tempNominaData, setTempNominaData] = useState(null);
+    const [confirmNegativeValues, setConfirmNegativeValues] = useState(false);
+
+    const handleChangeEditNomina = (event) => {
+        const { name, value } = event.target;
+        setFormDataNomina(prevState => ({
+            ...prevState,
+            [name]: parseInt(value, 10) || 0 // Asegura valores numéricos
+        }));
+    };
+
+    const handleUpdateNomina = (formDataNomina, nomina) => {
+        console.log(nomina)
+        if ((formDataNomina.horasExtra < 0 || formDataNomina.bonificacion < 0) && !confirmNegativeValues) {
+            setTempNominaData(nominaData);
+            setShowNegativeWarning(true);
+            return;
+        }
+        handleConfirmNegative(formDataNomina, nomina);
+    };
+
+    const handleConfirmNegative = (formDataNomina, nomina) => {
+        setShowNegativeWarning(false);  // Cierra la advertencia
+console.log('entro principal')
+        // Comprobamos si las horas extra superan las 48 horas
+        const extraTotal = formDataNomina.horasExtra + nomina.HorasExtra;
+        if (extraTotal > 48) {
+            alert('Las Horas extra no pueden superar las 48 horas, revisa tus datos y vuelve a intentar');
+            return;  // Si las horas extra exceden el límite, salimos de la función
+        }
+
+        // Creamos el objeto `updatedNomina` para enviar solo los campos modificados
+        const updatedNomina = {};
+
+        // Si las horas extra son diferentes a 0 o a lo que estaba antes, las agregamos al objeto
+        if (formDataNomina.horasExtra !== "") {
+            updatedNomina.Horasextra = formDataNomina.horasExtra + nomina.HorasExtra;  // Sumamos las horas extra
+            console.log('entro horas')
+        }
+
+        // Si la bonificación es diferente de 0, la agregamos al objeto
+        if (formDataNomina.Bonificacion !== "") {
+            updatedNomina.Bonificacion = formDataNomina.bonificacion + nomina.Bonificacion;  // Sumamos la bonificación
+            console.log('rntro bonificacion')
+        }
+
+        // Si se ha modificado algún valor, recalculamos el total de la nómina
+        updatedNomina.Idnomina = nomina.IdNomina;
+        
+            const salarioBase = nomina.SalarioBase || 0;
+
+            // Calculamos el Totalnomina directamente aquí
+            updatedNomina.Totalnomina = salarioBase +
+                ((updatedNomina.Horasextra || 0) * (salarioBase / 30 / 8) * 1.25) +  // Valor de las horas extra
+                (updatedNomina.Bonificacion || 0);  // Sumamos la bonificación
+            console.log(updatedNomina)
+            NominaService.updateNominaEmpleado(updatedNomina, nomina.IdNomina);
+        
+
+    };
+
+    // Reinicia el formulario y estados relacionados
+    const resetForm = () => {
+        setFormDataNomina(initialNominaState);
+        setTempNominaData(null);
+        setConfirmNegativeValues(false);
+    };
+
+    const WarningModal = ({ title, message, onConfirm, onCancel }) => (
+        <div className="modal fade show" style={{ display: "block" }} tabIndex="-1" role="dialog">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">{title}</h5>
+                        <button type="button" className="btn-close" onClick={onCancel}></button>
+                    </div>
+                    <div className="modal-body">{message}</div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={onCancel}>Cancelar</button>
+                        <button type="button" className="btn btn-primary" onClick={onConfirm}>Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     return (
         <>
             <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#addUserModal">
@@ -224,6 +340,13 @@ const UserManagementTable = () => {
                                             onClick={() => handleDeleteUsuario(usuario.Idusuario)}
                                         >
                                             Eliminar
+                                        </button>
+                                        <button
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editNominaModal"
+                                            onClick={() => openEditNominaModal(usuario)}>
+                                            Editar nomina
                                         </button>
                                     </td>
                                     <td>
@@ -376,6 +499,65 @@ const UserManagementTable = () => {
                     </div>
                 </div>
             </div>
+
+            {/*Modal de editar nomina*/}
+            <div className="modal fade" id="editNominaModal" tabIndex="-1" aria-labelledby="editNominaModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="editNominaModalLabel">Empleado: {nomina.Empleado}</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <div className="mb-3">
+                                    <label htmlFor="horasExtraInput" className="form-label">Agregar horas extra:</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        id="horasExtraInput"
+                                        name="horasExtra"
+                                        value={formDataNomina.horasExtra}
+                                        onChange={handleChangeEditNomina}
+                                        aria-describedby="horasExtraHelp"
+                                    />
+                                    <div id="horasExtraHelp" className="form-text">
+                                        Actualmente el empleado tiene {nomina.HorasExtra} horas extra.
+                                    </div>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="bonificacionInput" className="form-label">Agregar bonificación:</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        id="bonificacionInput"
+                                        name="bonificacion"
+                                        value={formDataNomina.bonificacion}
+                                        onChange={handleChangeEditNomina}
+                                    />
+                                    <div className="form-text">
+                                        Actualmente el empleado tiene ${nomina.Bonificacion} en bonificaciones.
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" className="btn btn-primary" onClick={() => handleUpdateNomina(formDataNomina, nomina)}>Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal de advertencia por valores negativos */}
+            {showNegativeWarning && (
+                <WarningModal
+                    title="Advertencia"
+                    message="Has ingresado valores negativos. ¿Deseas continuar?"
+                    onConfirm={() => handleConfirmNegative(tempNominaData, nomina)}
+                    onCancel={() => setShowNegativeWarning(false)}
+                />
+            )}
         </>
     );
 };

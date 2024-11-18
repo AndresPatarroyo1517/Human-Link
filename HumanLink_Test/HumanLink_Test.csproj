@@ -29,11 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IntegrationTest\" />
-    <Folder Include="UnitaryTest\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Human-Link-Web.Server\Human-Link-Web.Server.csproj" />
   </ItemGroup>
 

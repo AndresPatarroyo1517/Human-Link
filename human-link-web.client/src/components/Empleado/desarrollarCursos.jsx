@@ -7,7 +7,7 @@ import cursosService from '../../services/cursosService'
 
 const DesarrollarCursos = () => {
     const apiKey = 'AIzaSyAdRZMAsJHz2KPzYbCr6QCDQI8-zAObpVU';
-    const { selectedCurso } = useCurso();
+    const { selectedCurso, setSelectedCurso } = useCurso();
     const { setActiveMenu } = useEmpleado();
     const [descripciones, setDescripciones] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -17,46 +17,54 @@ const DesarrollarCursos = () => {
     const [isQuizCompleted, setIsQuizCompleted] = useState(false);
     const [idcuremp, setIdcuremp] = useState(null);
 
+
+
+    useEffect(() => {
+        cargaNotas()
+    }, [selectedCurso, setIdcuremp])
+
     const obtenerVideoId = (url) => {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
         const match = url.match(regex);
         return match ? match[1] : null;
     };
 
-        
 
-        const handleQuizClick = () => {
-            setIsQuizCompleted(true);
+
+    const handleQuizClick = () => {
+        setIsQuizCompleted(true);
+    };
+
+    const handleCompleteQuiz = async () => {
+        setIsQuizCompleted(false);
+        setIsLoading(true);
+        console.log(selectedCurso);
+        console.log(selectedCurso[0].Url.length - 1);
+        const body = {
+            idcuremp: 0,
+            idusuario: 0,
+            idcurso: selectedCurso[0].Idcurso,
+            progreso: selectedCurso[0].Url.length - 1,
+            notas: []
         };
+        const response = await formService.putCargarNota(body);
+        setIsLoading(false);
+        console.log(response);
+        if (response.Notas == null) {
+            /*alert("No se ha enviado ninguna respuesta.");*/
+            setIsError(true);
+            setModalMessage("Ninguna nota fue cargada en la base de datos.");
+            setShowModal(true);
+        } else {
+            /*alert("Nota cargada exitosamente.");*/
+            cargaNotas();
+            setIsError(false);
+            setModalMessage("Nota cargada exitosamente en la base de datos.");
+            setShowModal(true);
 
-        const handleCompleteQuiz = async () => {
-            setIsQuizCompleted(false);
-            setIsLoading(true);
-            console.log(selectedCurso);
-            console.log(selectedCurso[0].Url.length - 1);
-            const body = {
-                idcuremp: 0,
-                idusuario: 0,
-                idcurso: selectedCurso[0].Idcurso,
-                progreso: selectedCurso[0].Url.length - 1,
-                notas: []
-            };
-            const response = await formService.putCargarNota(body);
-            setIsLoading(false);
-            console.log(response);
-            if (response.Notas == null) {
-                /*alert("No se ha enviado ninguna respuesta.");*/
-                setIsError(true);
-                setModalMessage("Ninguna nota fue cargada en la base de datos.");
-                setShowModal(true);
-            } else {
-                /*alert("Nota cargada exitosamente.");*/
-                setIsError(false);
-                setModalMessage("Nota cargada exitosamente en la base de datos.");
-                setShowModal(true);
-            }
+        }
 
-        };
+    };
 
     useEffect(() => {
         const fetchDescriptions = async () => {
@@ -75,38 +83,39 @@ const DesarrollarCursos = () => {
         fetchDescriptions();
     }, [selectedCurso, apiKey]);
 
-const eliminar = async (modalId) => {
-    const curso = selectedCurso[0];
-    const idcuremp = selectedCurso[1];
+    const eliminar = async (modalId) => {
+        const curso = selectedCurso[0];
+        const idcuremp = selectedCurso[1];
 
-    for (const id of idcuremp) {
-        if (id.Idcurso === curso.Idcurso) {
-            try {
-                const response = await cursosService.deleteCursoUsuarioEmpleado(id.Idcuremp);
-                if (response.ok) {
-                    alert("Curso eliminado con éxito.");
-                    const modal = document.getElementById(modalId);
-                    if (modal) {
-                        const modalInstance = bootstrap.Modal.getInstance(modal);
-                        modalInstance.hide();
+        for (const id of idcuremp) {
+            if (id.Idcurso === curso.Idcurso) {
+                try {
+                    const response = await cursosService.deleteCursoUsuarioEmpleado(id.Idcuremp);
+                    if (response.ok) {
+                        alert("Curso eliminado con éxito.");
+                        const modal = document.getElementById(modalId);
+                        if (modal) {
+                            const modalInstance = bootstrap.Modal.getInstance(modal);
+                            modalInstance.hide();
+                        }
+                        setActiveMenu('Mis Cursos');
+                        // Recargar cursos del empleado
+                        await cargarCursosEmpleado();
+
+                        // Cerrar el modal
+
+                    } else {
+                        alert(`Error al eliminar el curso: ${response.statusText}`);
                     }
-                    setActiveMenu('Mis Cursos');
-                    // Recargar cursos del empleado
-                    await cargarCursosEmpleado();
-
-                    // Cerrar el modal
-
-                } else {
-                    alert(`Error al eliminar el curso: ${response.statusText}`);
+                } catch (error) {
+                    console.error("Error al eliminar el curso:", error);
                 }
-            } catch (error) {
-                console.error("Error al eliminar el curso:", error);
             }
         }
-    }
     };
 
-    useEffect(() => {
+
+    const cargaNotas = () => {
         console.log("Selected Curso en useEffect:", JSON.stringify(selectedCurso, null, 2));
 
         if (selectedCurso) {
@@ -140,7 +149,7 @@ const eliminar = async (modalId) => {
                 })
                 .catch((error) => console.error("Error fetching curso data:", error));
         }
-    }, [selectedCurso, setIdcuremp]);
+    };
 
         console.log(selectedCurso)
         return (
@@ -185,7 +194,13 @@ const eliminar = async (modalId) => {
                                     <p className="mt-3">
                                         <strong>Descripción:</strong> {descripciones[index]}
                                     </p>
-
+                                    <a
+                                        href={botonCuestionario ? "https://docs.google.com/forms/d/e/1FAIpQLScQUXiRBXzSpb_unC0wDAC0VYN1IWZBc1o6ZZozAZUXMJ9rZA/viewform?usp=sf_link" : null}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        disabled={!botonCuestionario}
+                                        style={{ with: '100%', height: '100%', outline: 'none', color: 'white' }}
+                                    >
                                     <button
                                         className="btn btn-secondary bottom-0 end-0 m-3"
                                         onClick={botonCuestionario ? handleQuizClick : ''}
@@ -193,24 +208,19 @@ const eliminar = async (modalId) => {
                                         aria-controls={`parte${index}`}
                                         style={{ pointerEvents: botonCuestionario ? 'auto' : 'none' }}
                                     >
-                                        <a
-                                            href={botonCuestionario ? "https://docs.google.com/forms/d/e/1FAIpQLScQUXiRBXzSpb_unC0wDAC0VYN1IWZBc1o6ZZozAZUXMJ9rZA/viewform?usp=sf_link" : ''}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            style={{ with: '100%', height: '100%', outline: 'none', color: 'white' }}
-                                        >
+                                        
                                             Cuestionario
-                                        </a>
+                                        
                                     </button>
-
+                                    </a>
                                     <button
                                         className="btn btn-success"
                                         onClick={handleCompleteQuiz}
-                                        disabled={!isQuizCompleted}
+                                        disabled={!isQuizCompleted || !botonCuestionario}
                                     >
                                         Finalizar cuestionario
                                     </button>
-                                    {isLoading && (
+                                    {(botonCuestionario) && isLoading && (
                                         <div className="d-flex justify-content-center">
                                             <div className="spinner-border" role="status">
                                                 <span className="visually-hidden">Cargando...</span>

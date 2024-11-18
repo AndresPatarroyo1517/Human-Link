@@ -9,7 +9,8 @@ const Slidebar = () => {
         { label: 'Mis Documentos', icon: 'bi bi-archive' },
         { label: 'Informes', icon: 'bi bi-file-earmark-medical' }
     ] : [
-        { label: 'Añadir Cursos', icon: 'bi bi-folder-plus' },
+            { label: 'Añadir Cursos', icon: 'bi bi-folder-plus' },
+            { label: 'Modificar Cursos', icon: 'bi bi-journals' }, 
         { label: 'Mis Documentos', icon: 'bi bi-archive' },
         { label: 'Certificados', icon: 'bi bi-patch-check' }
     ];

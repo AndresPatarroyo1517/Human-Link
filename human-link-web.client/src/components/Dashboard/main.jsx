@@ -8,8 +8,8 @@ import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 import DocumentManager from './documentManager';
-import AsignarCursos from './asignarCursos'; 
-
+import AsignarCursos from './asignarCursos';
+import NuevosCursos from './nuevosCursos'; // Importa NuevosCursos
 
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
@@ -54,9 +54,10 @@ const Main = () => {
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
                     {activeMenu === 'Gestionar Usuarios' && <TableUsuarios />}
-                    {activeMenu === 'Asignar Cursos' && <AsignarCursos />} {/* Muestra el componente AsignarCursos */}
-                    {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aquí */}
-                    {activeMenu === 'Añadir Cursos' && <CardCursos />}
+                    {activeMenu === 'Asignar Cursos' && <AsignarCursos />}
+                    {activeMenu === 'Mis Documentos' && <DocumentManager />}
+                    {activeMenu === 'Añadir Cursos' && <NuevosCursos />}
+                    {activeMenu === 'Modificar Cursos' && < CardCursos />}
                     {activeMenu === 'Informes' && <VisualizacionDatos />}
                     {activeMenu === 'Certificados' && <TableInforms />}
                 </div>

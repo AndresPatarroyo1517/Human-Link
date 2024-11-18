@@ -1,189 +1,288 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
-import cursosService from "../../services/cursosService";
+import React, { useState, useEffect } from 'react';
+import cursosService from '../../services/cursosService';
+import './cardCursos.css';
 
 const CardCursos = () => {
-    // Array inicial de cursos
-    const [cursos, setCursos] = useState([
-        {
-            titulo: "Curso ReactJS - OpenBootcamp",
-            duracion: 10,
-            url: "https://i.ytimg.com/vi/xgfc6q5ieGQ/hqdefault.jpg",
-            descripcion: "Aprenderás cómo crear componentes reutilizables y construir interfaces de usuario interactivas con React."
-        },
-        {
-            titulo: "Curso Java Script - OpenBootcamp",
-            duracion: 8,
-            url: "https://i.ytimg.com/vi/8OwZHiQBGBA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCckxnyKr0ptCRMd4VKgZMRAAKW6g",
-            descripcion: "Con NodeJS podrás trabajar con JavaScript en el servidor y crear aplicaciones rápidas y escalables."
-        }
-    ]);
+    const [cursos, setCursos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [cursoInfo, setCursoInfo] = useState(null); // Estado para almacenar la información del curso seleccionado
+    const [isLoadingUsuarios, setIsLoadingUsuarios] = useState(false); // Estado para saber si estamos cargando la información de los usuarios
+    const [formData, setFormData] = useState({
+        Nombrecurso: '',
+        Descripcion: '',
+        Categoria: '',
+        Duracion: '',
+        Url: []  // Inicializamos el array de URLs
+    });
+    const [selectedCursoId, setSelectedCursoId] = useState(null); // Para almacenar el ID del curso seleccionado
 
+    // Obtener los cursos al montar el componente
     useEffect(() => {
-        cursosService.getCursos()
+        cursosService.getAllCursosCategoria()
             .then(response => {
-                setCursos(response);
+                setCursos(response); // Guardamos los cursos en el estado
+                setLoading(false);    // Indicamos que ya se cargaron los cursos
             })
             .catch(error => {
                 console.error('Error al obtener los cursos:', error);
+                setLoading(false);
             });
     }, []);
 
-    // Estado para los cursos y el nuevo curso
-    const [newCurso, setNewCurso] = useState({
-        titulo: "",
-        descripcion: "",
-        etiquetas: "",
-        url: "",
-        imageSize: "0 KB" // TamaÃ±o inicial de la imagen
-    });
-    const [selectedCurso, setSelectedCurso] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    // FunciÃ³n para cargar los cursos
-    const loadCursos = async () => {
+    // Función para obtener la información de los usuarios y estadísticas del curso
+    const obtenerInfoCurso = async (cursoId) => {
+        setIsLoadingUsuarios(true);
         try {
-            const data = await cursosService.getCursos();
-            setCursos(data);
+            const infoCurso = await cursosService.getUsuariosEnCurso(cursoId);
+            setCursoInfo(infoCurso); // Guardamos la información del curso seleccionado
         } catch (error) {
-            console.error(error);
+            console.error('Error al obtener información del curso:', error);
         } finally {
-            setIsLoading(false);
+            setIsLoadingUsuarios(false);
         }
     };
 
-    useEffect(() => {
-        loadCursos();
-    }, []);
-
-    const handleInputChange = (e) => {
-        setNewCurso({
-            ...newCurso,
-            [e.target.name]: e.target.value
+    // Función para manejar el clic en "Modificar curso"
+    const handleModificarCurso = (curso) => {
+        // Llenamos el formulario con los datos del curso seleccionado
+        setSelectedCursoId(curso.Idcurso); // Asignamos el Idcurso al estado
+        console.log("ID del curso seleccionado:", curso.Idcurso);
+        setFormData({
+            Nombrecurso: curso.Nombrecurso || '',
+            Descripcion: curso.Descripcion || '',
+            Categoria: curso.Categoria || '',
+            Duracion: curso.Duracion || '',
+            Url: curso.Url || []  // Establecemos las URLs del curso
         });
     };
 
-    const handleAddCurso = async () => {
-        try {
-            await cursosService.addCurso(newCurso); 
-            setCursos([...cursos, newCurso]);
-            // Restablecer el formulario
-            setNewCurso({
-                titulo: "",
-                descripcion: "",
-                etiquetas: "",
-                url: "",
-                imageSize: "0 KB"
-            });
-        } catch (error) {
-            console.error("Error al agregar el curso:", error);
-        }
+    // Manejar cambios en el formulario
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
-    return (
-        <>
-            <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#aniadirModal">
-                <i className="bi bi-plus-circle"></i> Añadir curso
-            </button>
+    // Manejar el cambio en los campos de URL
+    const handleUrlChange = (index, e) => {
+        const { value } = e.target;
+        setFormData(prevState => {
+            const newUrls = [...prevState.Url];
+            newUrls[index] = value; // Actualizar la URL en la posición especificada
+            return {
+                ...prevState,
+                Url: newUrls
+            };
+        });
+    };
 
-            <div className="modal fade" id="aniadirModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+    // Agregar una nueva URL al array
+    const handleAddUrl = () => {
+        setFormData(prevState => ({
+            ...prevState,
+            Url: [...prevState.Url, ''] // Añadir una URL vacía
+        }));
+    };
+
+    // Eliminar una URL del array
+    const handleRemoveUrl = (index) => {
+        setFormData(prevState => ({
+            ...prevState,
+            Url: prevState.Url.filter((_, i) => i !== index) // Eliminar la URL en la posición especificada
+        }));
+    };
+
+    // Manejar el envío del formulario para modificar el curso
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const updatedCurso = {
+                Idcurso: selectedCursoId, // ID del curso, ya lo tenemos
+                Nombrecurso: formData.Nombrecurso,  // Nombre del curso
+                Descripcion: formData.Descripcion,  // Descripción del curso
+                Duracion: formData.Duracion, // Duración del curso
+                Categoria: formData.Categoria,  // Categoría del curso
+                Url: formData.Url,  // Pasamos las URLs modificadas
+                Cuestionarios: [],  // Si no tienes cuestionarios, pasa un array vacío
+                Cursousuarios: []  // Si no tienes usuarios, pasa un array vacío
+            };
+
+            // Verificar que los campos obligatorios están completos
+            if (!updatedCurso.Nombrecurso || !updatedCurso.Descripcion || !updatedCurso.Categoria || !updatedCurso.Duracion) {
+                alert("Todos los campos son obligatorios.");
+                return;
+            }
+
+            console.log("ID del curso seleccionado:", selectedCursoId);
+            console.log("Datos del curso a actualizar:", updatedCurso);
+
+            // Enviar los datos al servicio para actualizar el curso
+            const response = await cursosService.updateCurso(selectedCursoId, updatedCurso);
+
+            // Confirmar que la actualización fue exitosa
+            alert("Curso actualizado con éxito.");
+
+            // Recargar los cursos para reflejar los cambios
+            setCursos(await cursosService.getAllCursosCategoria());
+        } catch (error) {
+            console.error("Error al actualizar el curso:", error);
+            alert("Hubo un error al actualizar el curso.");
+        }
+    };
+    // Función para eliminar un curso
+    const handleEliminarCurso = async () => {
+        const confirmacion = window.confirm(
+            `¿Estás seguro de que deseas eliminar el curso "${formData.Nombrecurso}"? Esta acción no se puede deshacer.`
+        );
+
+        if (!confirmacion) return;
+
+        try {
+            await cursosService.deleteCursoUsuarioEmpleado(selectedCursoId);
+            alert('Curso eliminado con éxito.');
+
+            // Actualizar la lista de cursos
+            setCursos(await cursosService.getAllCursosCategoria());
+        } catch (error) {
+            console.error('Error al eliminar el curso:', error);
+            alert('Hubo un error al intentar eliminar el curso.');
+        }
+    };
+    if (loading) {
+        return <div>Loading...</div>; // Mientras se cargan los cursos
+    }
+
+    return (
+        <div>
+            <div className="row">
+                {cursos.map((curso, index) => (
+                    <div key={index} className="col-md-4 mb-4">
+                        <div className="card h-100">
+                            <img
+                                src={curso.Url && curso.Url[0] ? curso.Url[0] : 'url-default.jpg'}  // Usamos el primer enlace de Url para la imagen
+                                className="card-img-top"
+                                alt={curso.Nombrecurso || 'Curso sin título'}  // Usamos el nombre del curso para el alt de la imagen
+                            />
+                            <div className="card-body">
+                                <h5 className="card-title">{curso.Nombrecurso || 'Curso sin título'}</h5>
+                                <p className="card-text">{curso.Descripcion || 'No hay descripción disponible.'}</p>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modificarModal"
+                                    onClick={() => handleModificarCurso(curso)} // Asignamos el curso al hacer clic
+                                >
+                                    Modificar curso
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Modal para modificar curso */}
+            <div className="modal fade" id="modificarModal" tabIndex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">InformaciÃ³n Curso</h1>
+                            <h5 className="modal-title" id="modificarModalLabel">
+                                Modificar curso: {formData.Nombrecurso || 'Curso no encontrado'}
+                            </h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form>
+                            {/* Opción de eliminar curso */}
+                            <p className="eliminar-curso-text" onClick={handleEliminarCurso}>
+                                Eliminar curso
+                            </p>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="titulo" className="col-form-label">Nombre del Curso:</label>
-                                    <input type="text" className="form-control" id="titulo" name="titulo" value={newCurso.titulo} onChange={handleInputChange} />
+                                    <label htmlFor="Nombrecurso" className="form-label">Nombre del curso</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="Nombrecurso"
+                                        name="Nombrecurso"
+                                        value={formData.Nombrecurso}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="descripcion" className="col-form-label">DescripciÃ³n del Curso:</label>
-                                    <textarea className="form-control" id="descripcion" name="descripcion" value={newCurso.descripcion} onChange={handleInputChange}></textarea>
+                                    <label htmlFor="Descripcion" className="form-label">Descripción</label>
+                                    <textarea
+                                        className="form-control"
+                                        id="Descripcion"
+                                        name="Descripcion"
+                                        value={formData.Descripcion}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="etiquetas" className="col-form-label">Etiquetas:</label>
-                                    <input type="text" className="form-control" id="etiquetas" name="etiquetas" value={newCurso.etiquetas} onChange={handleInputChange} />
+                                    <label htmlFor="Categoria" className="form-label">Categoría</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="Categoria"
+                                        name="Categoria"
+                                        value={formData.Categoria}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="url" className="col-form-label">Imagen del Curso:</label>
-                                    <div className="d-flex align-items-center">
-                                        <button type="button" className="btn btn-light me-2">Subir</button>
-                                        <button type="button" className="btn btn-light">Cambiar</button>
-                                    </div>
-                                    <p className="mt-2">TamaÃ±o: {newCurso.imageSize}</p>
+                                    <label htmlFor="Duracion" className="form-label">Duración (en horas)</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        id="Duracion"
+                                        name="Duracion"
+                                        value={formData.Duracion}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
+
+                                {/* Campos para manejar las URLs */}
                                 <div className="mb-3">
-                                    <div className="d-flex justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                            <div className="circle gray me-2"></div>
-                                            <span>Obligatorio</span>
+                                    <label htmlFor="Url" className="form-label">URLs del curso</label>
+                                    {formData.Url.map((url, index) => (
+                                        <div key={index} className="d-flex mb-2">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={url}
+                                                onChange={(e) => handleUrlChange(index, e)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger ms-2"
+                                                onClick={() => handleRemoveUrl(index)}
+                                            >
+                                                Eliminar
+                                            </button>
                                         </div>
-                                        <div className="d-flex align-items-center">
-                                            <div className="circle lightgreen me-2"></div>
-                                            <span>Libre</span>
-                                        </div>
-                                    </div>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        onClick={handleAddUrl}
+                                    >
+                                        Añadir URL
+                                    </button>
                                 </div>
+
+                                <button type="submit" className="btn btn-success">Guardar cambios</button>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleAddCurso}>Guardar Curso</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* tarjetas de los cursos */}
-            {isLoading ? (
-                <p>Cargando cursos...</p>
-            ) : (
-                <div className="row">
-                    {cursos.map((curso, index) => (
-                        <div key={index} className="col-md-4 mb-4">
-                            <div className="card h-100">
-                                <img src={curso.url} className="card-img-top" alt={curso.titulo} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{curso.titulo}</h5>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#infoModal"
-                                        onClick={() => setSelectedCurso(curso)}
-                                    >
-                                        Saber mÃ¡s
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-
-            {/* detalles del curso */}
-            {selectedCurso && (
-                <div className="modal fade" id="infoModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">{selectedCurso.titulo}</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                {selectedCurso.descripcion}
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
+        </div>
     );
 };
 

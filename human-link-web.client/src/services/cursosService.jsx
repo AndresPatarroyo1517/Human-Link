@@ -75,20 +75,20 @@ const cursosService = {
 
     // Obtener todos los cursos con CursoUsuario y Curso
     getAllCursosCategoria: async () => {
-        const response = await fetch(API_URL, {
+        const response = await fetch('https://localhost:7019/HumanLink/Curso', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include', // Enviar cookies con la solicitud
+            credentials: 'include',
         });
 
         if (!response.ok) {
-            throw new Error('Error al consultar todos los cursos y categorias');
+            throw new Error('Error al obtener los cursos');
         }
 
         const data = await response.json();
-        return data;
+        return data;  // Retorna la respuesta que se espera tenga los cursos
     },
     postCursoUsuarioEmpleado: async ({ empleadoId, cursoId }) => {
         // Crear el objeto Cursousuario que se enviará al backend
@@ -133,12 +133,67 @@ const cursosService = {
         }
     },
 
+    // Actualizar un curso siendo admin
+    updateCurso: async (cursoId, updatedCurso) => {
+        try {
+            const response = await fetch(`${API_URL_CURSO}/${cursoId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(updatedCurso),
+            });
+
+            if (!response.ok) {
+                const errorDetails = await response.text(); // Leer la respuesta como texto si no es JSON
+                console.error("Detalles del error en la respuesta:", errorDetails);
+                throw new Error('Error al modificar el curso: ' + errorDetails);
+            }
+
+            // Intentamos obtener la respuesta como JSON solo si es válida
+            const responseText = await response.text(); // Leer la respuesta como texto primero
+
+            // Intentar parsear JSON si el texto parece un JSON válido
+            try {
+                const data = JSON.parse(responseText); // Si es JSON válido, lo parseamos
+                return data;
+            // eslint-disable-next-line no-unused-vars
+            } catch (jsonError) {
+                console.error("No se pudo parsear como JSON:", responseText);
+                // Si no es JSON válido, simplemente devolvemos el texto de respuesta
+                return responseText;
+            }
+
+        } catch (error) {
+            console.error("Error en cursosService.updateCurso:", error);
+            throw new Error("Error al modificar el curso");
+        }
+    },
+
+    //agregar nuevo curso
+    postCurso: async (nuevoCurso) => {
+        const response = await fetch(`${API_URL_CURSO}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify(nuevoCurso),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al crear el curso');
+        }
+
+        return await response.json();
+    },
 
 
     // Eliminar curso del usuario
     deleteCursoUsuarioEmpleado: async (Idcurso) => {
         try {
-            const response = await fetch(`${API_URL}/empleado/${Idcurso}`, {
+            const response = await fetch(`${API_URL_CURSO}/${Idcurso}`, {
                 method: 'DELETE',
                 credentials: 'include',
             }
@@ -155,5 +210,6 @@ const cursosService = {
         }
     },
 }
+
 
 export default cursosService;

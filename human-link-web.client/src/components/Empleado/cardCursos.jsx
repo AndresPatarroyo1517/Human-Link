@@ -73,6 +73,16 @@ const CardCursos = () => {
         }
     };
 
+    const handleIngresarClick = (curso) => {
+        const cursoSeleccionado = cursos.find(c => c.Idcurso === curso.Idcurso);
+        if (cursoSeleccionado && idcuremp.length > 0) {
+            setSelectedCurso([cursoSeleccionado, idcuremp]);
+            setActiveMenu('Desarrollo curso');
+        } else {
+            alert("Curso no disponible o los datos necesarios aún no han cargado. Por favor, intente nuevamente.");
+        }
+    };
+
     return (
         <>
             {/* Mis cursos */}
@@ -89,15 +99,7 @@ const CardCursos = () => {
                                 <button
     type="button"
     className="btn btn-primary"
-    onClick={() => {
-        const cursoSeleccionado = cursos.find(c => c.Idcurso === curso.Idcurso);
-        if (cursoSeleccionado) {
-            setSelectedCurso([cursoSeleccionado, idcuremp]);
-            setActiveMenu('Desarrollo curso');
-        } else {
-            alert("Curso no disponible en este momento. Por favor, recargue la página.");
-        }
-    }}
+                                    onClick={() => handleIngresarClick(curso)}
 >
     Ingresar
 </button>

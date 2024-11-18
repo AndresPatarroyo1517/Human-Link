@@ -14,6 +14,8 @@ const DesarrollarCursos = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [isError, setIsError] = useState(false);
+    const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+    const [idcuremp, setIdcuremp] = useState(null);
 
     const obtenerVideoId = (url) => {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -21,7 +23,7 @@ const DesarrollarCursos = () => {
         return match ? match[1] : null;
     };
 
-        const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+        
 
         const handleQuizClick = () => {
             setIsQuizCompleted(true);
@@ -102,83 +104,157 @@ const eliminar = async (modalId) => {
             }
         }
     }
-};
+    };
+
+    useEffect(() => {
+        console.log("Selected Curso en useEffect:", JSON.stringify(selectedCurso, null, 2));
+
+        if (selectedCurso) {
+            cursosService.getIdCurEmpp()
+                .then((response) => {
+                    console.log("Response from API:", JSON.stringify(response, null, 2));
+                    console.log("Selected Curso dentro del then:", JSON.stringify(selectedCurso, null, 2));
+
+                    const selectedCursoId = Array.isArray(selectedCurso)
+                        ? selectedCurso[0]?.Idcurso
+                        : selectedCurso.Idcurso;
+
+                    if (!selectedCursoId) {
+                        console.error("Idcurso no válido en selectedCurso.");
+                        return;
+                    }
+
+                    const cursoActual = response.find(
+                        (lista) => Number(lista.Idcurso) === Number(selectedCursoId)
+                    );
+
+                    if (!cursoActual) {
+                        console.error("Curso no encontrado:", selectedCursoId);
+                        return;
+                    }
+
+                    console.log("Curso actual encontrado:", JSON.stringify(cursoActual, null, 2));
+
+                    setIdcuremp(cursoActual.Notas || []);
+
+                })
+                .catch((error) => console.error("Error fetching curso data:", error));
+        }
+    }, [selectedCurso, setIdcuremp]);
+
         console.log(selectedCurso)
         return (
             <>
-                <h2 className="mb-4">{selectedCurso[0].Nombrecurso}</h2>
-                {selectedCurso[0].Url.slice(1).map((url, index) => (
-                    <div key={index} className="video-card position-relative p-3 mb-4">
-                        <p className="d-inline-flex gap-1">
-                            <a className="btn btn-primary" data-bs-toggle="collapse" href={'#parte' + index} role="button" aria-expanded="false" aria-controls={'parte' + index}>
-                                {selectedCurso[0].Nombrecurso} - Video {index + 1}
-                            </a>
-                        </p>
-                        <div className="collapse" id={'parte' + index}>
-                            <div className="card card-body text-center" style={{ width: '100%' }}>
-                                <div className="video-container">
-                                    <iframe
-                                        className="video-frame"
-                                        width="560"
-                                        height="315"
-                                        src={url}
-                                        title="YouTube video player"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerPolicy="strict-origin-when-cross-origin"
-                                        allowFullScreen
-                                    ></iframe>
-                                </div>
-                                <p className="mt-3"><strong>Descripci�n:</strong> {descripciones[index]}</p>
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLScQUXiRBXzSpb_unC0wDAC0VYN1IWZBc1o6ZZozAZUXMJ9rZA/viewform?usp=sf_link" target="_blank">
-                                    <button className="btn btn-secondary bottom-0 end-0 m-3" onClick={handleQuizClick}>Cuestionario</button>
+                <h2 className="mb-4">
+                    {selectedCurso !== null ? selectedCurso[0].Nombrecurso : ''}
+                </h2>
+
+                {selectedCurso !== null ? selectedCurso[0].Url.slice(1).map((url, index) => {
+                    const habilitado = (idcuremp && idcuremp.length + 1) > index;
+                    const botonCuestionario = (idcuremp && idcuremp[index] === undefined);
+                    console.log('ver fal:' + index + ' = ' + botonCuestionario)
+                    return (
+                        <div key={index} className="video-card position-relative p-3 mb-4">
+                            <p className="d-inline-flex gap-1">
+                                <a
+                                    className={habilitado ? 'btn btn-primary' : ' btn btn-secondary'}
+                                    data-bs-toggle="collapse"
+                                    href={'#parte' + index}
+                                    role="button"
+                                    aria-expanded={habilitado ? 'true' : 'false'}
+                                    aria-controls={`parte${index}`}
+                                    style={{ pointerEvents: habilitado ? 'auto' : 'none' }}
+                                >
+                                    {selectedCurso[0].Nombrecurso} - Video {index + 1}
                                 </a>
-                                <button className="btn btn-success" onClick={handleCompleteQuiz} disabled={!isQuizCompleted}>
-                                    Finalizar cuestionario
-                                </button>
-                                {isLoading && (
-                                    <div className="d-flex justify-content-center">
-                                        <div className="spinner-border" role="status">
-                                            <span className="visually-hidden">Cargando...</span>
-                                        </div>
+                            </p>
+                            <div className="collapse" id={'parte' + index}>
+                                <div className="card card-body text-center" style={{ width: '100%' }}>
+                                    <div className="video-container">
+                                        <iframe
+                                            className="video-frame"
+                                            width="560"
+                                            height="315"
+                                            src={url}
+                                            title="YouTube video player"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        ></iframe>
                                     </div>
-                                )}
-                                {showModal && (
-                                    <div
-                                        className="modal fade show"
-                                        style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-                                        tabIndex="-1"
+                                    <p className="mt-3">
+                                        <strong>Descripción:</strong> {descripciones[index]}
+                                    </p>
+
+                                    <button
+                                        className="btn btn-secondary bottom-0 end-0 m-3"
+                                        onClick={botonCuestionario ? handleQuizClick : ''}
+                                        disabled={!botonCuestionario}
+                                        aria-controls={`parte${index}`}
+                                        style={{ pointerEvents: botonCuestionario ? 'auto' : 'none' }}
                                     >
-                                        <div className="modal-dialog">
-                                            <div className={`modal-content ${isError ? 'bg-danger text-white' : ''}`}>
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title">{isError ?
-                                                        'No se ha enviado ninguna respuesta' : 'Respuesta recibida'}</h5>
-                                                    <button
-                                                        type="button"
-                                                        className="btn-close"
-                                                        onClick={() => setShowModal(false)}
-                                                    ></button>
-                                                </div>
-                                                <div className="modal-body">
-                                                    <p>{modalMessage}</p>
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-primary"
-                                                        onClick={() => setShowModal(false)}
-                                                    >
-                                                        Cerrar
-                                                    </button>
+                                        <a
+                                            href={botonCuestionario ? "https://docs.google.com/forms/d/e/1FAIpQLScQUXiRBXzSpb_unC0wDAC0VYN1IWZBc1o6ZZozAZUXMJ9rZA/viewform?usp=sf_link" : ''}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            style={{ with: '100%', height: '100%', outline: 'none', color: 'white' }}
+                                        >
+                                            Cuestionario
+                                        </a>
+                                    </button>
+
+                                    <button
+                                        className="btn btn-success"
+                                        onClick={handleCompleteQuiz}
+                                        disabled={!isQuizCompleted}
+                                    >
+                                        Finalizar cuestionario
+                                    </button>
+                                    {isLoading && (
+                                        <div className="d-flex justify-content-center">
+                                            <div className="spinner-border" role="status">
+                                                <span className="visually-hidden">Cargando...</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {showModal && (
+                                        <div
+                                            className="modal fade show"
+                                            style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                                            tabIndex="-1"
+                                        >
+                                            <div className="modal-dialog">
+                                                <div className={`modal-content ${isError ? 'bg-danger text-white' : ''}`}>
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title">{isError ?
+                                                            'No se ha enviado ninguna respuesta' : 'Respuesta recibida'}</h5>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-close"
+                                                            onClick={() => setShowModal(false)}
+                                                        ></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <p>{modalMessage}</p>
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-primary"
+                                                            onClick={() => setShowModal(false)}
+                                                        >
+                                                            Cerrar
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                }) : ''}
 
                 <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Eliminar curso
@@ -188,15 +264,21 @@ const eliminar = async (modalId) => {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Eliminar curso {selectedCurso[0].Nombrecurso}</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                    Eliminar curso {selectedCurso !== null ? selectedCurso[0].Nombrecurso : ''}
+                                </h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                si guarda los cambios se eliminara su progreso y notas que tenga en el curso ¿Desea continuar?
+                                Si guarda los cambios se eliminará su progreso y notas que tenga en el curso. ¿Desea continuar?
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={() => eliminar('exampleModal')}>Save changes</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
+                                <button type="button" className="btn btn-primary" onClick={() => eliminar('exampleModal')}>
+                                    Confirmar
+                                </button>
                             </div>
                         </div>
                     </div>

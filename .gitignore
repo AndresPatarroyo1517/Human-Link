@@ -12,3 +12,4 @@ HumanLink_Test/obj/*
 HumanLink_Test/bin/*
 
 *.user
+/human-link-web.client/src/components/Dashboard/asignarCursos.css

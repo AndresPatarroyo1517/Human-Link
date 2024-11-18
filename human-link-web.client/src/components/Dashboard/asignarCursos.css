@@ -1,59 +1,68 @@
-/* AsignarCursos.css */
-
 /* Estilo general para el contenedor del componente */
 .border {
-    border: 1px solid #ced4da; /* Color de borde */
-    border-radius: 0.375rem; /* Bordes redondeados */
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 1rem; /* Agregar un poco de padding */
 }
 
-/* Estilo para el título principal */
+/* Estilo para los títulos */
 h3.fw-bold {
-    font-weight: bold; /* Negrita */
-    margin-bottom: 1rem; /* Espacio inferior */
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 /* Estilo para los encabezados de las columnas */
 h5 {
-    font-weight: bold; /* Negrita */
-    margin-bottom: 0.5rem; /* Espacio inferior */
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 /* Estilo para las filas de empleados y cursos */
 .d-flex {
-    display: flex; /* Flexbox para alineación */
-    align-items: center; /* Centrar verticalmente */
+    display: flex;
+    flex-direction: column; /* Para apilar los elementos verticalmente */
+    align-items: flex-start; /* Alinear los elementos hacia la izquierda */
 }
 
 /* Espaciado entre elementos */
 .mb-2 {
-    margin-bottom: 0.5rem; /* Margen inferior */
+    margin-bottom: 0.5rem;
 }
 
-/* Estilo para los círculos que indican selección */
+/* Estilo para los círculos de selección */
 .rounded-circle {
-    width: 20px; /* Ancho del círculo */
-    height: 20px; /* Alto del círculo */
-    cursor: pointer; /* Cursor de mano al pasar por encima */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 /* Colores para los círculos */
-.bg-secondary {
-    background-color: #6c757d; /* Color gris por defecto */
-}
-
 .bg-success {
-    background-color: #28a745; /* Color verde para selección */
+    background-color: #28a745 !important;
 }
 
-/* Estilo para el botón de guardar cambios */
+.bg-secondary {
+    background-color: #6c757d !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important; /* Color de fondo al seleccionar */
+}
+
+/* Estilo para los botones */
 .btn-success {
-    background-color: #28a745; /* Color de fondo verde */
-    border-color: #28a745; /* Color del borde verde */
-    transition: background-color 0.3s; /* Transición suave para el color */
+    background-color: #28a745;
+    border-color: #28a745;
 }
 
-    /* Estilo para el botón al pasar el mouse */
     .btn-success:hover {
-        background-color: #218838; /* Color más oscuro al pasar el mouse */
-        border-color: #1e7e34; /* Color del borde más oscuro */
+        background-color: #218838;
+        border-color: #1e7e34;
     }
+.form-select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    font-size: 1rem;
+}

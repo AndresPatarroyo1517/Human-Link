@@ -90,26 +90,50 @@ const cursosService = {
         const data = await response.json();
         return data;
     },
+    postCursoUsuarioEmpleado: async ({ empleadoId, cursoId }) => {
+        // Crear el objeto Cursousuario que se enviará al backend
+        const cursousuario = {
+            Idusuario: empleadoId, // Cambiar 'empleadoId' a 'Idusuario'
+            Idcurso: cursoId,      // Cambiar 'cursoId' a 'Idcurso'
+            Progreso: 0,           // Iniciar con progreso 0
+        };
 
-    postCursoUsuarioEmpleado: async (cursoId) => {
-        const response = await fetch(API_URL + '/inscripcion', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include', // Enviar cookies con la solicitud
-            body: JSON.stringify({
-                Idcurso: cursoId,
-                Progreso: 0,
-            }),
-        });
+        try {
+            const response = await fetch(`${API_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Enviar cookies con la solicitud
+                body: JSON.stringify(cursousuario), // Enviar el objeto en formato JSON
+            });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Error details:", errorData);
+            if (!response.ok) {
+                const errorData = await response.json();
+                if (response.status === 409) {
+                    // Si el servidor responde con conflicto (usuario ya inscrito)
+                    console.error("Error: El usuario ya está inscrito en este curso.");
+                    alert("El usuario ya está inscrito en este curso.");
+                } else {
+                    // Otro tipo de error
+                    console.error("Error al asignar curso:", errorData);
+                    alert("Hubo un error al asignar el curso.");
+                }
+                throw new Error('Error al asignar curso');
+            }
+
+            const data = await response.json();
+            console.log("Curso asignado exitosamente:", data);
+            alert("Curso asignado exitosamente.");
+
+            return data; // Devuelve la respuesta del servidor (cursousuario creado)
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
+            throw error;
         }
-        return response;
     },
+
+
 
     // Eliminar curso del usuario
     deleteCursoUsuarioEmpleado: async (Idcurso) => {

@@ -75,13 +75,30 @@ namespace Human_Link_Web.Server.Controllers
                 return NotFound("No se encontró el curso-usuario especificado con los IDs proporcionados.");
             }
 
-            if (bdCursoUsuario.Notas == null)
-            {
-                bdCursoUsuario.Notas = new List<int>();
-            }
+            bdCursoUsuario.Notas ??= new List<int>();
+            cursousuario.Progreso ??= 0;
+
+            var progreso = (int)(100 / cursousuario.Progreso);
+
             bdCursoUsuario.Notas.Add(ultimaNota.Value);
 
+            if (bdCursoUsuario.Progreso < 100)
+            {
+                bdCursoUsuario.Progreso += progreso;
+            }
+
+            if (bdCursoUsuario.Notas.Count > cursousuario.Progreso)
+            {
+                return Ok(objCursoUsuario);
+            }
+
+            if (bdCursoUsuario.Notas.Count == cursousuario.Progreso && bdCursoUsuario.Progreso < 100)
+            {
+                bdCursoUsuario.Progreso += (100 - bdCursoUsuario.Progreso);
+            }
+
             _context.Entry(bdCursoUsuario).Property(c => c.Notas).IsModified = true;
+            _context.Entry(bdCursoUsuario).Property(c => c.Progreso).IsModified = true;
 
             await _context.SaveChangesAsync();
 
@@ -92,16 +109,12 @@ namespace Human_Link_Web.Server.Controllers
         // False: fecha u hora fuera del rango
         private static bool ValidarFechaYHora(String fecha)
         {
-            // Parsear la fecha recibida en formato ISO 8601
             DateTime fechaRecibida = DateTime.Parse(fecha, null, System.Globalization.DateTimeStyles.RoundtripKind);
 
-            // Convertir la fecha recibida a la hora local
             DateTime fechaRecibidaLocal = fechaRecibida.ToLocalTime();
 
-            // Obtener la fecha y hora actual en hora local
             DateTime fechaActualLocal = DateTime.Now;
 
-            // Verificar si la fecha recibida coincide con la fecha actual (mismo día)
             if (fechaRecibidaLocal.Date == fechaActualLocal.Date)
             {
                 // Calcular el rango de 5 minutos hacia atrás

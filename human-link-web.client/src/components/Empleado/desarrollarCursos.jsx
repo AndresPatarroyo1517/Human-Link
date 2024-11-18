@@ -10,7 +10,6 @@ const DesarrollarCursos = () => {
     const { selectedCurso } = useCurso();
     const { setActiveMenu } = useEmpleado();
     const [descripciones, setDescripciones] = useState([]);
-    const [estadoNotas, setEstadoNotas] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -32,11 +31,12 @@ const DesarrollarCursos = () => {
             setIsQuizCompleted(false);
             setIsLoading(true);
             console.log(selectedCurso);
+            console.log(selectedCurso[0].Url.length - 1);
             const body = {
                 idcuremp: 0,
                 idusuario: 0,
                 idcurso: selectedCurso[0].Idcurso,
-                progreso: 0,
+                progreso: selectedCurso[0].Url.length - 1,
                 notas: []
             };
             const response = await formService.putCargarNota(body);
@@ -53,15 +53,6 @@ const DesarrollarCursos = () => {
                 setModalMessage("Nota cargada exitosamente en la base de datos.");
                 setShowModal(true);
             }
-
-            //if (estadoNota.length != 0 && isQuizCompleted) {
-            //    console.log(estadoNota);
-            //    if (estadoNota.Nota == null) {
-            //        alert("No se ha enviado ninguna respuesta.");
-            //    } else if (estadoNota.length > 2) {
-            //        alert("Nota cargada exitosamente.");
-            //    }
-            //}
 
         };
 

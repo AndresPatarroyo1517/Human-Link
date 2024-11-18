@@ -14,7 +14,4 @@
     <None Remove="src\components\Empleado\desarrolloCursos.css" />
     <None Remove="src\index.css" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\components\Admin\" />
-  </ItemGroup>
 </Project>

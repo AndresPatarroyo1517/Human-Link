@@ -11,6 +11,7 @@ import DocumentManager from './documentManager';
 import AsignarCursos from './asignarCursos'; 
 
 
+
 const Main = () => {
     const { activeMenu, activeSection, setActiveSection, setActiveMenu } = useAdmin();
 

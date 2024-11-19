@@ -20,18 +20,48 @@ namespace Human_Link_Web.Server.Controllers
             _context = context;
         }
 
-        [Authorize(Policy = "AllPolicy")]
+        [Authorize(Policy = "AdminPolicy")]
         [HttpGet()]
         public async Task<IActionResult> GetArchivos()
         {
+            // Obtener todos los archivos de la base de datos
             var archivos = await _context.Archivos
-                    .Find(FilterDefinition<Archivo>.Empty)
-                    .ToListAsync();
+                .Find(FilterDefinition<Archivo>.Empty)
+                .ToListAsync();
 
             if (archivos == null || archivos.Count == 0)
                 return NotFound("No se encontraron archivos.");
 
-            return Ok(archivos);
+            // Formatear la respuesta
+            var resultados = archivos.Select(archivo => new
+            {
+                Id = archivo.ArchivoPath, // Usamos ArchivoPath como identificador
+                Propietario = archivo.Propietario,
+                Estado = archivo.Estado,
+                NombreArchivo = archivo.NombreArchivo,
+                TipoDocumento = archivo.TipoDocumento, // Incluimos el tipo de documento
+                Fecha = archivo.Fecha // Incluimos cualquier otro campo relevante
+            }).ToList();
+
+            return Ok(resultados);
+        }
+
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpPut("estado/{id}")]
+        public async Task<IActionResult> ActualizarEstado(string id, [FromBody] string nuevoEstado)
+        {
+            if (string.IsNullOrWhiteSpace(nuevoEstado))
+                return BadRequest(new { message = "El estado no puede estar vacío." });
+
+            var filter = Builders<Archivo>.Filter.Eq(a => a.ArchivoPath, id);
+            var update = Builders<Archivo>.Update.Set(a => a.Estado, nuevoEstado);
+
+            var resultado = await _context.Archivos.UpdateOneAsync(filter, update);
+
+            if (resultado.MatchedCount == 0)
+                return NotFound(new { message = "No se encontró el archivo con el ID especificado." });
+
+            return Ok(new { message = "Estado actualizado correctamente." });
         }
 
 

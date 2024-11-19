@@ -1,7 +1,5 @@
 const API_URL = 'https://localhost:7019/HumanLink/Nomina';
 
-
-
 const NominaService = {
     getNomina: async () => {
         const response = await fetch(API_URL + '/Get', {
@@ -19,6 +17,33 @@ const NominaService = {
         const data = await response.json();
         return data;
     },
+
+    addNomina: async (newNomina) => {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(newNomina), // Enviamos la nueva nómina como JSON
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Nómina añadida con éxito:', data);
+                return data; // Devolvemos la nómina creada
+            } else {
+                const errorData = await response.json();
+                console.error("Error al añadir la nómina:", errorData);
+                throw new Error('Error al añadir la nómina');
+            }
+        } catch (error) {
+            console.error("Error añadiendo la nómina:", error);
+            throw error; // Lanzamos el error para manejo en el componente
+        }
+    },
+
 
     updateNominaEmpleado: async (updatedNomina, nominaId) => {
         try {

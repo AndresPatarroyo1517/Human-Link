@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import usuariosService from "../../services/usuariosService";
 import empleadosService from "../../services/empleadosService";
 import nominasService from "../../services/nominaService";
-import { InformePerso } from '../Informes/informePerso'
+import { InformePerso } from '../Informes/informePerso';
 import { fetchNominaPerso } from '../../services/pdfService.jsx';
 
 const UserManagementTable = () => {
@@ -14,8 +14,6 @@ const UserManagementTable = () => {
     const [selectedUsuario, setSelectedUsuario] = useState(null);
     const [selectedEmpleado, setSelectedEmpleado] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
-    
-
 
     // Estados para manejo de nómina
     const [nomina, setNomina] = useState({
@@ -146,7 +144,8 @@ const UserManagementTable = () => {
                 console.log("Empleados actualizados:", empleados);
 
                 // Agregar la nómina
-                await nominasService.addNomina(nominaToAdd);
+                const nomina = await nominasService.addNomina(nominaToAdd);
+                console.log("Nomina agregada:", nomina)
 
                 console.log("Registros agregados correctamente.");
             } catch (error) {
@@ -232,7 +231,7 @@ const UserManagementTable = () => {
                 throw error;
             }
 
-            
+
 
             // Actualizar la lista de empleados
             await loadEmpleadosDisponibles();
@@ -336,7 +335,7 @@ const UserManagementTable = () => {
     const handleUpdateNomina = (formDataNomina, nomina) => {
         console.log(nomina)
         if ((formDataNomina.horasExtra < 0 || formDataNomina.bonificacion < 0) && !confirmNegativeValues) {
-            setTempNominaData(nominaData);
+            setTempNominaData(null);
             setShowNegativeWarning(true);
             return;
         }

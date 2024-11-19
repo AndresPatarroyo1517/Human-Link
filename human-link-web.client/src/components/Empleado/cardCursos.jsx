@@ -127,7 +127,7 @@ const CardCursos = () => {
                                         data-bs-toggle="modal"
                                         data-bs-target={'#modalcurso' + index}
                                     >
-                                        Launch static backdrop modal
+                                       Quiero Inscribirme!
                                     </button>
 
                                     {/* Modal registro curso */}

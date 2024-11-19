@@ -27,24 +27,41 @@ namespace Human_Link_Web.Server.Controllers
             return Ok(empleados);
         }
 
-        //Endpoint para obtener un empleado en base a su ID
+        // Endpoint para obtener un empleado por su ID (proporcionado en la ruta)
         // GET: HumanLink/Empleado/:id
-        [HttpGet("Get")]
+        [HttpGet("{id:int}")]
         [Authorize(Policy = "AllPolicy")]
-        public async Task<ActionResult<Empleado>> GetEmpleado()
+        public async Task<ActionResult<Empleado>> GetEmpleadoById(int id)
         {
-            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (id == null)
+            // Obtener el ID del usuario autenticado desde los claims
+            var authenticatedUserIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (authenticatedUserIdClaim == null)
             {
-                return Unauthorized(); // Si no se encuentra el ID del usuario en las claims, devolver 401 Unauthorized
+                return Unauthorized(); // Si no se encuentra el ID en las claims, devolver 401 Unauthorized
             }
 
-            var usuarioId = Convert.ToInt32(id);
-            var empleado = await _context.Empleados.FindAsync(usuarioId);
+            if (!int.TryParse(authenticatedUserIdClaim, out int authenticatedUserId))
+            {
+                return BadRequest("El ID del usuario autenticado no es válido.");
+            }
+
+            // Validar si el usuario autenticado tiene permiso para acceder al recurso solicitado
+            if (authenticatedUserId != id)
+            {
+                // Verifica si el usuario tiene permisos adicionales (puedes ajustar esta lógica según tus necesidades)
+                var isAdmin = HttpContext.User.IsInRole("Admin"); // Ejemplo: validar si el usuario es administrador
+                if (!isAdmin)
+                {
+                    return Forbid("No tienes permisos para acceder a este recurso.");
+                }
+            }
+
+            // Buscar el empleado en la base de datos por su ID
+            var empleado = await _context.Empleados.FindAsync(id);
 
             if (empleado == null)
             {
-                return NotFound();
+                return NotFound(); // Si no se encuentra el empleado, devolver 404 Not Found
             }
 
             return Ok(empleado);

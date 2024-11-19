@@ -1,9 +1,9 @@
 const API_BASE_URL = 'https://localhost:7019/HumanLink/Empleado';
 
 const empleadosService = {
-    // Obtener información del empleado logueado
-    getEmpleado: async () => {
-        const response = await fetch(API_BASE_URL + '/Get', { // No es necesario pasar el ID en la URL
+    // Obtener información de un empleado por ID
+    getEmpleado: async (id) => {
+        const response = await fetch(`${API_BASE_URL}/${id}`, {  // Se usa el ID en la URL
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,6 +16,7 @@ const empleadosService = {
         }
 
         const data = await response.json();
+        console.log(data);
         return data;
     },
 
@@ -36,6 +37,34 @@ const empleadosService = {
         const data = await response.json();
         return data;
     },
+
+    // Crear un nuevo empleado
+    addEmpleado: async (empleadoData) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/Post`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(empleadoData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(errorData || 'Error al agregar el empleado');
+            }
+
+            // Retornar el objeto del empleado creado (según el diseño del API)
+            const data = await response.json();
+            console.log("Empleado creado:", data);
+            return data;
+        } catch (error) {
+            console.error("Error en addEmpleado:", error);
+            throw error;
+        }
+    },
+
     // Actualizar un empleado
     updateEmpleado: async (id, empleadoData) => {
         try {
@@ -45,7 +74,7 @@ const empleadosService = {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify(empleadoData)
+                body: JSON.stringify(empleadoData),
             });
 
             if (!response.ok) {
@@ -61,6 +90,34 @@ const empleadosService = {
             return false;
         } catch (error) {
             console.error("Error en updateEmpleado:", error);
+            throw error;
+        }
+    },
+
+    // Eliminar un empleado
+    deleteEmpleado: async (id) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/Delete-${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(errorData || 'Error al eliminar el empleado');
+            }
+
+            // El endpoint retorna NoContent (204)
+            if (response.status === 204) {
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error("Error en deleteEmpleado:", error);
             throw error;
         }
     }

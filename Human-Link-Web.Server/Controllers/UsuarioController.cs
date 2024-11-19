@@ -64,9 +64,9 @@ namespace Human_Link_Web.Server.Controllers
         }
 
 
-        //Endpoint para obtener el usuario mediante ID
+        //Endpoint para obtener el usuario
         //Cambiar a uso restringido del JWT solamente del administrador
-        // GET: HumanLink/Usuario/5
+        // GET: HumanLink/Usuario
         [HttpGet("usuario")]
         [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<UsuarioUnique>> GetUsuario()
@@ -97,6 +97,40 @@ namespace Human_Link_Web.Server.Controllers
 
             return Ok(usuarioDTO);
         }
+
+        // Endpoint para obtener el usuario mediante ID
+        // Cambiar a uso restringido del JWT solamente del administrador
+        // GET: HumanLink/Usuario/{id}
+        [HttpGet("{id}")]
+        [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+        public async Task<ActionResult<UsuarioUnique>> GetUsuarioById(int id)
+        {
+            // Aquí verificamos si el usuario tiene el rol adecuado
+            var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Usuarios.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Mapeo del usuario a un DTO con las propiedades necesarias
+            var usuarioDTO = new UsuarioUnique
+            {
+                Correo = user.Correo,
+                IdUsuario = user.Idusuario,
+                Clave = user.Clave,
+                Usuario1 = user.Usuario1
+            };
+
+            return Ok(usuarioDTO);
+        }
+
 
 
         //Endpoint para actualizar la información del Usuario

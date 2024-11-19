@@ -4,7 +4,7 @@ const API_URL = 'https://localhost:7019/HumanLink/Nomina';
 
 const NominaService = {
     getNomina: async () => {
-        const response = await fetch(API_URL+'/Get', {
+        const response = await fetch(API_URL + '/Get', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,6 +42,30 @@ const NominaService = {
         } catch (error) {
             console.error("Error actualizando la n�mina:", error);
             alert('Ocurri� un error al actualizar la n�mina');
+        }
+    },
+
+    deleteNomina: async (nominaId) => {
+        try {
+            const response = await fetch(`${API_URL}/${nominaId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error al eliminar la nómina:", errorData);
+                throw new Error('No se pudo eliminar la nómina');
+            }
+
+            return true; // Indica que la eliminación fue exitosa
+        } catch (error) {
+            console.error("Error eliminando la nómina:", error);
+            alert('Ocurrió un error al eliminar la nómina');
+            throw error; // Re-lanza el error para manejo en el componente
         }
     },
 

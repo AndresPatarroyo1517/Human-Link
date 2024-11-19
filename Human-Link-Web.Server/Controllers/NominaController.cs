@@ -135,6 +135,27 @@ namespace Human_Link_Web.Server.Controllers
             return Ok(informe);
         }
 
+        // DELETE: HumanLink/Nomina/5
+        [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+        public async Task<IActionResult> DeleteNomina(int id)
+        {
+            // Buscar la nómina por su ID
+            var nomina = await _context.Nominas.FindAsync(id);
+            if (nomina == null)
+            {
+                return NotFound("No se encontró la nómina con el ID proporcionado.");
+            }
+
+            // Eliminar la nómina del contexto
+            _context.Nominas.Remove(nomina);
+
+            // Guardar los cambios en la base de datos
+            await _context.SaveChangesAsync();
+
+            return Ok("Nómina eliminada exitosamente.");
+        }
+
         private bool NominaExists(int id)
         {
             return _context.Nominas.Any(e => e.Idnomina == id);

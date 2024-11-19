@@ -105,8 +105,15 @@ const CardCursos = () => {
             await cursosService.updateCurso(selectedCursoId, updatedCurso);
             alert('Curso actualizado con éxito.');
 
-            // Recargar cursos
+            setFormData({
+                Nombrecurso: '',
+                Descripcion: '',
+                Categoria: '',
+                Duracion: '',
+                Url: [],
+            });
             cargarCursos();
+
         } catch (error) {
             console.error('Error al actualizar el curso:', error);
             alert('Hubo un error al actualizar el curso.');

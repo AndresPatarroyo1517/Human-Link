@@ -35,7 +35,7 @@ const CardCursos = () => {
         if (!confirmar) return;
 
         try {
-            await cursosService.deleteCursoUsuarioEmpleado(idCurso);
+            await cursosService.deleteCursoUsuarioAdmin(idCurso);
             alert('Curso eliminado con éxito.');
             cargarCursos(); // Recargar la lista de cursos
         } catch (error) {

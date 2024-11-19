@@ -110,22 +110,28 @@ const documentsService = {
         return await response.json();
     },
 
-    updateDocumentStatus: async (id, nuevoEstado) => {
-        const response = await fetch(`${API_URL_DOCUMENTS}/estado/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({ estado: nuevoEstado }),
-        });
+    updateDocumentStatus: async (id, estado) => {
+        try {
+            const response = await fetch(`${API_URL_DOCUMENTS}/estado/${id}`, {
+                method: "PUT",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(estado), // Envía el estado directamente
+            });
 
-        if (!response.ok) {
-            throw new Error('Error al actualizar el estado del documento');
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.message || "Error al actualizar el estado del documento");
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error en updateDocumentStatus:", error);
+            throw error;
         }
-
-        return await response.json();
-    },
+    }
 
 };
 

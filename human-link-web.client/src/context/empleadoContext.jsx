@@ -7,7 +7,7 @@ export const EmpleadoProvider = ({ children }) => {
     // Inicializamos el estado con el valor de localStorage o el valor por defecto
     const [activeMenu, setActiveMenu] = useState(() => {
         const savedMenu = localStorage.getItem('empleadoActiveMenu');
-        return savedMenu || 'Mis Cursos';
+        return savedMenu || 'Info';
     });
 
     // Actualizamos localStorage cuando cambia el valor

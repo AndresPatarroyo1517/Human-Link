@@ -10,6 +10,7 @@ const Documents = () => {
         try {
             const response = await documentsService.getDocumentosUsuario();
             setDocumentos(response);
+            console.log(documentos)
         } catch (error) {
             console.error('Error al obtener los documentos:', error);
         }
@@ -70,6 +71,18 @@ const Documents = () => {
         }
     };
 
+    const verify = (estado) => {
+        if (estado == 'Verificado') {
+            return "bi bi-patch-check-fill text-success"
+        } else if (estado == 'sin verificar') {
+            return "bi bi-stopwatch-fill text-secondary"
+        } else if (estado == 'Rechazado') {
+            return "bi bi-x-octagon-fill text-danger"
+        } else {
+            return '';
+        }
+    }
+
     return (
         <div>
             <h2 className="mb-4">Documentos Requeridos</h2>
@@ -84,11 +97,11 @@ const Documents = () => {
                                         <h5 className="card-title">{tipoDocumento}</h5>
                                         {documentosSubidos.length > 0 ? (
                                             <>
-                                                <p className="card-text">Archivo Subido</p>
+                                                {documentosSubidos.map((tipoDoc, idx) => (<>
+                                                    <p className="card-text">Archivo Subido <span class={verify(tipoDoc.Estado)}></span></p> 
                                                 <ul className="list-group">
-                                                    {documentosSubidos.map((tipoDoc, idx) => (
                                                         <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
-                                                            {tipoDoc.NombreArchivo}
+                                                            {tipoDoc.NombreArchivo} 
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-danger"
@@ -98,10 +111,10 @@ const Documents = () => {
                                                             >
                                                                 Delete
                                                             </button>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-
+                                                        </li> 
+                                                    
+                                                    </ul></>
+                                                ))}
                                                 <form onSubmit={(e) => handleSubirDocumento(e, tipoDocumento)}>
                                                     <div className="form-group mt-2">
                                                         <input type="file" className="form-control-file" name="file" />

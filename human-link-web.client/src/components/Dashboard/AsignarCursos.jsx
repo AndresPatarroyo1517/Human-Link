@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useCallback } from "react";
-import './asignarCursos.css';
 import empleadosService from '../../services/empleadosService';
 import cursosService from '../../services/cursosService';
 

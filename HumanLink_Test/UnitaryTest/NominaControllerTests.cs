@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using static Human_Link_Web.Server.Controllers.NominaController;
 
 namespace HumanLink_UnitaryTest
 {

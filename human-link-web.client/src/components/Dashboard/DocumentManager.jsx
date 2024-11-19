@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import documentsService from '../../../services/documentService';
+import documentsService from '../../services/documentService';
 import './documentManager.css';
 
 const DocumentManager = () => {

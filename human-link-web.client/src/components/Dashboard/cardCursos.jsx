@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import cursosService from '../../services/cursosService';
-import './cardCursos.css';
 
 const CardCursos = () => {
     const [cursos, setCursos] = useState([]);

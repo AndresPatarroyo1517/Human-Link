@@ -177,10 +177,10 @@ namespace Human_Link_Web.Server.Controllers
                     return Unauthorized("El usuario no está autenticado.");
                 }
 
-                var usuarioId = Convert.ToInt32(id); 
+                var usuarioId = Convert.ToInt32(id);
 
                 var cursousuarios = await _context.Cursousuarios
-                    .Where(cu => cu.Idusuario == usuarioId)  
+                    .Where(cu => cu.Idusuario == usuarioId)
                     .ToListAsync();
 
                 if (cursousuarios == null || !cursousuarios.Any())
@@ -369,7 +369,7 @@ namespace Human_Link_Web.Server.Controllers
                         cu => cu.Idcurso,
                         (c, cu) => new { c, cu })
                     .GroupBy(x => x.c.Nombrecurso)
-                    .Select(g => new 
+                    .Select(g => new
                     {
                         NombreCurso = g.Key,
                         TotalInscritos = g.Count()

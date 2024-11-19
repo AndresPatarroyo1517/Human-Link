@@ -98,7 +98,7 @@ const Documents = () => {
                                         {documentosSubidos.length > 0 ? (
                                             <>
                                                 {documentosSubidos.map((tipoDoc, idx) => (<>
-                                                    <p className="card-text">Archivo Subido <span class={verify(tipoDoc.Estado)}></span></p> 
+                                                    <p className="card-text">Archivo Subido <span className={verify(tipoDoc.Estado)}></span></p> 
                                                 <ul className="list-group">
                                                         <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                                             {tipoDoc.NombreArchivo} 

@@ -1,6 +1,27 @@
 const API_URL = 'https://localhost:7019/HumanLink/Usuario';
 
 const usuariosService = {
+    getUser: async () => {
+        try {
+            const response = await fetch(`${API_URL}/usuario`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Error al consultar los usuarios: ${response.status} - ${errorText}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error al intentar obtener usuarios:", error);
+            throw error;
+        }
+    },
+
     getUsuarios: async () => {
         try {
             const response = await fetch(API_URL, {
@@ -60,26 +81,16 @@ const usuariosService = {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Asegúrate de incluir el token de autorización si es necesario
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 credentials: 'include',
                 body: JSON.stringify(usuarioData)
             });
-
-            // Manejar específicamente la respuesta 204
-            if (response.status === 204) {
-                return usuarioData;
-            }
+            const responseText = await response.text();
 
             if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(errorData || 'Error al actualizar el usuario');
+                throw new Error(responseText || 'Error al actualizar el usuario');
             }
-
-            // Si hay una respuesta con contenido (aunque no debería en este caso)
-            const data = await response.json();
-            return data;
+            return responseText;
         } catch (error) {
             console.error("Error en updateUsuario:", error);
             throw error;

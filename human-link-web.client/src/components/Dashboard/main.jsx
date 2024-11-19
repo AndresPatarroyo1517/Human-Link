@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import CardCursos from './cardCursos';
-import TableInforms from './tableInforms';
 import TableUsuarios from './tableUsuarios';
 import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';

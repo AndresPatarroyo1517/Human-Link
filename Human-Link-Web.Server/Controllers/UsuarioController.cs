@@ -3,7 +3,9 @@ using Human_Link_Web.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Transactions;
+using static Human_Link_Web.Server.Controllers.UsuarioController;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -29,6 +31,14 @@ namespace Human_Link_Web.Server.Controllers
             public bool? Isemailverified { get; set; }
             public ICollection<Cursousuario> Cursousuarios { get; set; }
             public ICollection<Empleado> Empleados { get; set; }
+        }
+
+        public class UsuarioUnique
+        {
+            public string Correo { get; set; }
+            public int IdUsuario { get; set; }
+            public string Clave { get; set; }
+            public string Usuario1 { get; set; }
         }
 
 
@@ -57,18 +67,35 @@ namespace Human_Link_Web.Server.Controllers
         //Endpoint para obtener el usuario mediante ID
         //Cambiar a uso restringido del JWT solamente del administrador
         // GET: HumanLink/Usuario/5
-        [HttpGet("{id}")]
-        [Authorize(Policy = "AdminPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        [HttpGet("usuario")]
+        [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
+        public async Task<ActionResult<UsuarioUnique>> GetUsuario()
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return Unauthorized();
+            }
+
+            var Idusuario = Convert.ToInt32(id);
+
+            var usuario = await _context.Usuarios.FindAsync(Idusuario);
 
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            // Mapeo del usuario a un DTO con las propiedades necesarias
+            var usuarioDTO = new UsuarioUnique
+            {
+                Correo = usuario.Correo,
+                IdUsuario = usuario.Idusuario,
+                Clave = usuario.Clave,
+                Usuario1 = usuario.Usuario1
+            };
+
+            return Ok(usuarioDTO);
         }
 
 
@@ -77,8 +104,8 @@ namespace Human_Link_Web.Server.Controllers
         //Cambiar a uso restringido del JWT solamente del propio usuario y admin, recomendación cambiar a PATCH
         // PUT: HumanLink/Usuario/id
         [HttpPut("{id}")]
-        [Authorize(Policy = "AdminPolicy")]
-        public async Task<IActionResult> PutUsuario(int id, [FromBody] Usuario usuario)
+        [Authorize(Policy = "AllPolicy")]
+        public async Task<IActionResult> PutUsuario(int id, [FromBody] UsuarioUnique usuario)
         {
             // Verifica si la clave está vacía
             if (string.IsNullOrWhiteSpace(usuario.Clave))
@@ -87,7 +114,7 @@ namespace Human_Link_Web.Server.Controllers
             }
 
             // Verifica que el ID coincida entre la URL y el cuerpo del request
-            if (id != usuario.Idusuario)
+            if (id != usuario.IdUsuario)
             {
                 return BadRequest("El ID del usuario en la URL no coincide con el ID proporcionado en el cuerpo.");
             }
@@ -102,9 +129,9 @@ namespace Human_Link_Web.Server.Controllers
 
             // Actualizamos los campos que se pueden modificar
             usuarioExistente.Usuario1 = usuario.Usuario1;
+            usuarioExistente.Isadmin = usuarioExistente.Isadmin;
+            usuarioExistente.Isemailverified = usuarioExistente.Isemailverified;
             usuarioExistente.Correo = usuario.Correo;
-            usuarioExistente.Isadmin = usuario.Isadmin;
-            usuarioExistente.Isemailverified = usuario.Isemailverified;
 
             // Actualizamos el estado de la entidad para que se guarden los cambios
             _context.Entry(usuarioExistente).State = EntityState.Modified;
@@ -313,7 +340,7 @@ namespace Human_Link_Web.Server.Controllers
                 return StatusCode(500, errorMessage);
             }
         }
-
+        [Authorize(Policy = "AdminPolicy")]
         [HttpGet("usuario/{idUsuario}/cursos")]
         public async Task<ActionResult<IEnumerable<object>>> GetProgresoCursos(int idUsuario)
         {
@@ -336,7 +363,7 @@ namespace Human_Link_Web.Server.Controllers
 
             return Ok(cursosUsuario);
         }
-
+        [Authorize(Policy = "AdminPolicy")]
         [HttpGet("usuario/{idUsuario}/salario")]
         public async Task<ActionResult<object>> GetSalarioCalculado(int idUsuario)
         {

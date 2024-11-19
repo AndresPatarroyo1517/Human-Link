@@ -15,12 +15,14 @@ const Info = () => {
 
     useEffect(() => {
         cursosService.getCursosProgeso()
-            .then(response => setCursos(response))
+            .then(response => {
+                setCursos(response)
+            })
             .catch(error => console.error('Error al obtener los cursos:', error));
     }, []);
 
     useEffect(() => {
-        empleadosService.getEmpleado()
+        empleadosService.getEmp()
             .then(response => setEmpleadoInfo(response))
             .catch(error => console.error('Error al obtener el empleado:', error));
     }, []);
@@ -152,35 +154,49 @@ const Info = () => {
 
                 {/* Cursos finalizados */}
                 <div className="col-md-8 col-12">
-                    <h3 className="mb-4">Cursos Finalizados</h3>
-                    {cursos.filter(curso => curso.Progreso === '100').map((curso, index) => (
-                        <div key={index} className="card mb-3">
-                            <div className="row g-0 align-items-center">
-                                <div className="col-md-2">
+                    <h3 className="mb-5 text-center text-primary">Cursos Finalizados</h3>
+                    {cursos.filter(curso => curso.Progreso === 100).map((curso, index) => (
+                        <div
+                            key={index}
+                            className="card mb-4 shadow-sm border-0 rounded-3"
+                            style={{ overflow: 'hidden', backgroundColor: '#f8f9fa' }}
+                        >
+                            <div className="row g-0">
+                                {/* Imagen del curso */}
+                                <div className="col-md-4">
                                     <img
                                         src={curso.Curso.Url[0]}
                                         alt="Imagen del curso"
-                                        className="img-fluid rounded-start"
-                                        style={{ objectFit: 'cover' }}
+                                        className="img-fluid"
+                                        style={{
+                                            objectFit: 'cover',
+                                            height: '100%',
+                                        }}
                                     />
                                 </div>
-                                <div className="col-md-8">
+                                {/* Detalles del curso */}
+                                <div className="col-md-6">
                                     <div className="card-body">
-                                        <h5 className="card-title">{curso.Curso.Nombrecurso}</h5>
-                                        <p className="card-text">{curso.Curso.Descripcion}</p>
+                                        <h5 className="card-title fw-bold text-dark">{curso.Curso.Nombrecurso}</h5>
+                                        <p className="card-text text-muted">{curso.Curso.Descripcion}</p>
                                         <p className="card-text">
-                                            <small className="text-muted">Duración: {curso.Curso.Duracion} horas</small>
+                                            <small className="text-primary fw-semibold">Duración: {curso.Curso.Duracion} horas</small>
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-md-2 text-center">
-                                    <i className="bi bi-check-circle-fill text-success" style={{ fontSize: '2rem' }}></i>
-                                    <p className="text-muted mt-2">Completado</p>
+                                {/* Estado de completado */}
+                                <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center bg-success text-white">
+                                    <i
+                                        className="bi bi-check-circle-fill"
+                                        style={{ fontSize: '3rem' }}
+                                    ></i>
+                                    <p className="fw-semibold mt-2">Completado</p>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     );

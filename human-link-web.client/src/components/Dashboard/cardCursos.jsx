@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import cursosService from '../../services/cursosService';
+import './card.css'
 
 const CardCursos = () => {
     const [cursos, setCursos] = useState([]);
@@ -18,7 +19,7 @@ const CardCursos = () => {
 
     // Obtener los cursos al montar el componente
     useEffect(() => {
-        cursosService.getAllCursosCategoria()
+        cursosService.getCursos()
             .then(response => {
                 setCursos(response); // Guardamos los cursos en el estado
                 setLoading(false);    // Indicamos que ya se cargaron los cursos
@@ -115,17 +116,12 @@ const CardCursos = () => {
                 return;
             }
 
-            console.log("ID del curso seleccionado:", selectedCursoId);
-            console.log("Datos del curso a actualizar:", updatedCurso);
+            await cursosService.updateCurso(selectedCursoId, updatedCurso);
 
-            // Enviar los datos al servicio para actualizar el curso
-            const response = await cursosService.updateCurso(selectedCursoId, updatedCurso);
-
-            // Confirmar que la actualización fue exitosa
             alert("Curso actualizado con éxito.");
 
             // Recargar los cursos para reflejar los cambios
-            setCursos(await cursosService.getAllCursosCategoria());
+            setCursos(await cursosService.getCursos());
         } catch (error) {
             console.error("Error al actualizar el curso:", error);
             alert("Hubo un error al actualizar el curso.");
@@ -144,7 +140,7 @@ const CardCursos = () => {
             alert('Curso eliminado con éxito.');
 
             // Actualizar la lista de cursos
-            setCursos(await cursosService.getAllCursosCategoria());
+            setCursos(await cursosService.getCursos());
         } catch (error) {
             console.error('Error al eliminar el curso:', error);
             alert('Hubo un error al intentar eliminar el curso.');
@@ -161,9 +157,9 @@ const CardCursos = () => {
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card h-100">
                             <img
-                                src={curso.Url && curso.Url[0] ? curso.Url[0] : 'url-default.jpg'}  // Usamos el primer enlace de Url para la imagen
+                                src={curso.Url && curso.Url[0] ? curso.Url[0] : 'url-default.jpg'}
                                 className="card-img-top"
-                                alt={curso.Nombrecurso || 'Curso sin título'}  // Usamos el nombre del curso para el alt de la imagen
+                                alt={curso.Nombrecurso || 'Curso sin título'}
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{curso.Nombrecurso || 'Curso sin título'}</h5>
@@ -173,7 +169,7 @@ const CardCursos = () => {
                                     className="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modificarModal"
-                                    onClick={() => handleModificarCurso(curso)} // Asignamos el curso al hacer clic
+                                    onClick={() => handleModificarCurso(curso)}
                                 >
                                     Modificar curso
                                 </button>
@@ -182,6 +178,7 @@ const CardCursos = () => {
                     </div>
                 ))}
             </div>
+
 
             {/* Modal para modificar curso */}
             <div className="modal fade" id="modificarModal" tabIndex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">

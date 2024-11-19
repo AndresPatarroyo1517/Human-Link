@@ -155,6 +155,7 @@ const cursosService = {
     // Actualizar un curso siendo admin
     updateCurso: async (cursoId, updatedCurso) => {
         try {
+            console.log('Siuuuu', updatedCurso)
             const response = await fetch(`${API_URL_CURSO}/${cursoId}`, {
                 method: 'PUT',
                 headers: {
@@ -168,20 +169,6 @@ const cursosService = {
                 const errorDetails = await response.text(); // Leer la respuesta como texto si no es JSON
                 console.error("Detalles del error en la respuesta:", errorDetails);
                 throw new Error('Error al modificar el curso: ' + errorDetails);
-            }
-
-            // Intentamos obtener la respuesta como JSON solo si es válida
-            const responseText = await response.text(); // Leer la respuesta como texto primero
-
-            // Intentar parsear JSON si el texto parece un JSON válido
-            try {
-                const data = JSON.parse(responseText); // Si es JSON válido, lo parseamos
-                return data;
-            // eslint-disable-next-line no-unused-vars
-            } catch (jsonError) {
-                console.error("No se pudo parsear como JSON:", responseText);
-                // Si no es JSON válido, simplemente devolvemos el texto de respuesta
-                return responseText;
             }
 
         } catch (error) {

@@ -33,7 +33,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
     env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7019';
 
-const isProduction = env.NODE_ENV === 'production';
+const isProduction = true
 export default defineConfig({
     plugins: [plugin()],
     resolve: {

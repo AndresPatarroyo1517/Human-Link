@@ -1,196 +1,103 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import documentService from '../../services/documentService';
-import empleadosService from '../../services/empleadosService'; // Importar el servicio de empleados
+import documentsService from '../../../services/documentService';
 import './documentManager.css';
 
-
 const DocumentManager = () => {
-    const [documents, setDocuments] = useState([]);
-    const [file, setFile] = useState(null);
-    const [selectedDocument, setSelectedDocument] = useState(null);
-    const [searchEmployee, setSearchEmployee] = useState('');
-    const [employees, setEmployees] = useState([]); // Almacenar empleados relacionados
-    const [selectedEmployee, setSelectedEmployee] = useState(null); // Empleado seleccionado para asignar
-    const [showAssignModal, setShowAssignModal] = useState(false); // Estado para controlar el modal
+    const [documentos, setDocumentos] = useState([]);
+    const [mostrarSoloEmpleados, setMostrarSoloEmpleados] = useState(false);
 
-    const loadDocuments = async () => {
-        try {
-            const data = await documentService.getDocuments();
-            setDocuments(data);
-        } catch (error) {
-            console.error("Error al cargar documentos:", error);
-        }
-    };
+    const titleDocuments = ['Hoja de Vida', 'Documento de Identidad', 'Certificados de Educacion y Formacion', 'Documentos Varios'];
 
-    const loadEmployees = async () => {
+    // Cargar todos los documentos al activar el componente
+    const cargarDocumentos = async () => {
         try {
-            const data = await empleadosService.getEmpleados();
-            setEmployees(data);
+            const response = await documentsService.getDocuments(); // Método correcto
+            setDocumentos(response);
         } catch (error) {
-            console.error("Error al cargar empleados:", error);
+            console.error('Error al obtener los documentos:', error);
         }
     };
 
     useEffect(() => {
-        loadDocuments();
-        loadEmployees(); // Cargar empleados al iniciar
+        cargarDocumentos();
     }, []);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    const handleUpload = async () => {
-        if (!file) return;
-
+    const descargarDocumento = async (id, nombreArchivo) => {
         try {
-            await documentService.uploadFile(file);
-            setFile(null);
-            loadDocuments();
+            const blob = await documentsService.downloadDocument(id);
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = nombreArchivo;
+            link.click();
+            URL.revokeObjectURL(url);
         } catch (error) {
-            console.error("Error al subir el archivo:", error);
+            console.error('Error al descargar el documento:', error);
         }
     };
 
-    const handleDocumentSelect = (document) => {
-        setSelectedDocument(document);
-    };
-
-    const handleAssignEmployeeClick = () => {
-        setShowAssignModal(true); // Mostrar el modal para asignar empleado
-    };
-
-    const handleSearchEmployee = () => {
-        // Aquí puedes filtrar la lista de empleados según el nombre
-        if (searchEmployee) {
-            const filteredEmployees = employees.filter(employee =>
-                employee.Nombre.toLowerCase().includes(searchEmployee.toLowerCase())
-            );
-            setEmployees(filteredEmployees);
+    const handleModificarEstado = async (id, nuevoEstado) => {
+        try {
+            await documentsService.updateDocumentStatus(id, nuevoEstado);
+            alert(`El documento ha sido ${nuevoEstado}`);
+            cargarDocumentos();
+        } catch (error) {
+            console.error('Error al actualizar el estado del documento:', error);
         }
     };
 
-    const handleEmployeeSelect = (employee) => {
-        setSelectedEmployee(employee); // Establecer el empleado seleccionado
-    };
-
-    const handleAssign = () => {
-        if (selectedDocument && selectedEmployee) {
-            console.log(`Asignando ${selectedEmployee.Nombre} al documento: ${selectedDocument.NombreArchivo}`);
-            // Aquí puedes agregar la lógica para asignar el empleado al documento
-            setShowAssignModal(false); // Cerrar el modal
-            setSelectedEmployee(null); // Reiniciar el empleado seleccionado
-        }
-    };
+    const documentosFiltrados = mostrarSoloEmpleados
+        ? documentos.filter(doc => doc.RolUsuario === 'Empleado')
+        : documentos;
 
     return (
         <div>
-            <button type="button" className="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                Añadir Documento
+            <h2 className="mb-4">Documentos Requeridos</h2>
+            <button className="btn btn-info mb-3" onClick={() => setMostrarSoloEmpleados(!mostrarSoloEmpleados)}>
+                {mostrarSoloEmpleados ? 'Ver Todos los Documentos' : 'Ver Documentos de Empleados'}
             </button>
 
-            {/* Tabla de documentos */}
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Documentos</th>
-                        <th>Verificación</th>
-                        <th>Propietario</th>
-                        <th>Fecha subida</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {documents.map((document) => (
-                        <tr key={document.Id.Timestamp}>
-                            <td>
-                                <input
-                                    type="radio"
-                                    name="selectedDocument"
-                                    onChange={() => handleDocumentSelect(document)}
-                                />
-                            </td>
-                            <td>{document.NombreArchivo}</td>
-                            <td>{document.Estado}</td>
-                            <td>{document.Propietario}</td>
-                            <td>{new Date(document.Fecha).toLocaleDateString()}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* Botones para gestionar documentos */}
-            <div className="d-flex flex-column">
-                <button className="btn btn-light mb-2">Eliminar Documento</button>
-                <button className="btn btn-light mb-2" onClick={handleAssignEmployeeClick}>
-                    Asignar a Empleado
-                </button>
-            </div>
-
-            {/* Modal para añadir documento */}
-            <div className="modal fade" id="uploadModal" tabIndex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="uploadModalLabel">Añadir Documento</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <input type="file" onChange={handleFileChange} />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-success" onClick={handleUpload} data-bs-dismiss="modal">Guardar Documento</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Modal para asignar empleado */}
-            <div className={`modal fade ${showAssignModal ? 'show' : ''}`} style={{ display: showAssignModal ? 'block' : 'none' }} tabIndex="-1" aria-labelledby="assignEmployeeModalLabel" aria-hidden={!showAssignModal}>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title fw-bold" id="assignEmployeeModalLabel">Asignar Empleado</h5>
-                            <button type="button" className="btn-close" onClick={() => setShowAssignModal(false)} aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <div>
-                                <strong>Nombre archivo:</strong> {selectedDocument ? selectedDocument.NombreArchivo : 'Ninguno'}
-                            </div>
-                            <div className="mb-3 mt-2">
-                                <label htmlFor="employeeSearch" className="form-label">Nombre empleado</label>
-                                <div className="input-group">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="employeeSearch"
-                                        value={searchEmployee}
-                                        onChange={(e) => setSearchEmployee(e.target.value)}
-                                        placeholder="Buscar empleado"
-                                    />
-                                    <button className="btn btn-success" onClick={handleSearchEmployee}>Buscar</button>
+            <div className="container">
+                <div className="row">
+                    {titleDocuments.map((tipoDocumento, index) => {
+                        const documentosSubidos = documentosFiltrados.filter(doc => doc.TipoDocumento === tipoDocumento);
+                        return (
+                            <div className="col-12 mb-4" key={index}>
+                                <div className="card w-100">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{tipoDocumento}</h5>
+                                        {documentosSubidos.length > 0 ? (
+                                            <ul className="list-group">
+                                                {documentosSubidos.map((tipoDoc, idx) => (
+                                                    <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+                                                        {tipoDoc.NombreArchivo}
+                                                        <div>
+                                                            <button className="btn btn-secondary" onClick={() => descargarDocumento(tipoDoc.Id, tipoDoc.NombreArchivo)}>
+                                                                Descargar
+                                                            </button>
+                                                            {tipoDoc.RolUsuario === 'Empleado' && (
+                                                                <>
+                                                                    <button className="btn btn-success mx-2" onClick={() => handleModificarEstado(tipoDoc.Id, 'aprobado')}>
+                                                                        Aprobar
+                                                                    </button>
+                                                                    <button className="btn btn-danger" onClick={() => handleModificarEstado(tipoDoc.Id, 'rechazado')}>
+                                                                        Rechazar
+                                                                    </button>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p>No hay documentos subidos para este tipo.</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="employee-results" style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', maxHeight: '200px', overflowY: 'scroll' }}>
-                                {employees.map((employee, index) => (
-                                    <div key={index} className="d-flex align-items-center mb-1">
-                                        <div
-                                            onClick={() => handleEmployeeSelect(employee)}
-                                            className={`rounded-circle me-2 ${selectedEmployee === employee ? 'bg-success' : 'bg-secondary'}`}
-                                            style={{ width: '20px', height: '20px', cursor: 'pointer' }}
-                                        ></div>
-                                        {employee.Nombre}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={() => setShowAssignModal(false)}>Cancelar</button>
-                            <button type="button" className="btn btn-success" onClick={handleAssign}>Asignar</button>
-                        </div>
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
@@ -198,4 +105,3 @@ const DocumentManager = () => {
 };
 
 export default DocumentManager;
-

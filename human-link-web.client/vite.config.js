@@ -33,7 +33,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
     env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7019';
 
-// https://vitejs.dev/config/
+const isProduction = env.NODE_ENV === 'production';
 export default defineConfig({
     plugins: [plugin()],
     resolve: {
@@ -49,9 +49,9 @@ export default defineConfig({
             }
         },
         port: 5173,
-        https: {
+        https: isProduction ? false : {
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
         }
     }
-})
+});

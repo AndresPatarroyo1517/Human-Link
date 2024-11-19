@@ -27,6 +27,31 @@ namespace Human_Link_Web.Server.Controllers
             return Ok(empleados);
         }
 
+        [HttpGet("usuario")]
+        [Authorize(Policy = "AllPolicy")]
+        public async Task<ActionResult<Empleado>> GetEmpleadoById()
+        {
+            // Obtener el ID del usuario autenticado desde los claims
+            var authenticatedUserIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (authenticatedUserIdClaim == null)
+            {
+                return Unauthorized(); // Si no se encuentra el ID en las claims, devolver 401 Unauthorized
+            }
+
+            var Idusuario = Convert.ToInt32(authenticatedUserIdClaim);
+
+            // Buscar el empleado en la base de datos por su ID
+            var empleado = await _context.Empleados.FindAsync(Idusuario);
+
+            if (empleado == null)
+            {
+                return NotFound(); // Si no se encuentra el empleado, devolver 404 Not Found
+            }
+
+            return Ok(empleado);
+        }
+
+
         // Endpoint para obtener un empleado por su ID (proporcionado en la ruta)
         // GET: HumanLink/Empleado/:id
         [HttpGet("{id:int}")]

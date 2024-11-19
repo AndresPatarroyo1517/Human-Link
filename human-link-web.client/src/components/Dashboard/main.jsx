@@ -7,7 +7,8 @@ import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
 import DocumentManager from './documentManager';
-import AsignarCursos from './asignarCursos'; 
+import AsignarCursos from './asignarCursos';
+import Info from './Info';
 
 
 
@@ -54,11 +55,11 @@ const Main = () => {
             <div className="content-placeholder bg-light border rounded p-5">
                 <div>
                     {activeMenu === 'Gestionar Usuarios' && <TableUsuarios />}
+                    {activeMenu === 'Info' && <Info />}
                     {activeMenu === 'Asignar Cursos' && <AsignarCursos />} {/* Muestra el componente AsignarCursos */}
                     {activeMenu === 'Mis Documentos' && <DocumentManager />} {/* Integra DocumentManager aquí */}
                     {activeMenu === 'Añadir Cursos' && <CardCursos />}
                     {activeMenu === 'Informes' && <VisualizacionDatos />}
-                    {activeMenu === 'Certificados' && <TableInforms />}
                 </div>
             </div>
         </main>

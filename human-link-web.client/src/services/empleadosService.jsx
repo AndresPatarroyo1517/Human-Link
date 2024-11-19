@@ -19,6 +19,23 @@ const empleadosService = {
         console.log(data);
         return data;
     },
+    getEmp: async () => {
+        const response = await fetch(`${API_BASE_URL}/usuario`, {  // Se usa el ID en la URL
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al consultar el empleado');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+    },
 
     // Obtener todos los empleados
     getEmpleados: async () => {

@@ -92,7 +92,6 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AllPolicy")]
         public async Task<ActionResult<Cursousuario>> PostCursousuarioEmpleado([FromBody] Cursousuario cursousuario)
         {
-            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}");
             var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (id == null)
             {
@@ -101,9 +100,6 @@ namespace Human_Link_Web.Server.Controllers
 
             cursousuario.Idusuario = Convert.ToInt32(id);
             cursousuario.Fechainicio = DateOnly.FromDateTime(DateTime.Now);
-
-            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}, idusuario = {cursousuario.Idusuario}, fecha = {cursousuario.Fechainicio}");
-
             _context.Cursousuarios.Add(cursousuario);
             await _context.SaveChangesAsync();
 

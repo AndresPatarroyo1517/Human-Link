@@ -248,3 +248,21 @@ span {
     color: #A0CDA0; 
     font-weight: 500; 
 }
+
+.password-field {
+    position: relative;
+}
+
+    .password-field .visibility-toggle {
+        position: absolute;
+        right: 70px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #a8a8a8;
+        font-size: 1.2rem;
+    }
+
+        .password-field .visibility-toggle:hover {
+            color: #5bb75b; 
+        }

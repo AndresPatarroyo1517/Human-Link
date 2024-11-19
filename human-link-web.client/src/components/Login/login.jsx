@@ -9,8 +9,9 @@ const Login = () => {
     const [recordar, setRecordar] = useState(false);
     const [errorLogin, setErrorLogin] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [mostrarClave, setMostrarClave] = useState(false); // Nuevo estado
 
-    const {user, login } = useAuth();
+    const { user, login } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,16 +65,20 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <div className="login__field">
+                        <div className="login__field password-field">
                             <i className="login__icon fas fa-lock"></i>
                             <input
-                                type="password"
+                                type={mostrarClave ? 'text' : 'password'}
                                 className="login__input"
                                 placeholder="Password"
                                 value={clave}
                                 onChange={(e) => setClave(e.target.value)}
                                 required
                             />
+                            <i
+                                className={`visibility-toggle fas ${mostrarClave ? 'fa-eye-slash' : 'fa-eye'}`}
+                                onClick={() => setMostrarClave(!mostrarClave)}
+                            ></i>
                         </div>
                         <div className="login__field">
                             <label>

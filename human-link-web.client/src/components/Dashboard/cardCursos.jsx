@@ -13,9 +13,8 @@ const CardCursos = () => {
         Duracion: '',
         Url: [],
     });
-    const [selectedCursoId, setSelectedCursoId] = useState(null); // Para manejar edición
+    const [selectedCursoId, setSelectedCursoId] = useState(null);
 
-    // Obtener los cursos al montar el componente
     useEffect(() => {
         cargarCursos();
     }, []);
@@ -31,7 +30,20 @@ const CardCursos = () => {
         }
     };
 
-    // Manejar cambios en el formulario
+    const handleEliminarCurso = async (idCurso) => {
+        const confirmar = window.confirm('¿Estás seguro de que deseas eliminar este curso?');
+        if (!confirmar) return;
+
+        try {
+            await cursosService.deleteCursoUsuarioEmpleado(idCurso);
+            alert('Curso eliminado con éxito.');
+            cargarCursos(); // Recargar la lista de cursos
+        } catch (error) {
+            console.error('Error al eliminar el curso:', error);
+            alert('Hubo un error al eliminar el curso.');
+        }
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
@@ -40,7 +52,6 @@ const CardCursos = () => {
         }));
     };
 
-    // Manejar el cambio en los campos de URL
     const handleUrlChange = (index, e) => {
         const { value } = e.target;
         setFormData((prevState) => {
@@ -53,7 +64,6 @@ const CardCursos = () => {
         });
     };
 
-    // Agregar una nueva URL al array
     const handleAddUrl = () => {
         setFormData((prevState) => ({
             ...prevState,
@@ -61,7 +71,6 @@ const CardCursos = () => {
         }));
     };
 
-    // Eliminar una URL del array
     const handleRemoveUrl = (index) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -69,7 +78,6 @@ const CardCursos = () => {
         }));
     };
 
-    // Abrir modal para editar un curso existente
     const handleEditarCurso = (curso) => {
         setSelectedCursoId(curso.Idcurso);
         setFormData({
@@ -81,90 +89,12 @@ const CardCursos = () => {
         });
     };
 
-    // Manejar el envío del formulario para editar un curso
-    const handleActualizarCurso = async (e) => {
-        e.preventDefault();
-
-        try {
-            if (!formData.Nombrecurso || !formData.Descripcion || !formData.Categoria || !formData.Duracion) {
-                alert('Todos los campos son obligatorios.');
-                return;
-            }
-
-            const updatedCurso = {
-                Idcurso: selectedCursoId,
-                Nombrecurso: formData.Nombrecurso,
-                Descripcion: formData.Descripcion,
-                Categoria: formData.Categoria,
-                Duracion: formData.Duracion,
-                Url: formData.Url,
-                Cuestionarios: [],
-                Cursousuarios: [],
-            };
-
-            await cursosService.updateCurso(selectedCursoId, updatedCurso);
-            alert('Curso actualizado con éxito.');
-
-            setFormData({
-                Nombrecurso: '',
-                Descripcion: '',
-                Categoria: '',
-                Duracion: '',
-                Url: [],
-            });
-            cargarCursos();
-
-        } catch (error) {
-            console.error('Error al actualizar el curso:', error);
-            alert('Hubo un error al actualizar el curso.');
-        }
-    };
-
-    // Manejar el envío del formulario para agregar un curso
-    const handleCrearCurso = async (e) => {
-        e.preventDefault();
-
-        try {
-            if (!formData.Nombrecurso || !formData.Descripcion || !formData.Categoria || !formData.Duracion) {
-                alert('Todos los campos son obligatorios.');
-                return;
-            }
-
-            const nuevoCurso = {
-                Nombrecurso: formData.Nombrecurso,
-                Descripcion: formData.Descripcion,
-                Categoria: formData.Categoria,
-                Duracion: formData.Duracion,
-                Url: formData.Url,
-                Cuestionarios: [],
-                Cursousuarios: [],
-            };
-
-            await cursosService.postCurso(nuevoCurso);
-            alert('Curso creado con éxito.');
-
-            // Limpiar el formulario y recargar cursos
-            setFormData({
-                Nombrecurso: '',
-                Descripcion: '',
-                Categoria: '',
-                Duracion: '',
-                Url: [],
-            });
-            cargarCursos();
-        } catch (error) {
-            console.error('Error al crear el curso:', error);
-            alert('Hubo un error al crear el curso.');
-        }
-    };
-
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div>
-            {/* Botón para abrir modal de creación */}
             <button
                 type="button"
                 className="btn btn-success mb-3"
@@ -188,12 +118,19 @@ const CardCursos = () => {
                                 <p className="card-text">{curso.Descripcion || 'No hay descripción disponible.'}</p>
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btn-primary me-2"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editarModal"
                                     onClick={() => handleEditarCurso(curso)}
                                 >
-                                    Editar Curso
+                                    Editar
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleEliminarCurso(curso.Idcurso)}
+                                >
+                                    Eliminar
                                 </button>
                             </div>
                         </div>
@@ -210,8 +147,7 @@ const CardCursos = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleCrearCurso}>
-                                {/* Reutilizamos los campos del formulario */}
+                            <form>
                                 {renderFormFields()}
                                 <button type="submit" className="btn btn-success">Crear Curso</button>
                             </form>
@@ -229,8 +165,7 @@ const CardCursos = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleActualizarCurso}>
-                                {/* Reutilizamos los campos del formulario */}
+                            <form>
                                 {renderFormFields()}
                                 <button type="submit" className="btn btn-primary">Actualizar Curso</button>
                             </form>
@@ -241,7 +176,6 @@ const CardCursos = () => {
         </div>
     );
 
-    // Función para renderizar los campos del formulario
     function renderFormFields() {
         return (
             <>

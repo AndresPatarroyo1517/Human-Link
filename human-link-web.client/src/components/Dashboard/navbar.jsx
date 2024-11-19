@@ -19,7 +19,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarContent">
                 <ul className="navbar-nav ms-auto">
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <i className="bi bi-person-fill-lock"> </i>
+                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <i className="bi bi-person-fill-lock"> </i>
                             Mi Cuenta
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

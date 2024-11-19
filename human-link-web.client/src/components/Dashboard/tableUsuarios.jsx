@@ -342,7 +342,7 @@ console.log('entro principal')
                                             Eliminar
                                         </button>
                                         <button
-                                            class="btn btn-primary"
+                                            className="btn btn-primary"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editNominaModal"
                                             onClick={() => openEditNominaModal(usuario)}>

@@ -197,9 +197,27 @@ const cursosService = {
 
 
     // Eliminar curso del usuario
-    deleteCursoUsuarioEmpleado: async (Idcurso) => {
+    deleteCursoUsuarioAdmin: async (Idcurso) => {
         try {
             const response = await fetch(`${API_URL_CURSO}/${Idcurso}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            }
+            );
+
+            if (!response.ok) {
+                throw new Error('No se pudo eliminar el curso');
+            }
+
+            return response;
+        } catch (error) {
+            console.error('Error al eliminar el curso:', error);
+            throw error;
+        }
+    },
+    deleteCursoUsuarioEmpleado: async (Idcurso) => {
+        try {
+            const response = await fetch(`${API_URL}/empleado/${Idcurso}`, {
                 method: 'DELETE',
                 credentials: 'include',
             }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Human_Link_Web.Server.Controllers
 {
@@ -85,6 +86,28 @@ namespace Human_Link_Web.Server.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCurso", new { id = curso.Idcurso }, curso);
+        }
+
+        [HttpPost("inscripcion")]
+        [Authorize(Policy = "AllPolicy")]
+        public async Task<ActionResult<Cursousuario>> PostCursousuarioEmpleado([FromBody] Cursousuario cursousuario)
+        {
+            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}");
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return Unauthorized(); // Si no se encuentra el ID del usuario en las claims, devolver 401 Unauthorized
+            }
+
+            cursousuario.Idusuario = Convert.ToInt32(id);
+            cursousuario.Fechainicio = DateOnly.FromDateTime(DateTime.Now);
+
+            Console.WriteLine($"Received data: Idcurso = {cursousuario.Idcurso}, Progreso = {cursousuario.Progreso}, idusuario = {cursousuario.Idusuario}, fecha = {cursousuario.Fechainicio}");
+
+            _context.Cursousuarios.Add(cursousuario);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCursousuario", new { id = cursousuario.Idcuremp }, cursousuario);
         }
 
         //Endpoint para eliminar algú curso usando la ID

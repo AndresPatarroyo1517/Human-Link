@@ -90,7 +90,7 @@ const cursosService = {
         const data = await response.json();
         return data;
     },
-    postCursoUsuarioEmpleado: async ({ empleadoId, cursoId }) => {
+    postCursoUsuarioAdmin: async ({ empleadoId, cursoId }) => {
         // Crear el objeto Cursousuario que se enviará al backend
         const cursousuario = {
             Idusuario: empleadoId, // Cambiar 'empleadoId' a 'Idusuario'
@@ -131,6 +131,25 @@ const cursosService = {
             console.error("Error en la solicitud:", error);
             throw error;
         }
+    },
+    postCursoUsuarioEmpleado: async (cursoId) => {
+        const response = await fetch(API_URL + '/inscripcion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Enviar cookies con la solicitud
+            body: JSON.stringify({
+                Idcurso: cursoId,
+                Progreso: 0,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error details:", errorData);
+        }
+        return response;
     },
 
 

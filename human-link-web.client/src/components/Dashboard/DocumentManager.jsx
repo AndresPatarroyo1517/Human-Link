@@ -54,7 +54,7 @@ const DocumentManager = () => {
     const handleEstadoChange = (id, nuevoEstado) => {
         setEstadoSeleccionado((prev) => ({
             ...prev,
-            [id]: nuevoEstado, // Actualizar el estado seleccionado para el documento específico
+            [id]: nuevoEstado, // Actualizar el estado seleccionado para el documento especï¿½fico
         }));
     };
 
@@ -108,7 +108,7 @@ const DocumentManager = () => {
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target={`#ModalVerificar${docTable.Id}`}
                                                                     >
-                                                                        <i className="bi bi-file-earmark-check"></i> Verificación
+                                                                        <i className="bi bi-file-earmark-check"></i> Verificaciï¿½n
                                                                     </button>
                                                                     <button
                                                                         className="btn btn-success"
@@ -131,7 +131,7 @@ const DocumentManager = () => {
                                                                     <div className="modal-content">
                                                                         <div className="modal-header">
                                                                             <h1 className="modal-title fs-5" id="ModalVerificarLabel">
-                                                                                Verificación de documento
+                                                                                Verificaciï¿½n de documento
                                                                             </h1>
                                                                             <button
                                                                                 type="button"
@@ -141,17 +141,17 @@ const DocumentManager = () => {
                                                                             ></button>
                                                                         </div>
                                                                         <div className="modal-body">
-                                                                            Selecciona una opción de verificación para el archivo{" "}
+                                                                            Selecciona una opciï¿½n de verificaciï¿½n para el archivo{" "}
                                                                             <strong>{docTable.NombreArchivo}</strong>
                                                                             <select
                                                                                 className="form-select"
-                                                                                aria-label="Estado de Verificación"
+                                                                                aria-label="Estado de Verificaciï¿½n"
                                                                                 value={estadoSeleccionado[docTable.Id] || ""}
                                                                                 onChange={(e) =>
                                                                                     handleEstadoChange(docTable.Id, e.target.value)
                                                                                 }
                                                                             >
-                                                                                <option value="">Seleccione una opción:</option>
+                                                                                <option value="">Seleccione una opciï¿½n:</option>
                                                                                 <option value="Verificado">Verificado</option>
                                                                                 <option value="Rechazado">Rechazado</option>
                                                                             </select>

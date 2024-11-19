@@ -24,6 +24,7 @@ const BarrasCursosCategoria = ({ onImagenGenerada }) => {
                 setData(formattedData);
             })
             .catch(error => {
+                console.error("Error al obtener cursos con categorias: " + error);
             });
     }, []);
 
@@ -31,7 +32,7 @@ const BarrasCursosCategoria = ({ onImagenGenerada }) => {
         const generarImagen = async () => {
             const graficoElement = document.querySelector('.contenedor-grafico-export');
             if (!graficoElement) {
-                throw new Error('No se encontró el elemento del gráfico');
+                throw new Error('No se encontrï¿½ el elemento del grï¿½fico');
             }
 
             try {
@@ -49,7 +50,7 @@ const BarrasCursosCategoria = ({ onImagenGenerada }) => {
                     imageC.current.src = imageData;  
                 }
             } catch (error) {
-                //console.error('Error al generar la imagen del gráfico:', 'tabla');
+                //console.error('Error al generar la imagen del grï¿½fico:', 'tabla');
             }
         };
 
@@ -84,9 +85,9 @@ const BarrasCursosCategoria = ({ onImagenGenerada }) => {
                     },
                 ]}
                 layout={{
-                    title: 'Cantidad de Inscritos por Categoría',
+                    title: 'Cantidad de Inscritos por Categorï¿½a',
                     xaxis: {
-                        title: 'Categorías',
+                        title: 'Categorï¿½as',
                         automargin: true,
                     },
                     yaxis: {

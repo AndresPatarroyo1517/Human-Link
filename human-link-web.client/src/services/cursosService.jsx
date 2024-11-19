@@ -75,7 +75,7 @@ const cursosService = {
 
     // Obtener todos los cursos con CursoUsuario y Curso
     getAllCursosCategoria: async () => {
-        const response = await fetch('https://localhost:7019/HumanLink/Curso', {
+        const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

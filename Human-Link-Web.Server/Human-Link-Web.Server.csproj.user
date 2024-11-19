@@ -12,5 +12,6 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>Human_Link_Web.Server.Models.HumanLinkContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <NameOfLastUsedPublishProfile>Human-Link-WebServer20241119131724 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

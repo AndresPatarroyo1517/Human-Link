@@ -105,12 +105,6 @@ namespace Human_Link_Web.Server.Controllers
         [Authorize(Policy = "AllPolicy")] // Solo permite el consumo del endpoint a los usuarios logeados y con rol administrador
         public async Task<ActionResult<UsuarioUnique>> GetUsuarioById(int id)
         {
-            // Aquí verificamos si el usuario tiene el rol adecuado
-            var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
 
             var user = await _context.Usuarios.FindAsync(id);
 

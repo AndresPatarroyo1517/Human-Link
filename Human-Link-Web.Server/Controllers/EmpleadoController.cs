@@ -29,7 +29,7 @@ namespace Human_Link_Web.Server.Controllers
 
         [HttpGet("usuario")]
         [Authorize(Policy = "AllPolicy")]
-        public async Task<ActionResult<Empleado>> GetEmpleadoById()
+        public async Task<ActionResult<Empleado>> GetEmpleado()
         {
             // Obtener el ID del usuario autenticado desde los claims
             var authenticatedUserIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;

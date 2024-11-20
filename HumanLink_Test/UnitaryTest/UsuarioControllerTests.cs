@@ -44,7 +44,7 @@ namespace HumanLink_UnitaryTest
         [Fact]
         public async Task GetUsuario_ReturnsNotFound_ForInvalidId()
         {
-            var result = await _controller.GetUsuario(99);
+            var result = await _controller.GetUsuarioById(99);
 
             Assert.IsType<NotFoundResult>(result.Result);
         }
@@ -55,7 +55,7 @@ namespace HumanLink_UnitaryTest
             var existingUser = new Usuario { Idusuario = 3, Clave = "password" };
             await _controller.PostUsuario(existingUser);
 
-            var updatedUser = new Usuario { Idusuario = 3, Clave = "newPassword" };
+            var updatedUser = new UsuarioUnique { IdUsuario = 3, Clave = "newPassword" };
 
             var result = await _controller.PutUsuario(3, updatedUser);
 

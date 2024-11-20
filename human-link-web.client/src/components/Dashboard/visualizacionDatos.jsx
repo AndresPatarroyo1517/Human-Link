@@ -1,7 +1,7 @@
 import TortaInscritos from "../graficosCursos/tortaInscritos";
 import "./visualizacionDatos.css";
 import BarrasCursos from "../graficosCursos/barrasCursos";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Informes } from "../Informes/informes";
 import BarrasCursosCategoria from "../graficosCursos/barrasCursosCategoria";
 import PromedioNotasCurso from "../graficosCursos/promedioNotasCurso";
@@ -11,7 +11,12 @@ import Estadisticas from "../graficosCursos/estadisticas";
 
 const VisualizacionDatos = () => {
 
+    
     const [imageSrc, setImageSrc] = useState(null);
+
+    useEffect(() => {
+
+    }, [Informes])
 
     const manejarImagenGenerada = (imageData) => {
         setImageSrc(imageData)

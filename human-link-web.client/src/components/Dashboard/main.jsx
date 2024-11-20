@@ -6,8 +6,8 @@ import { useAdmin } from '../../context/adminContext';
 import TableEmpleados from './tableEmpleados';
 import VisualizacionDatos from './visualizacionDatos';
 import BarrasCursos from '../graficosCursos/barrasCursosCategoria';
-import DocumentManager from './documentManager';
-import AsignarCursos from './asignarCursos';
+import DocumentManager from './DocumentManager';
+import AsignarCursos from './AsignarCursos';
 import Info from './Info';
 
 

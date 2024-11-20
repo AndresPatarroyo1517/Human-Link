@@ -36,7 +36,7 @@ namespace Human_Link_Web.Server
             {
                 options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
-                    builder.WithOrigins("https://human-link.vercel.app/")
+                    builder.WithOrigins("https://localhost:5173")
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials();
